@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>JSON Reference and Identification</title>
+<meta content="Henry Andrews" name="author">
+<meta content="
+       JSON Reference and Identification (JRI) provides a way for media types and
+other data formats that lack native identification and referencing mechanisms
+to implement them in a familiar and interoperable way. 
+    " name="description">
+<meta content="xml2rfc 3.15.1" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-handrews-jri-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.15.1
+    Python 3.8.13
+    appdirs 1.4.4
+    ConfigArgParse 1.5.3
+    google-i18n-address 2.5.2
+    html5lib 1.1
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    kitchen 1.2.6
+    lxml 4.9.1
+    MarkupSafe 2.1.1
+    pycountry 22.3.5
+    PyYAML 6.0
+    requests 2.28.1
+    setuptools 65.5.0
+    six 1.16.0
+-->
+<link href="draft-handrews-jri.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">/*
+
+  NOTE: Changes at the bottom of this file overrides some earlier settings.
+
+  Once the style has stabilized and has been adopted as an official RFC style,
+  this can be consolidated so that style settings occur only in one place, but
+  for now the contents of this file consists first of the initial CSS work as
+  provided to the RFC Formatter (xml2rfc) work, followed by itemized and
+  commented changes found necssary during the development of the v3
+  formatters.
+
+*/
+
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+/* general and mobile first */
+html {
+}
+body {
+  max-width: 90%;
+  margin: 1.5em auto;
+  color: #222;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  line-height: 1.3;
+}
+#title {
+  clear: both;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0.5em;
+}
+.author {
+  padding-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  margin: 1em 0;
+}
+h2 {
+  font-size: 22px;
+  margin-top: -20px;  /* provide offset for in-page anchors */
+  padding-top: 33px;
+}
+h3 {
+  font-size: 18px;
+  margin-top: -36px;  /* provide offset for in-page anchors */
+  padding-top: 42px;
+}
+h4 {
+  font-size: 16px;
+  margin-top: -36px;  /* provide offset for in-page anchors */
+  padding-top: 42px;
+}
+h5, h6 {
+  font-size: 14px;
+}
+#n-copyright-notice {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* general structure */
+p {
+  padding: 0;
+  margin: 0 0 1em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  display: table;
+  border: none;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.ulBare, li.ulBare {
+  margin-left: 0em !important;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+/* 
+dl.nohang > dt {
+  float: none;
+}
+*/
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #22e; /* Arlen: WCAG 2019 */
+}
+a[href]:hover {
+  background-color: #f2f2f2;
+}
+figcaption a[href],
+a[href].selfRef {
+  color: #222;
+}
+/* XXX probably not this:
+a.selfRef:hover {
+  background-color: transparent;
+  cursor: default;
+} */
+
+/* Figures */
+tt, code, pre {
+  background-color: #f9f9f9;
+  font-family: 'Roboto Mono', monospace;
+}
+pre {
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 1em;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption {
+  font-style: italic;
+  margin: 0 0 1em 0;
+}
+@media screen {
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    max-width: calc(100% - 22px);
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 1.2em 2em;
+}
+blockquote {
+  background-color: #f9f9f9;
+  color: #111; /* Arlen: WCAG 2019 */
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #e9e9e9;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f5f5f5;
+}
+table caption {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  color: #666; /* Arlen: AHDJ 2019 */
+  text-decoration: none;
+  visibility: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media screen {
+  aside:hover > a.pilcrow,
+  p:hover > a.pilcrow,
+  blockquote:hover > a.pilcrow,
+  div:hover > a.pilcrow,
+  li:hover > a.pilcrow,
+  pre:hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: 0.9em;
+}
+#identifiers dt {
+  width: 3em;
+  clear: left;
+}
+#identifiers dd {
+  float: left;
+  margin-bottom: 0;
+}
+/* Fix PDF info block run off issue */
+@media print {
+  #identifiers dd {
+    float: none;
+  }
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #666; /* Arlen: WCAG 2019 */
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc  {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+nav.toc ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+nav.toc li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+  }
+  .index ul ul {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #9e2a00; /* Arlen: WCAG 2019 */
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+  border-radius: 3px;
+}
+.cref {
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 2em;
+  }
+  #title {
+    padding: 1em 0;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: -18px;  /* provide offset for in-page anchors */
+    padding-top: 38px;
+  }
+  #identifiers dd {
+    max-width: 60%;
+  }
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    border-bottom: 1px solid #ccc;
+  }
+  #toc h2 {
+    margin: -1px 0 0 0;
+    padding: 4px 0 4px 6px;
+    padding-right: 1em;
+    min-width: 190px;
+    font-size: 1.1em;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 6px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 1024px) {
+  body {
+    max-width: 724px;
+    margin: 42px auto;
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+  #toc {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    width: 25%;
+    margin: 0;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #toc h2 {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 0;
+    overflow: auto;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  pre.breakable {
+    break-inside: auto;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+/* This is commented out here, as the string-set: doesn't
+   pass W3C validation currently */
+/*
+.ears thead .left {
+  string-set: ears-top-left content();
+}
+
+.ears thead .center {
+  string-set: ears-top-center content();
+}
+
+.ears thead .right {
+  string-set: ears-top-right content();
+}
+
+.ears tfoot .left {
+  string-set: ears-bottom-left content();
+}
+
+.ears tfoot .center {
+  string-set: ears-bottom-center content();
+}
+
+.ears tfoot .right {
+  string-set: ears-bottom-right content();
+}
+*/
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+  /* The follwing is commented out here, but set appropriately by in code, as
+     the content depends on the document */
+  /*
+  @top-left {
+    content: 'Internet-Draft';
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-left {
+    content: string(ears-top-left);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-center {
+    content: string(ears-top-center);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-right {
+    content: string(ears-top-right);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @bottom-left {
+    content: string(ears-bottom-left);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-center {
+    content: string(ears-bottom-center);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-right {
+      content: '[Page ' counter(page) ']';
+      vertical-align: top;
+      border-top: solid 1px #ccc;
+  }
+  */
+
+}
+
+/* Changes introduced to fix issues found during implementation */
+/* Make sure links are clickable even if overlapped by following H* */
+a {
+  z-index: 2;
+}
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Leave room in document info to show Internet-Draft on one line */
+#identifiers dt {
+  width: 8em;
+}
+
+/* Don't waste quite as much whitespace between label and value in doc info */
+#identifiers dd {
+  margin-left: 1em;
+}
+
+/* Give floating toc a background color (needed when it's a div inside section */
+#toc {
+  background-color: white;
+}
+
+/* Make the collapsed ToC header render white on gray also when it's a link */
+@media screen and (max-width: 1023px) {
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+}
+
+/* Give the bottom of the ToC some whitespace */
+@media screen and (min-width: 1024px) {
+  #toc {
+    padding: 0 0 1em 1em;
+  }
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* prevent monospace from becoming overly large */
+tt, code, pre {
+  font-size: 95%;
+}
+
+/* Fix the height/width aspect for ascii art*/
+pre.sourcecode,
+.art-text pre {
+  line-height: 1.12;
+}
+
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin-right: 0.5em;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table td.text-left,
+table th.text-left {
+  text-align: left;
+}
+table td.text-center,
+table th.text-center {
+  text-align: center;
+}
+table td.text-right,
+table th.text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact informatio look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 30em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+caption a[href] {
+  color: #222;
+}
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+/* Tweak the invisible space above H* in order not to overlay links in text above */
+ h2 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 31px;
+ }
+ h3 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 24px;
+ }
+ h4 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 24px;
+ }
+/* Float artwork pilcrow to the right */
+@media screen {
+  .artwork a.pilcrow {
+    display: block;
+    line-height: 0.7;
+    margin-top: 0.15em;
+  }
+}
+/* Make pilcrows on dd visible */
+@media screen {
+  dd:hover > a.pilcrow {
+    visibility: visible;
+  }
+}
+/* Make the placement of figcaption match that of a table's caption
+   by removing the figure's added bottom margin */
+.alignLeft.art-text,
+.alignCenter.art-text,
+.alignRight.art-text {
+   margin-bottom: 0;
+}
+.alignLeft,
+.alignCenter,
+.alignRight {
+  margin: 1em 0 0 0;
+}
+/* In print, the pilcrow won't show on hover, so prevent it from taking up space,
+   possibly even requiring a new line */
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+/* Styling for the external metadata */
+div#external-metadata {
+  background-color: #eee;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  display: none;
+}
+div#internal-metadata {
+  padding: 0.5em;                       /* to match the external-metadata padding */
+}
+/* Styling for title RFC Number */
+h1#rfcnum {
+  clear: both;
+  margin: 0 0 -1em;
+  padding: 1em 0 0 0;
+}
+/* Make .olPercent look the same as <ol><li> */
+dl.olPercent > dd {
+  margin-bottom: 0.25em;
+  min-height: initial;
+}
+/* Give aside some styling to set it apart */
+aside {
+  border-left: 1px solid #ddd;
+  margin: 1em 0 1em 2em;
+  padding: 0.2em 2em;
+}
+aside > dl,
+aside > ol,
+aside > ul,
+aside > table,
+aside > p {
+  margin-bottom: 0.5em;
+}
+/* Additional page break settings */
+@media print {
+  figcaption, table caption {
+    page-break-before: avoid;
+  }
+}
+/* Font size adjustments for print */
+@media print {
+  body  { font-size: 10pt;      line-height: normal; max-width: 96%; }
+  h1    { font-size: 1.72em;    padding-top: 1.5em; } /* 1*1.2*1.2*1.2 */
+  h2    { font-size: 1.44em;    padding-top: 1.5em; } /* 1*1.2*1.2 */
+  h3    { font-size: 1.2em;     padding-top: 1.5em; } /* 1*1.2 */
+  h4    { font-size: 1em;       padding-top: 1.5em; }
+  h5, h6 { font-size: 1em;      margin: initial; padding: 0.5em 0 0.3em; }
+}
+/* Sourcecode margin in print, when there's no pilcrow */
+@media print {
+  .artwork,
+  .artwork > pre,
+  .sourcecode {
+    margin-bottom: 1em;
+  }
+}
+/* Avoid narrow tables forcing too narrow table captions, which may render badly */
+table {
+  min-width: 20em;
+}
+/* ol type a */
+ol.type-a { list-style-type: lower-alpha; }
+ol.type-A { list-style-type: upper-alpha; }
+ol.type-i { list-style-type: lower-roman; }
+ol.type-I { list-style-type: lower-roman; }
+/* Apply the print table and row borders in general, on request from the RPC,
+and increase the contrast between border and odd row background sligthtly */
+table {
+  border: 1px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+}
+tr {
+  break-inside: avoid;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f8f8f8;
+}
+/* Use style rules to govern display of the TOC. */
+@media screen and (max-width: 1023px) {
+  #toc nav { display: none; }
+  #toc.active nav { display: block; }
+}
+/* Add support for keepWithNext */
+.keepWithNext {
+  break-after: avoid-page;
+  break-after: avoid-page;
+}
+/* Add support for keepWithPrevious */
+.keepWithPrevious {
+  break-before: avoid-page;
+}
+/* Change the approach to avoiding breaks inside artwork etc. */
+figure, pre, table, .artwork, .sourcecode  {
+  break-before: auto;
+  break-after: auto;
+}
+/* Avoid breaks between <dt> and <dd> */
+dl {
+  break-before: auto;
+  break-inside: auto;
+}
+dt {
+  break-before: auto;
+  break-after: avoid-page;
+}
+dd {
+  break-before: avoid-page;
+  break-after: auto;
+  orphans: 3;
+  widows: 3
+}
+span.break, dd.break {
+  margin-bottom: 0;
+  min-height: 0;
+  break-before: auto;
+  break-inside: auto;
+  break-after: auto;
+}
+/* Undo break-before ToC */
+@media print {
+  #toc {
+    break-before: auto;
+  }
+}
+/* Text in compact lists should not get extra bottim margin space,
+   since that would makes the list not compact */
+ul.compact p, .ulCompact p,
+ol.compact p, .olCompact p {
+ margin: 0;
+}
+/* But the list as a whole needs the extra space at the end */
+section ul.compact,
+section .ulCompact,
+section ol.compact,
+section .olCompact {
+  margin-bottom: 1em;                    /* same as p not within ul.compact etc. */
+}
+/* The tt and code background above interferes with for instance table cell
+   backgrounds.  Changed to something a bit more selective. */
+tt, code {
+  background-color: transparent;
+}
+p tt, p code, li tt, li code {
+  background-color: #f8f8f8;
+}
+/* Tweak the pre margin -- 0px doesn't come out well */
+pre {
+   margin-top: 0.5px;
+}
+/* Tweak the comact list text */
+ul.compact, .ulCompact,
+ol.compact, .olCompact,
+dl.compact, .dlCompact {
+  line-height: normal;
+}
+/* Don't add top margin for nested lists */
+li > ul, li > ol, li > dl,
+dd > ul, dd > ol, dd > dl,
+dl > dd > dl {
+  margin-top: initial;
+}
+/* Elements that should not be rendered on the same line as a <dt> */
+/* This should match the element list in writer.text.TextWriter.render_dl() */
+dd > div.artwork:first-child,
+dd > aside:first-child,
+dd > figure:first-child,
+dd > ol:first-child,
+dd > div:first-child > pre.sourcecode,
+dd > table:first-child,
+dd > ul:first-child {
+  clear: left;
+}
+/* fix for weird browser behaviour when <dd/> is empty */
+dt+dd:empty::before{
+  content: "\00a0";
+}
+/* Make paragraph spacing inside <li> smaller than in body text, to fit better within the list */
+li > p {
+  margin-bottom: 0.5em
+}
+/* Don't let p margin spill out from inside list items */
+li > p:last-of-type {
+  margin-bottom: 0;
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<h2><em>Warning: Manual Build</em></h2>
+<p>
+<em>This is a statically built copy as of Dec. 10, 2022, and may be out-of-date compared to the 
+<a href="https://github.com/json-schema-org/referencing/blob/main/draft-handrews-jri.md">source document</a>.</em>
+</p>
+<p>
+<em>In the future, there will be an automatic build, to which this page will redirect.</em>
+</p>
+<hr />
+<hr />
+<hr />
+
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">JSON Reference and Identification</td>
+<td class="right">December 2022</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Andrews</td>
+<td class="center">Expires 13 June 2023</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Internet Engineering Task Force</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-handrews-jri-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2022-12-10" class="published">10 December 2022</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2023-06-13">13 June 2023</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">H. Andrews</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">JSON Reference and Identification</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">JSON Reference and Identification (JRI) provides a way for media types and
+other data formats that lack native identification and referencing mechanisms
+to implement them in a familiar and interoperable way.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note" id="section-note.1">
+      <h2 id="name-note-to-readers">
+<a href="#name-note-to-readers" class="section-name selfRef">Note to Readers</a>
+      </h2>
+<p id="section-note.1-1"><em>RFC EDITOR: please remove this section before publication</em><a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">This specification is a response to the usage of these keywords both inside and outside of JSON Schema during the decade since <code>id</code> (which was later split into <code>"$id"</code> and <code>"$anchor"</code>) and <code>"$ref"</code> were first introduced in JSON Schema draft-03 <span>[<a href="#I-D.zyp-json-schema-03" class="cite xref">I-D.zyp-json-schema-03</a>]</span>.  The <code>definitions</code> keyword (which later became <code>"$defs"</code>) was introduced in JSON Schema Validation draft-04 <span>[<a href="#I-D.fge-json-schema-validation-00" class="cite xref">I-D.fge-json-schema-validation-00</a>]</span>, at which point <code>"$ref"</code> had been split into its own short-lived but influential JSON Reference <span>[<a href="#I-D.pbryan-zyp-json-ref-03" class="cite xref">I-D.pbryan-zyp-json-ref-03</a>]</span> proposal.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">The full and rather complex history of these keywords, including their usage in OpenAPI and AsyncAPI, as well as other proposals to split some or all of them back into a separate specification, is detailed in the <a href="https://github.com/json-schema-org/referencing/tree/main/BACKGROUND.md">BACKGROUND.md</a> file in the repository containing this document.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Use cases have been compiled from popular tools that support JSON Reference (and sometimes other keywords in this specification) without being full JSON Schema implementations, and from specification requirements regarding non-JSON Schema use.  Notably, some of the tools support additional JRI keywords that were not included in JSON Reference, motivating a larger specification than simply a revival of JSON Reference.  These requirements and use cases are also available in the <a href="https://github.com/json-schema-org/referencing/tree/main/BACKGROUND.md">BACKGROUND.md</a> file.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+<p id="section-note.1-5">Discussion of this draft takes place in the <a href="https://github.com/json-schema-org/referencing">GitHub repository</a> and on the <code>"#referencing"</code> channel of the <a href="https://json-schema.org/slack">JSON Schema Slack server</a>.<a href="#section-note.1-5" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 13 June 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2022 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-notational-conventions" class="internal xref">Notational Conventions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-definitions" class="internal xref">Definitions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.1">
+                    <p id="section-toc.1-1.1.2.2.2.1.1" class="keepWithNext"><a href="#section-1.2.1" class="auto internal xref">1.2.1</a>.  <a href="#name-jri-context" class="internal xref">JRI Context</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.2">
+                    <p id="section-toc.1-1.1.2.2.2.2.1" class="keepWithNext"><a href="#section-1.2.2" class="auto internal xref">1.2.2</a>.  <a href="#name-simple-and-compound-documen" class="internal xref">Simple and Compound Documents</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.3">
+                    <p id="section-toc.1-1.1.2.2.2.3.1"><a href="#section-1.2.3" class="auto internal xref">1.2.3</a>.  <a href="#name-reference-semantics" class="internal xref">Reference Semantics</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-jri-fundamentals" class="internal xref">JRI Fundamentals</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-iri-behavior-in-jri" class="internal xref">IRI Behavior in JRI</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.1">
+                    <p id="section-toc.1-1.2.2.1.2.1.1"><a href="#section-2.1.1" class="auto internal xref">2.1.1</a>.  <a href="#name-base-iri" class="internal xref">Base IRI</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.2">
+                    <p id="section-toc.1-1.2.2.1.2.2.1"><a href="#section-2.1.2" class="auto internal xref">2.1.2</a>.  <a href="#name-identifiers-vs-locators" class="internal xref">Identifiers vs Locators</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.3">
+                    <p id="section-toc.1-1.2.2.1.2.3.1"><a href="#section-2.1.3" class="auto internal xref">2.1.3</a>.  <a href="#name-duplicate-iris" class="internal xref">Duplicate IRIs</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-jri-keywords" class="internal xref">JRI Keywords</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.1">
+                    <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref">2.2.1</a>.  <a href="#name-general-syntax" class="internal xref">General syntax</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.2">
+                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="auto internal xref">2.2.2</a>.  <a href="#name-evaluation-order" class="internal xref">Evaluation order</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.3">
+                    <p id="section-toc.1-1.2.2.2.2.3.1"><a href="#section-2.2.3" class="auto internal xref">2.2.3</a>.  <a href="#name-identification" class="internal xref">Identification</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.4">
+                    <p id="section-toc.1-1.2.2.2.2.4.1"><a href="#section-2.2.4" class="auto internal xref">2.2.4</a>.  <a href="#name-location" class="internal xref">Location</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.5">
+                    <p id="section-toc.1-1.2.2.2.2.5.1"><a href="#section-2.2.5" class="auto internal xref">2.2.5</a>.  <a href="#name-referencing" class="internal xref">Referencing</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-extending-jri" class="internal xref">Extending JRI</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-standalone-jri-implementati" class="internal xref">Standalone JRI implementations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-the-interoperable-jri-subse" class="internal xref">The interoperable JRI Subset</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
+                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-restricting-base-iri-change" class="internal xref">Restricting base IRI changes and IRI assignment</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-recognizing-jri-keywords" class="internal xref">Recognizing JRI keywords</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-ensuring-consistent-referen" class="internal xref">Ensuring consistent reference semantics</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.4">
+                    <p id="section-toc.1-1.3.2.1.2.4.1"><a href="#section-3.1.4" class="auto internal xref">3.1.4</a>.  <a href="#name-discovering-jri-identifiers" class="internal xref">Discovering JRI identifiers</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.5">
+                    <p id="section-toc.1-1.3.2.1.2.5.1"><a href="#section-3.1.5" class="auto internal xref">3.1.5</a>.  <a href="#name-interoperable-bundling-and-" class="internal xref">Interoperable bundling and un-bundling</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-implementing-a-subset-of-in" class="internal xref">Implementing a subset of interoperable JRI</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-jri-applications" class="internal xref">JRI Applications</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
+                    <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-discovering-caching-and-ser" class="internal xref">Discovering, caching, and serving resources</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.2">
+                    <p id="section-toc.1-1.3.2.3.2.2.1"><a href="#section-3.3.2" class="auto internal xref">3.3.2</a>.  <a href="#name-document-set-transformation" class="internal xref">Document set transformations</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.3">
+                    <p id="section-toc.1-1.3.2.3.2.3.1"><a href="#section-3.3.3" class="auto internal xref">3.3.3</a>.  <a href="#name-transparent-in-memory-repre" class="internal xref">Transparent in-memory representation of document sets</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-incorporating-jri-into-a-co" class="internal xref">Incorporating JRI into a context specification</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-fragments-and-secondary-res" class="internal xref">Fragments and secondary resources</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-locations" class="internal xref">Locations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-references-and-adjacent-key" class="internal xref">References and adjacent keywords</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.1">
+                    <p id="section-toc.1-1.4.2.3.2.1.1"><a href="#section-4.3.1" class="auto internal xref">4.3.1</a>.  <a href="#name-disambiguating-reference-se" class="internal xref">Disambiguating reference semantics</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.2">
+                    <p id="section-toc.1-1.4.2.3.2.2.1"><a href="#section-4.3.2" class="auto internal xref">4.3.2</a>.  <a href="#name-context-specific-fallback-t" class="internal xref">Context-specific fallback to object-level semantics</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-incorporating-a-subset-of-j" class="internal xref">Incorporating a subset of JRI</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
+                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="auto internal xref">4.5</a>.  <a href="#name-avoiding-behavioral-overlap" class="internal xref">Avoiding behavioral overlap</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6">
+                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="auto internal xref">4.6</a>.  <a href="#name-processing-jri-keywords-alo" class="internal xref">Processing JRI keywords alongside of context specification keywords</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-relationship-to-web-linking" class="internal xref">Relationship to Web Linking</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-interoperability-considerat" class="internal xref">Interoperability Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-jri-behavior-negotiation" class="internal xref">JRI behavior negotiation</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-media-type-parameters-for-s" class="internal xref">Media type parameters for safe processing</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-the-jri-keywords-media-type" class="internal xref">The "jri-keywords" media type parameter</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.3">
+                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-a-json-schema-vocabulary-fo" class="internal xref">A JSON Schema vocabulary for safe processing</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-guarding-against-infinite-r" class="internal xref">Guarding Against Infinite Recursion</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-media-types-iri-fragments-a" class="internal xref">Media types, IRI fragments, and non-fragment JSON Pointers</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-json-pointer-compatibility" class="internal xref">JSON Pointer compatibility</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-C" class="auto internal xref">Appendix C</a>.  <a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-faq" class="internal xref">FAQ</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-E" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
+            <p id="section-toc.1-1.15.1"><a href="#appendix-F" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">JSON Reference and Identification (JRI) offers a modular set of features to enable interoperable support of identification and referencing across a wide range of formats.  These features are necessary to create data formats across a set of linked documents, but are often incidental to the primary functionality of a data format specification.  Offloading these features to common libraries and tools based on a standardized approach allows data format implementations to focus on the format's purpose with minimal need to understand complex and potentially multi-document structures.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Standalone JRI use cases include a variety of document transformations, transparent in-memory representations of linked documents, and locating, caching, and serving resources identified within or referenced from a set of documents.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">While <span>[<a href="#RFC8288" class="cite xref">RFC8288</a>]</span> web linking solves this problem in a more general way, a simplified, concise, and self-contained linking and identification system is better-suited to many specifications.  This allows those specifications to avoid complexity, and to avoid constraining their syntax to match any one of the many competing web linking-enabled JSON formats.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">To support a variety of use cases, JRI supports trade-offs between generic interoperability and tight integration with the context in which it is used.  JRI defines an interoperable subset of its features for standalone use while encouraging specifications that need reference and/or identification features to incorporate as much or as little of JRI as suits their needs, as long as they do not redefine the parts not incorporated.  JRI also defines mechanisms for resources to indicate their JRI usage, allowing generic or standalone implementations to understand how to safely process a document without knowledge of its underlying data format.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<div id="notational-conventions">
+<section id="section-1.1">
+        <h3 id="name-notational-conventions">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-notational-conventions" class="section-name selfRef">Notational Conventions</a>
+        </h3>
+<p id="section-1.1-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+"MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.
+These words may also appear in this document in
+lower case as plain English words, absent their normative meanings.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">The terms "primary resource" and "secondary resource" in this specification are to be interpreted as in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>], <a href="https://rfc-editor.org/rfc/rfc3986#section-3.5" class="relref">Section 3.5</a></span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">The terms "IRI", "IRI-reference", "relative reference", "absolute-IRI", and "base IRI" in this specification are to be interpreted as in <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="definitions">
+<section id="section-1.2">
+        <h3 id="name-definitions">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-definitions" class="section-name selfRef">Definitions</a>
+        </h3>
+<p id="section-1.2-1">In addition to the terms from other specifications listed in the previous section, this document uses the following terminology:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.2-2.1">
+            <em>same-resource reference</em>: used in this specification in place of "same-document reference" as defined in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>], <a href="https://rfc-editor.org/rfc/rfc3986#section-4.4" class="relref">Section 4.4</a></span> due to the distinction this specificaiton makes between documents and resources; "same-document reference" is not used in this specification<a href="#section-1.2-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.2">
+            <em>data format:</em> any specification for structuring data within a document, including but not limited to formal media types<a href="#section-1.2-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.3">
+            <em>JSON-based format:</em> any data format using <span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span> JSON as its syntax, including but not limited to formats defined with an <code>application/json</code> or <code>+json</code> structured suffix media type<a href="#section-1.2-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.4">
+            <em>JSON Pointer-compatible document:</em> any document with a structure that can be unambiguously addressed by JSON Pointer as described in <a href="#jsonpointer" class="auto internal xref">Appendix B</a><a href="#section-1.2-2.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.5">
+            <em>root object:</em> the object, if any, containing the entirety of a JSON-compatible document<span class="cref" id="_2">How should formats without a root object be handled?  Some formats might have a root array.  For interoperability, being able to define how processing starts in terms of a root object is unambiguous.  It is also valid to reference a document that is neither an object or array (early JSON specifications restricted documents to objects or arrays, but that restriction was lifted at least as early as RFC 4627).</span><a href="#section-1.2-2.5" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.6">
+            <em>keyword:</em> an object property name with specification-defined behavior, as opposed to object properties which are simply data<a href="#section-1.2-2.6" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.7">
+            <em>processing a data format:</em> performing any actions required by the format, typically based on the format's structure and keywords, beyond simply parsing the format into an in-memory representation<a href="#section-1.2-2.7" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.8">
+            <em>evaluation path:</em> the path, including reference keywords traversed, taken to reach a particular point of processing from the document root at which processing started; the exact nature of this path depends on the reference semantics chosen as defined in <a href="#ref-semantics" class="auto internal xref">Section 2.2.5.3</a><a href="#section-1.2-2.8" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-1.2-2.9">
+            <em>location-defining behavior:</em> the ability of certain keywords to indicate that a location in a document has specific semantics, typically including that the location supports JRI keywords<a href="#section-1.2-2.9" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-1.2-3">For formats that incorporate JRI, "processing" includes resolving relative IRI-references and either associating the resulting IRI with the appropriate resource, or resolving the IRI to the resource with which it is already associated.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<div id="jri-context">
+<section id="section-1.2.1">
+          <h4 id="name-jri-context">
+<a href="#section-1.2.1" class="section-number selfRef">1.2.1. </a><a href="#name-jri-context" class="section-name selfRef">JRI Context</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-1.2.1-1.1">
+              <em>context specification:</em> a data format specification that normatively references this specification, making use of some or all of its keywords in a complaint manner, and optionally defining context-specific behavior for them where this specification allows or requires such definition<a href="#section-1.2.1-1.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.1-1.2">
+              <em>context-independent format:</em> a data format that only allows the use of JRI in an interoperable manner as defined in <a href="#interop" class="auto internal xref">Section 6</a><a href="#section-1.2.1-1.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.1-1.3">
+              <em>context-independent document:</em> a document, which may or may not be written in a context-independent format, that only uses JRI in an interoperable manner as defined in <a href="#interop" class="auto internal xref">Section 6</a><a href="#section-1.2.1-1.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.1-1.4">
+              <em>standalone JRI implementation:</em> an implementation that in its default configuration only understands how to process context-independent documents<a href="#section-1.2.1-1.4" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+<div id="simple-and-compound-documents">
+<section id="section-1.2.2">
+          <h4 id="name-simple-and-compound-documen">
+<a href="#section-1.2.2" class="section-number selfRef">1.2.2. </a><a href="#name-simple-and-compound-documen" class="section-name selfRef">Simple and Compound Documents</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-1.2.2-1.1">
+              <em>simple document:</em> a document that is also a single primary resource<a href="#section-1.2.2-1.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.2-1.2">
+              <em>compound document:</em> a document consisting of multiple primary resources<a href="#section-1.2.2-1.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.2-1.3">
+              <em>root resource:</em> the first resource encountered while parsing a compound document, corresponding to the root object if one is present, but excluding any embedded resources<a href="#section-1.2.2-1.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.2-1.4">
+              <em>embedded resource:</em> a primary resource within a compound document that is not the root resource<a href="#section-1.2.2-1.4" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.2-1.5">
+              <em>encapsulating resource:</em> the immediate primary resource in which an embedded resource is contained; a resource can be both embedded and encapsulating<a href="#section-1.2.2-1.5" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.2-1.6">
+              <em>uniform compound document:</em> a compound document in which all primary resources are of the same data format<a href="#section-1.2.2-1.6" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.2-1.7">
+              <em>mixed compound document:</em> a compound document in which the primary resources are of different data formats<a href="#section-1.2.2-1.7" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+<div id="reference-semantics">
+<section id="section-1.2.3">
+          <h4 id="name-reference-semantics">
+<a href="#section-1.2.3" class="section-number selfRef">1.2.3. </a><a href="#name-reference-semantics" class="section-name selfRef">Reference Semantics</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-1.2.3-1.1">
+              <em>object-level semantics:</em> The object containing the reference keyword is completely replaced by the reference target, regardless of the presence of any other properties or the semantics of the context specification, if any<a href="#section-1.2.3-1.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-1.2.3-1.2">
+              <em>keyword-level semantics:</em> The reference target is processed, and its results combined with those of other keywords in the same object as the reference keyword, according to the relevant context specification<a href="#section-1.2.3-1.2" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="jri-fundamentals">
+<section id="section-2">
+      <h2 id="name-jri-fundamentals">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-jri-fundamentals" class="section-name selfRef">JRI Fundamentals</a>
+      </h2>
+<div id="iri-behavior">
+<section id="section-2.1">
+        <h3 id="name-iri-behavior-in-jri">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-iri-behavior-in-jri" class="section-name selfRef">IRI Behavior in JRI</a>
+        </h3>
+<p id="section-2.1-1">All IRI behavior within JRI is governed by <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>]</span>, <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, and any relevant standards specifying IRI (or URI) scheme-specific syntax and semantics or media type-specific IRI fragment syntax and semantics.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">In particular, JRI identifier keywords indicate how they impact base IRI determination, as allowed by those two RFCs.  Relative IRI-reference resolution in each JRI keyword therefore does not have any direct dependence on any other JRI keyword.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<div id="base-iri">
+<section id="section-2.1.1">
+          <h4 id="name-base-iri">
+<a href="#section-2.1.1" class="section-number selfRef">2.1.1. </a><a href="#name-base-iri" class="section-name selfRef">Base IRI</a>
+          </h4>
+<p id="section-2.1.1-1">To support the full base IRI determination process defined in <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>], <a href="https://rfc-editor.org/rfc/rfc3987#section-6.5" class="relref">Section 6.5</a></span> and <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>], <a href="https://rfc-editor.org/rfc/rfc3986#section-5.1" class="relref">Section 5.1</a></span>, a JRI implementation SHOULD be able to accept a non-relative base IRI prior to processing a document, unless it is part of the implementation of a context specification for which one of the following is true:<a href="#section-2.1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1.1-2.1">the context specification requires an absolute base IRI defined within each primary resource<a href="#section-2.1.1-2.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-2.1.1-2.2">the context specification requires all IRI-references to be non-relative or fragment-only<a href="#section-2.1.1-2.2" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-2.1.1-3">Such a base IRI is necessary if the implementation encounters a relative IRI-reference prior to determining a non-relative base IRI defined within the content.  It is assumed that any provided base IRI has been determined in accordance with the relevant specifications.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-4">An implementation that does not meet either of the above criteria yet still disregards this recommendation MUST document the limitation and treat unresolvable relative references as an error.<a href="#section-2.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-5">Defining a default base IRI as allowed by <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>], <a href="https://rfc-editor.org/rfc/rfc3986#section-5.1.4" class="relref">Section 5.1.4</a></span> is deferred to context specifications.<a href="#section-2.1.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="id-vs-loc">
+<section id="section-2.1.2">
+          <h4 id="name-identifiers-vs-locators">
+<a href="#section-2.1.2" class="section-number selfRef">2.1.2. </a><a href="#name-identifiers-vs-locators" class="section-name selfRef">Identifiers vs Locators</a>
+          </h4>
+<p id="section-2.1.2-1">IRIs used in JRI keywords are identifiers (IRIs/URIs) and not necessarily locators (IRLs/URLs), even if they specify a scheme indicating a protocol suitable for resource retrieval.  Context specifications SHOULD indicate under what circumstances a reference can be treated as a locator and retrieved on demand, and address the security concerns related to automatic retrieval.<a href="#section-2.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.1.2-2">Standalone implementations of context-independent JRI MUST NOT attempt to automatically retrieve references by default.  They MAY offer a configuration option to do so, and MAY offer a mechanism to register handlers based on the IRI scheme or other IRI components.<a href="#section-2.1.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="duplicate-iris">
+<section id="section-2.1.3">
+          <h4 id="name-duplicate-iris">
+<a href="#section-2.1.3" class="section-number selfRef">2.1.3. </a><a href="#name-duplicate-iris" class="section-name selfRef">Duplicate IRIs</a>
+          </h4>
+<p id="section-2.1.3-1">A resource MAY (and likely will) have multiple IRIs, but there is no way for an IRI to identify more than one resource.  When multiple primary or secondary resources attempt to identify as the same IRI through any combination of JRI keywords and context specification features, implementations SHOULD raise an error condition.  Otherwise the result is undefined, and even if documented will not be interoperable.<a href="#section-2.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="jri-keywords">
+<section id="section-2.2">
+        <h3 id="name-jri-keywords">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-jri-keywords" class="section-name selfRef">JRI Keywords</a>
+        </h3>
+<p id="section-2.2-1">JRI defines keywords in three behavior categories:<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2-2.1">Identifiers, which assign IRIs to primary or secondary resources and (for primary resources) set the resource's base IRI<a href="#section-2.2-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-2.2">Locations, which indicate which locations are referenceable and can contain identifiers<a href="#section-2.2-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.2-2.3">References, which link one part of a document to another part of the same document or to a different document<a href="#section-2.2-2.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-2.2-3">Context specifications MAY define their own keywords or other mechanisms within these three categories, as discussed in <a href="#context" class="auto internal xref">Section 4</a>.  They also MAY restrict reference targets to those identified by JRI and/or context specification identifier or location keywords.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<div id="general-syntax">
+<section id="section-2.2.1">
+          <h4 id="name-general-syntax">
+<a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-general-syntax" class="section-name selfRef">General syntax</a>
+          </h4>
+<p id="section-2.2.1-1">JRI keyword names and string values are defined to be representable as <span>[<a href="#RFC3629" class="cite xref">RFC3629</a>]</span> UTF-8 strings, with keyword names representable in <span>[<a href="#RFC20" class="cite xref">RFC20</a>]</span> ASCII.  As such, JRI keywords can be used as object properties in interoperable JSON documents as prescribed by Sections <a href="https://rfc-editor.org/rfc/rfc8259#section-4" class="relref">4</a>, <a href="https://rfc-editor.org/rfc/rfc8259#section-7" class="relref">7</a>, and <a href="https://rfc-editor.org/rfc/rfc8259#section-8.1" class="relref">8.1</a> of <span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span>, as well as in any other JSON Pointer-compatible data formats.<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1-2">JRI keywords MAY be used in data formats that are only capable of representing a subset of UTF-8 string values, with the obvious limitation that only the representable subset of JRI keyword values will be usable.<a href="#section-2.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.2.1-3">As <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>], <a href="https://rfc-editor.org/rfc/rfc3987#section-3" class="relref">Section 3</a></span> defines mappings between IRI and URI syntax, JRI MAY be used in data formats that can only directly represent URIs.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
+<div id="the-prefix">
+<section id="section-2.2.1.1">
+            <h5 id="name-the-prefix">
+<a href="#section-2.2.1.1" class="section-number selfRef">2.2.1.1. </a><a href="#name-the-prefix" class="section-name selfRef">The "$" prefix</a>
+            </h5>
+<p id="section-2.2.1.1-1">JRI keywords MUST start with a "$" character.  Context specifications MAY define their own "$"-prefixed keywords, however this is NOT RECOMMENDED as future specifications that extend JRI as discussed in <a href="#extending" class="auto internal xref">Section 2.3</a> will use that prefix.<span class="cref" id="_8">The usage of "$" as a prefix in the JSON Schema Core Vocabulary pre-dates JRI, and is expected to continue.  Some older JSON Schema proposals from immediately post-draft-04 also used a "$" prefix, but none were adopted and JSON Schema now discourages the use of that prefix.</span><a href="#section-2.2.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="exclusion-of-comment">
+<section id="section-2.2.1.2">
+            <h5 id="name-exclusion-of-comment">
+<a href="#section-2.2.1.2" class="section-number selfRef">2.2.1.2. </a><a href="#name-exclusion-of-comment" class="section-name selfRef">Exclusion of "$comment"</a>
+            </h5>
+<p id="section-2.2.1.2-1">For compatibility with JSON Schema <span>[<a href="#I-D.bhutton-json-schema-01" class="cite xref">I-D.bhutton-json-schema-01</a>], <a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#section-8.3" class="relref">Section 8.3</a></span>, JRI requires that a <code>"$comment"</code> keyword present in the same object as any JRI keywords MUST NOT impact the semantics of those JRI keywords.  In particular, <code>"$comment"</code> MUST NOT be used as a semantic disambiguator as described in <a href="#disambiguator" class="auto internal xref">Section 4.3.1</a>.<a href="#section-2.2.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.2-2">However, <code>"$comment"</code> is not itself considered to be a JRI keyword.  JRI does not place any requirements on the usage, data type, syntax, or other semantics of <code>"$comment"</code> in context specifications.  JRI implementations MUST NOT require that a <code>"$comment"</code> adjacent to JRI keywords conform to JSON Schema's <code>"$comment"</code> keyword, unless explicitly required to do so by a context specification.<a href="#section-2.2.1.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="evaluation-order">
+<section id="section-2.2.2">
+          <h4 id="name-evaluation-order">
+<a href="#section-2.2.2" class="section-number selfRef">2.2.2. </a><a href="#name-evaluation-order" class="section-name selfRef">Evaluation order</a>
+          </h4>
+<p id="section-2.2.2-1">JRI behaviors, whether implemented by JRI keywords or by context specification features, MUST be evaluated in the following order when present:<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.2.2-2">
+<li id="section-2.2.2-2.1">Primary resource identifiers (<code>"$id"</code>)<a href="#section-2.2.2-2.1" class="pilcrow">¶</a>
+</li>
+            <li id="section-2.2.2-2.2">Secondary resource identifiers (<code>"$anchor"</code>)<a href="#section-2.2.2-2.2" class="pilcrow">¶</a>
+</li>
+            <li id="section-2.2.2-2.3">Locations (<code>"$defs"</code>)<a href="#section-2.2.2-2.3" class="pilcrow">¶</a>
+</li>
+            <li id="section-2.2.2-2.4">References (<code>"$ref"</code>, <code>"$extRef"</code>)<a href="#section-2.2.2-2.4" class="pilcrow">¶</a>
+</li>
+          </ol>
+<p id="section-2.2.2-3">The logic of this ordering is that primary resources must be identified first as all other keywords depend having the correct base IRI.  Next, secondary resources can be identified once the primary resource is known.  Finally, nested locations which can be reference targets or have additional identifier keywords can be discovered (as discussed in <a href="#discovering" class="auto internal xref">Section 3.1.4</a> and <a href="#serving" class="auto internal xref">Section 3.3.1</a>) within the primary resource.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="identification">
+<section id="section-2.2.3">
+          <h4 id="name-identification">
+<a href="#section-2.2.3" class="section-number selfRef">2.2.3. </a><a href="#name-identification" class="section-name selfRef">Identification</a>
+          </h4>
+<p id="section-2.2.3-1">JRI offers two identification keywords:  one for primary resources, and one for secondary resources.<a href="#section-2.2.3-1" class="pilcrow">¶</a></p>
+<div id="id">
+<section id="section-2.2.3.1">
+            <h5 id="name-id">
+<a href="#section-2.2.3.1" class="section-number selfRef">2.2.3.1. </a><a href="#name-id" class="section-name selfRef"><code>"$id"</code></a>
+            </h5>
+<p id="section-2.2.3.1-1">The value of the <code>"$id"</code> property MUST be a string, and MUST be a valid IRI-reference as defined by <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>], <a href="https://rfc-editor.org/rfc/rfc3987#section-2.2" class="relref">Section 2.2</a></span>, and MUST NOT contain a fragment.<a href="#section-2.2.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.3.1-2">The object containing the <code>"$id"</code> property MUST be considered to be a primary resource identifiable by the IRI produced by resolving the IRI-reference against the current base IRI.  This IRI MUST be considered the base IRI for the primary resource that it identifies, in accordance with <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>], <a href="https://rfc-editor.org/rfc/rfc3986#section-5.1.1" class="relref">Section 5.1.1</a></span>.<a href="#section-2.2.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.2.3.1-3">If the object containing the <code>"$id"</code> property is not the root object of the document, the encapsulating resource MUST be considered to be an "encapsulating entity" per <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>], <a href="https://rfc-editor.org/rfc/rfc3986#section-5.1.2" class="relref">Section 5.1.2</a></span>.<a href="#section-2.2.3.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="anchor">
+<section id="section-2.2.3.2">
+            <h5 id="name-anchor">
+<a href="#section-2.2.3.2" class="section-number selfRef">2.2.3.2. </a><a href="#name-anchor" class="section-name selfRef"><code>"$anchor"</code></a>
+            </h5>
+<p id="section-2.2.3.2-1">The value of the <code>"$anchor"</code> property MUST be a string, and MUST be a valid IRI fragment according to the <code>ifragment</code> ABNF production in <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>], <a href="https://rfc-editor.org/rfc/rfc3987#section-2.2" class="relref">Section 2.2</a></span>.<a href="#section-2.2.3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="location">
+<section id="section-2.2.4">
+          <h4 id="name-location">
+<a href="#section-2.2.4" class="section-number selfRef">2.2.4. </a><a href="#name-location" class="section-name selfRef">Location</a>
+          </h4>
+<p id="section-2.2.4-1">Location keywords have location-defining behavior.  This behavior is necessary when not all locations within a data format are valid reference targets, or when object properties that appear to be JRI keywords are only actually JRI keywords in certain locations.  In formats where most locations cause automatic actions (such as applying a schema to an instance), location-defining behavior can also create areas where the automatic actions do not apply.  These reserved locations can safely hold re-usable objects separate from any single use.<a href="#section-2.2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.4-2">The passive nature of location-defining behavior makes it particularly suitable to be defined directly by context specifications, as noted in <a href="#context-loc" class="auto internal xref">Section 4.2</a>.  However, not all uses of JRI involve a context specification.<a href="#section-2.2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.2.4-3">JRI reserves the <code>"$defs"</code> keyword in order to make no-automatic-action location-defining behavior available within the <code>"$"</code>-prefixed namespace.  This keyword also enables safe interoperable bundling by standalone tools as described in <a href="#bundling-interop" class="auto internal xref">Section 3.1.5</a>.<span class="cref" id="_70">It's also possible to bundle documents that do not use <code>"$defs"</code> into a document that does, and can therefore be un-bundled by a generic bundling tool.  I'm not sure of the best way to talk about that, as I did not want to get into defining a bundling media type.</span><a href="#section-2.2.4-3" class="pilcrow">¶</a></p>
+<div id="defs">
+<section id="section-2.2.4.1">
+            <h5 id="name-defs">
+<a href="#section-2.2.4.1" class="section-number selfRef">2.2.4.1. </a><a href="#name-defs" class="section-name selfRef"><code>"$defs"</code></a>
+            </h5>
+<p id="section-2.2.4.1-1">The value of the <code>"$defs"</code> property MUST be an object.  The values of that object's properties are intended to be reference targets.  Therefore, the values can potentially be of any type, although context specifications can further constrain them as discussed in <a href="#context-loc" class="auto internal xref">Section 4.2</a>.  For values that are objects, JRI keywords MUST be allowed.  Aside from their use in JSON Pointers or similar structural identifiers, the property names within the <code>"$defs"</code> object MUST NOT be considered to impose specific semantics to the property values.<a href="#section-2.2.4.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="referencing">
+<section id="section-2.2.5">
+          <h4 id="name-referencing">
+<a href="#section-2.2.5" class="section-number selfRef">2.2.5. </a><a href="#name-referencing" class="section-name selfRef">Referencing</a>
+          </h4>
+<p id="section-2.2.5-1">JRI reference usage has two components: resolving the reference target and interpreting its semantics.  JRI offers several keywords for determining a reference target.  Once determined, regardless of which keywords are used, the possible semantics are as described in <a href="#ref-semantics" class="auto internal xref">Section 2.2.5.3</a>.<a href="#section-2.2.5-1" class="pilcrow">¶</a></p>
+<div id="ref">
+<section id="section-2.2.5.1">
+            <h5 id="name-ref">
+<a href="#section-2.2.5.1" class="section-number selfRef">2.2.5.1. </a><a href="#name-ref" class="section-name selfRef"><code>"$ref"</code></a>
+            </h5>
+<p id="section-2.2.5.1-1">The value of the <code>"$ref"</code> property MUST be a string, and MUST be a valid IRI-reference as defined by <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>], <a href="https://rfc-editor.org/rfc/rfc3987#section-2.2" class="relref">Section 2.2</a></span>.  The IRI produced by resolving this IRI-reference against the current base IRI identifies the reference target.<a href="#section-2.2.5.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.5.1-2">By default, the reference target MAY be assumed to be of whatever media type would otherwise be present inline, and fragments MAY be evaluated accordingly.  Context specifications MAY set other requirements regarding the nature of reference targets but MUST NOT expect these requirements to be interoperable with standalone JRI implementations.<a href="#section-2.2.5.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="extref">
+<section id="section-2.2.5.2">
+            <h5 id="name-extref">
+<a href="#section-2.2.5.2" class="section-number selfRef">2.2.5.2. </a><a href="#name-extref" class="section-name selfRef"><code>"$extRef"</code></a>
+            </h5>
+<p id="section-2.2.5.2-1">To avoid overloading the behavior of <code>"$ref"</code> or relying on non-interoperable context-specific behavior, <code>"$extRef"</code> (for "extensible reference") allows specifying additional metadata as well as alternative mechanisms for secondary resource identification.<a href="#section-2.2.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.5.2-2">The value of the <code>"$extRef"</code> property MUST be an object.<span class="cref" id="_90">The exact fields within this object are TBD pending discussion of this proposal with communities such as AsyncAPI that need this functionality.  Likely fields include an IRI without a fragment to identify the primary reference target, and an additional non-IRI field accepting a plain string JSON Pointer or other mechanism for identifying the secondary target, if any.  A field indicating/hinting the expected target media type or other format (as not all targets have a defined media type) is also likely.  Supporting a variety of media types might also require being able to specify an IRI with a fragment, although how to do that unambiguously when other media types cannot use fragments is not yet clear.</span><a href="#section-2.2.5.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="ref-semantics">
+<section id="section-2.2.5.3">
+            <h5 id="name-reference-semantics-2">
+<a href="#section-2.2.5.3" class="section-number selfRef">2.2.5.3. </a><a href="#name-reference-semantics-2" class="section-name selfRef">Reference semantics</a>
+            </h5>
+<p id="section-2.2.5.3-1">Reference semantics come in two varieties, object-level and keyword-level.  Object-level semantics are, under certain circumstances, both safe and interoperable in a context-independent manner.  Keyword-level semantics allow for more flexible semantic integration of referencing with a context-specification through allowing adjacent keywords.  However, this flexibility comes at the cost of interoperability, at least when adjacent keywords are actually present.<a href="#section-2.2.5.3-1" class="pilcrow">¶</a></p>
+<div id="object-level">
+<section id="section-2.2.5.3.1">
+              <h6 id="name-object-level-semantics">
+<a href="#section-2.2.5.3.1" class="section-number selfRef">2.2.5.3.1. </a><a href="#name-object-level-semantics" class="section-name selfRef">Object-level semantics</a>
+              </h6>
+<p id="section-2.2.5.3.1-1">With object-level semantics, an object containing a JRI reference keyword is effectively replaced with its target.  This results in an evaluation path in which the reference keyword does not appear.<a href="#section-2.2.5.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.5.3.1-2">Object-level semantics are generally safe to assume when the object only contains JRI reference keywords.  Context specifications SHOULD ensure this safety even if their intended reference semantics are keyword-level.<a href="#section-2.2.5.3.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="keyword-level">
+<section id="section-2.2.5.3.2">
+              <h6 id="name-keyword-level-semantics">
+<a href="#section-2.2.5.3.2" class="section-number selfRef">2.2.5.3.2. </a><a href="#name-keyword-level-semantics" class="section-name selfRef">Keyword-level semantics</a>
+              </h6>
+<p id="section-2.2.5.3.2-1">With keyword-level semantics, a JRI reference keyword remains part of the evaluation path, and has the effect of evaluating its target in the current context, as defined by the context specification.  See <a href="#context-ref" class="auto internal xref">Section 4.3</a> for further guidance.<a href="#section-2.2.5.3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="falling-back-to-object-level-semantics">
+<section id="section-2.2.5.3.3">
+              <h6 id="name-falling-back-to-object-leve">
+<a href="#section-2.2.5.3.3" class="section-number selfRef">2.2.5.3.3. </a><a href="#name-falling-back-to-object-leve" class="section-name selfRef">Falling back to object-level semantics</a>
+              </h6>
+<p id="section-2.2.5.3.3-1">Context specifications that use keyword-level semantics SHOULD ensure that, in the absence of keywords adjacent to JRI reference keywords, object-level JRI reference semantics can be assumed without changing the semantics of the document according to the context specification.  This requires that the difference in evaluation paths not impact the context semantics, as is further discussed in <a href="#context-fallback" class="auto internal xref">Section 4.3.2</a>.<a href="#section-2.2.5.3.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="extending">
+<section id="section-2.3">
+        <h3 id="name-extending-jri">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-extending-jri" class="section-name selfRef">Extending JRI</a>
+        </h3>
+<p id="section-2.3-1"><span class="cref" id="_40">This section is something of a placeholder.  I'm not quite sure how much to say, although it is important to specify that adjacent keywords can disambiguate semantics <em>within the context usage</em> but not change them such that the semantics no longer match this specification.  Otherwise that is a gray area with respect to the requirement to not impact JRI semantics.</span><a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">Rather than being directly extensible, JRI is intended to work alongside other specifications that might provide similar functionality.  An example would be JSON Schema's concept of dynamic references and anchors, which could be a companion specification to JRI.  In order for any combination to be interoperable, it MUST define its own set of interoperability constraints spanning the constituent functionalities.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="standalone-jri-implementations">
+<section id="section-3">
+      <h2 id="name-standalone-jri-implementati">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-standalone-jri-implementati" class="section-name selfRef">Standalone JRI implementations</a>
+      </h2>
+<p id="section-3-1">By definition, a standalone JRI implementation is an implementation that, in its default configuration, can only correctly process JRI in context-independent documents.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Such implementations MAY offer non-default configurations that incorporate context-aware behavior from any known context specification(s).  Implementations SHOULD document the conditions under which such non-default configurations are safe to use, and any assumptions involved that could produce unexpected behavior if used with a document that does not conform to the relevant context specification.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<div id="interop-subset">
+<section id="section-3.1">
+        <h3 id="name-the-interoperable-jri-subse">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-the-interoperable-jri-subse" class="section-name selfRef">The interoperable JRI Subset</a>
+        </h3>
+<p id="section-3.1-1">Context-independent interoperability places several additional requirements on any document that needs to be processed by a context-independent JRI implementation.  Most of these requirements are not enforceable by a context-independent implementation.  Users of context-independent implementations MUST NOT expect documents that violate these requirements to be detected by the implementation, and MUST NOT expect predictable, interoperable behavior
+from processing such documents.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">A document that can be interoperably processed by a context-independent JRI implementation will be referred to in this section as a <em>context-independent document</em>.  A data format for which all valid documents are context-independent documents will be referred to in this section as a <em>context-independent format.</em><a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">The requirements below are stated for context-independent formats.  A document in a non-context-independent format can be context-independent if it avoids using any features forbidden by the context-independent format requirements.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<div id="interop-overlap">
+<section id="section-3.1.1">
+          <h4 id="name-restricting-base-iri-change">
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-restricting-base-iri-change" class="section-name selfRef">Restricting base IRI changes and IRI assignment</a>
+          </h4>
+<p id="section-3.1.1-1">A context-independent format MUST NOT offer features for assigning IRIs to primary or secondary resources, or changing the base IRI from within a document.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="recognizing-jri-keywords">
+<section id="section-3.1.2">
+          <h4 id="name-recognizing-jri-keywords">
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-recognizing-jri-keywords" class="section-name selfRef">Recognizing JRI keywords</a>
+          </h4>
+<p id="section-3.1.2-1">The property names in the value of <code>"$defs"</code> are known to be non-keyword properties as this object syntax is defined by JRI.  These property names therefore MUST be considered exempt from the other requirements in this section regarding property names.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-2">A context-independent format MUST NOT allow object properties with names matching JRI keywords and values that appear valid for that keyword that are not intended to function as JRI keywords anywhere within the format.<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-3">Note that as JRI implementations are not required to validate keyword values, simply having the correct value type (e.g. string) is enough to make such a keyword appear to be a valid JRI keyword.  Context-independent JRI implementations MAY offer a non-default configuration option to validate potential JRI keyword values and ignore (rather than treat as an error) those that do not have valid values.<a href="#section-3.1.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="ensuring-consistent-reference-semantics">
+<section id="section-3.1.3">
+          <h4 id="name-ensuring-consistent-referen">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-ensuring-consistent-referen" class="section-name selfRef">Ensuring consistent reference semantics</a>
+          </h4>
+<p id="section-3.1.3-1">A context-independent format MUST NOT allow any non-JRI-reference keywords in the same object as any JRI reference keyword.<span class="cref" id="_11">Should we allow a context-independent format to allow non-JRI keywords in reference objects as long as it mandates that they are, in all circumstances, ignored?  Aside from <code>"$comment"</code>, this seems like asking for trouble, and OpenAPI and AsyncAPI notably forbid any properties other than <code>"$ref"</code> in their Reference Objects.  But it would be closer to JSON Reference behavior.</span><a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="discovering">
+<section id="section-3.1.4">
+          <h4 id="name-discovering-jri-identifiers">
+<a href="#section-3.1.4" class="section-number selfRef">3.1.4. </a><a href="#name-discovering-jri-identifiers" class="section-name selfRef">Discovering JRI identifiers</a>
+          </h4>
+<p id="section-3.1.4-1">A context-independent format MUST NOT allow JRI identifiers anywhere other than its root object or under a <code>"$defs"</code> keyword appearing (recursively) in the root object.<span class="cref" id="_10">Alternatively, we could treat them like the reference keywords and require that they be allowed anywhere.  Neither approach works with JSON Schema, but the JSON Schema vocabulary for JRI proposed in a later section would provide a way to do so.</span><a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="bundling-interop">
+<section id="section-3.1.5">
+          <h4 id="name-interoperable-bundling-and-">
+<a href="#section-3.1.5" class="section-number selfRef">3.1.5. </a><a href="#name-interoperable-bundling-and-" class="section-name selfRef">Interoperable bundling and un-bundling</a>
+          </h4>
+<p id="section-3.1.5-1">A context-independent bundling tool can un-bundle a document meeting the following requirements:<a href="#section-3.1.5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.5-2.1">The root object MUST contain <code>"$defs"</code>, and each bundled resource MUST be embedded in the <code>"$defs"</code> object; the names of the <code>"$defs"</code> properties are irrelevant<a href="#section-3.1.5-2.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3.1.5-2.2">If the embedded resources' <code>"$id"</code> values are relative IRI-reference, the root object MAY contain an absolute-IRI <code>"$id"</code> so that the resources can be bundled and un-bundled without changing their <code>"$id"</code>s; when un-bundled, such resources are expected to be in a directory structure appropriate to their <code>"$id"</code>s relative to the shared base<a href="#section-3.1.5-2.2" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="implementing-a-subset-of-interoperable-jri">
+<section id="section-3.2">
+        <h3 id="name-implementing-a-subset-of-in">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-implementing-a-subset-of-in" class="section-name selfRef">Implementing a subset of interoperable JRI</a>
+        </h3>
+<p id="section-3.2-1">The popularity of tools devoted only to processing <code>"$ref"</code> demonstrates a substantial market for simple standalone implementations of a JRI subset.  Standalone implementations that only support a subset of JRI MUST NOT claim to be full implementations of JRI, and MUST document what subset is supported.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="jri-applications">
+<section id="section-3.3">
+        <h3 id="name-jri-applications">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-jri-applications" class="section-name selfRef">JRI Applications</a>
+        </h3>
+<p id="section-3.3-1">JRI exists to facilitated interoperable tooling.  Therefore, several common applications of JRI here are described to encourage common functionality.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<div id="serving">
+<section id="section-3.3.1">
+          <h4 id="name-discovering-caching-and-ser">
+<a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-discovering-caching-and-ser" class="section-name selfRef">Discovering, caching, and serving resources</a>
+          </h4>
+<p id="section-3.3.1-1">A primary use case for JRI involves removing the need for downstream tools to track base IRIs and retrieve identified resources.  We will refer to a tool that fulfills this use case as a <em>JRI cache</em>.  In this use case, downstream tooling still encounters JRI references, but they have already been resolved to full IRIs (with a scheme), and the implementation resolves all IRIs by requesting them from the JRI cache.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-2">Depending on the exact functionality offered, the "cache" could be as simple as a look-up table.  It could also perform actual caching tasks such as managing a working set in limited memory, or integrating with a caching system such as one offered by HTTP clients in accordance with <span>[<a href="#RFC9111" class="cite xref">RFC9111</a>]</span>.  JRI does not impose any requirements in this regard.<a href="#section-3.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-3">A JRI cache implementation MUST:<a href="#section-3.3.1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3.1-4.1">Be able to associate a document, including non-JRI documents that could be JRI reference targets, with an IRI<a href="#section-3.3.1-4.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3.3.1-4.2">Locate all JRI identifiers (primary and secondary resources) within any document and automatically include them in the cache<a href="#section-3.3.1-4.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3.3.1-4.3">Locate all JRI references and resolve any relative IRI-references to full IRIs in the cached representation<a href="#section-3.3.1-4.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3.3.1-4.4">In its default configuration, treat cache misses as errors, since JRI reference IRIs are assumed to be locators<a href="#section-3.3.1-4.4" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3.3.1-4.5">Resolve IRIs that use JSON Pointer fragments as long as the primary resource is in the cache (when such fragments are appropriate for the resource.<a href="#section-3.3.1-4.5" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-3.3.1-5">JSON Pointer fragment resolution can either be done by indexing valid JSON Pointers, which typically involves understanding JRI location keywords and any similar context-specific locations, or by matching the primary resource and evaluating the JSON Pointer on that resource on demand.  However, discovering JRI identifiers generally needs to be done in advance, as compound documents mean that the location of a primary resource might only be detectable by scanning a document that appears to be a different resource.<a href="#section-3.3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-6">A JRI cache implementation SHOULD:<a href="#section-3.3.1-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3.1-7.1">Keep track of each resource's media type and handle fragments accordingly, unless the cache is implementing a context specification that guarantees consistent media types<a href="#section-3.3.1-7.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-3.3.1-7.2">Respect any cache controls on retrieved resources to avoid burdening servers with superfluous requests; this can often be deferred to a caching network protocol client<a href="#section-3.3.1-7.2" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-3.3.1-8">A JRI cache implementation MAY:<a href="#section-3.3.1-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3.1-9.1">
+              <p id="section-3.3.1-9.1.1">Offer a plugin interface for resolving cache misses, keyed off of the IRI scheme or other IRI components<a href="#section-3.3.1-9.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3.1-9.1.2.1">Such a system SHOULD allow plugins that locate resources other than by retrieving the IRI; for example in a development environment it might be preferable to resolve <code>https:</code> resources from the local file system<a href="#section-3.3.1-9.1.2.1" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-3.3.1-9.1.2.2">Registering a plugin is sufficient to consider the JRI cache implementation "non-default" with respect to the requirement to treat IRIs as non-locators by default<a href="#section-3.3.1-9.1.2.2" class="pilcrow">¶</a>
+</li>
+              </ul>
+</li>
+          </ul>
+</section>
+</div>
+<div id="document-set-transformations">
+<section id="section-3.3.2">
+          <h4 id="name-document-set-transformation">
+<a href="#section-3.3.2" class="section-number selfRef">3.3.2. </a><a href="#name-document-set-transformation" class="section-name selfRef">Document set transformations</a>
+          </h4>
+<p id="section-3.3.2-1">A common family of use cases involves reading one or more JRI-using documents and transforming them in a way that makes them usable by a wider range of tooling.  Note that circular references can cause problems for these use cases, as discussed in <a href="#infinite" class="auto internal xref">Section 7.1</a>.<a href="#section-3.3.2-1" class="pilcrow">¶</a></p>
+<div id="reference-removal">
+<section id="section-3.3.2.1">
+            <h5 id="name-reference-removal">
+<a href="#section-3.3.2.1" class="section-number selfRef">3.3.2.1. </a><a href="#name-reference-removal" class="section-name selfRef">Reference removal</a>
+            </h5>
+<p id="section-3.3.2.1-1">This use case attempts to remove all references with object-level semantics by replacing the reference objects with their targets, resulting in a plain JSON (or other underlying format) document that requires no knowledge of JRI.<a href="#section-3.3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.2.1-2">Object-level replacement MAY be implemented by producing a copy of the source document with the reference object replaced by the contents of its target.<a href="#section-3.3.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.3.2.1-3">Removing references from a set of documents with differing base IRIs, or involving fragments that are to be resolved within a specific primary resource carries additional restrictions.  References MUST be traversed in a depth-first fashion and removed from the leaf to the root, so that each removal takes place in the proper primary resource context and with the proper base IRI.<a href="#section-3.3.2.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="bundling-to-json-pointer-fragment-references-only">
+<section id="section-3.3.2.2">
+            <h5 id="name-bundling-to-json-pointer-fr">
+<a href="#section-3.3.2.2" class="section-number selfRef">3.3.2.2. </a><a href="#name-bundling-to-json-pointer-fr" class="section-name selfRef">Bundling to JSON Pointer fragment references only</a>
+            </h5>
+<p id="section-3.3.2.2-1">Despite implementing specifications that allow multi-document sets, in practice a significant number of tools only support same-resource references using JSON Pointer fragments (the only fragment syntax listed by name in older JSON Reference specifications).<a href="#section-3.3.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.2.2-2">This form of bundling creates a single document and adjusts all references to only point to the newly bundled locations using JSON Pointers.<a href="#section-3.3.2.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="bundling-with-stable-references">
+<section id="section-3.3.2.3">
+            <h5 id="name-bundling-with-stable-refere">
+<a href="#section-3.3.2.3" class="section-number selfRef">3.3.2.3. </a><a href="#name-bundling-with-stable-refere" class="section-name selfRef">Bundling with stable references</a>
+            </h5>
+<p id="section-3.3.2.3-1">A set of documents that each define <code>"$id"</code> in their root objects, and that only refer to each other using the primary resource identifiers set by those <code>"$id"</code>s (plus any appropriate fragment syntax when referencing secondary resources) can be bundled into a single compound document that satisfies all references internally without the need to edit them.<a href="#section-3.3.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.2.3-2">Unlike the previous two use cases, this type of bundling can be un-bundled.  An interoperable bundling format that can be safely un-bundled regardless of context is defined in <a href="#bundling-interop" class="auto internal xref">Section 3.1.5</a>.<a href="#section-3.3.2.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="transparent-in-memory-representation-of-document-sets">
+<section id="section-3.3.3">
+          <h4 id="name-transparent-in-memory-repre">
+<a href="#section-3.3.3" class="section-number selfRef">3.3.3. </a><a href="#name-transparent-in-memory-repre" class="section-name selfRef">Transparent in-memory representation of document sets</a>
+          </h4>
+<p id="section-3.3.3-1">This use case aims to present a set of linked documents as if no references were present at all (if object-level semantics are used), or as if the reference values are their targets rather than IRIs (if keyword-level semantics are used).  Typically, this involves some sort of lazy proxy object to ensure cyclic references do not automatically cause infinite recursion.<a href="#section-3.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.3-2">Depending on the intended scope of support (e.g. a single self-referential document vs document sets that link to each other and possibly external resources), this use case can benefit from being implemented on top of a JRI cache.<a href="#section-3.3.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="context">
+<section id="section-4">
+      <h2 id="name-incorporating-jri-into-a-co">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-incorporating-jri-into-a-co" class="section-name selfRef">Incorporating JRI into a context specification</a>
+      </h2>
+<p id="section-4-1">A context specification incorporates JRI into a data format that describes JSON Pointer-compatible documents.  Such a specification MUST normatively reference this specification, and MUST specify any relevant context-specific requirements that this specification defers to context specifications.<span class="cref" id="_3">Should a root object be mandated?  If not, how much variation to accommodate.  Should a root object have to allow JRI keywords?  <strong>No, because OAS does not (and probably AsyncAPI does not either).</strong></span><a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="fragments-and-secondary-resources">
+<section id="section-4.1">
+        <h3 id="name-fragments-and-secondary-res">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-fragments-and-secondary-res" class="section-name selfRef">Fragments and secondary resources</a>
+        </h3>
+<p id="section-4.1-1">Context specifications that do not define media types, or that define media types without a defined fragment syntax, SHOULD NOT incorporate <code>"$anchor"</code> into the specification.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">Context media types that define a fragment syntax SHOULD further constrain the syntax of <code>"$anchor"</code> to the set of fragments valid for that media type.  Any fragment syntax that correlates with the inherent structure of the document SHOULD be forbidden to avoid defining a fragment that conflicts with the document structure.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="context-loc">
+<section id="section-4.2">
+        <h3 id="name-locations">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-locations" class="section-name selfRef">Locations</a>
+        </h3>
+<p id="section-4.2-1">Context specifications MAY define location keywords that impose specific semantics within their values.  This is demonstrated by the <code>components</code> keyword used in both OpenAPI <span>[<a href="#oas3.1" class="cite xref">oas3.1</a>]</span> and AsyncAPI <span>[<a href="#async2.0" class="cite xref">async2.0</a>]</span>, which has subsections for different component types.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-2">Context specifications MAY assign location-defining behavior to keywords with other behaviors.  JSON Schema's inline applicator keywords <span>[<a href="#I-D.bhutton-json-schema-01" class="cite xref">I-D.bhutton-json-schema-01</a>], <a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#section-7.5" class="relref">Section 7.5</a></span> demonstrate this approach.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2-3">Context specifications MAY restrict the values of reference targets within location keywords, including <code>"$defs"</code>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-4">If the data format described by the context specification has a root object that allows JRI keywords, the structure of the objects under under location keywords SHOULD have the same structure as the root object, and MUST allow all JRI keywords that are allowed in the root object.<a href="#section-4.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="context-ref">
+<section id="section-4.3">
+        <h3 id="name-references-and-adjacent-key">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-references-and-adjacent-key" class="section-name selfRef">References and adjacent keywords</a>
+        </h3>
+<p id="section-4.3-1">Context specifications MAY define how such reference effects are combined with the effects of non-JRI keywords in the same object as the JRI reference keywords.  Such combined effects MUST NOT involve changing the behavior of JRI keywords to conflict with this specification in any way.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">There is no universally safe way to edit a document containing a reference to contain the reference target instead, even without circular references, although context specifications MAY define such edits.<span class="cref" id="_30">At one point in JSON Schema spec development, we discussed allowing reference "removal" by replacing <code>"$ref"</code> and its IRI value with <code>"$inline"</code> and the reference target value.  This allows inlining at the keyword level without needing to understand a context specification.  <code>"$inline"</code> was essentially a one-element <code>allOf</code> that conveyed that a reference had been inlined.  Is this worth reviving in JRI?  Doing so would not force JSON Schema to adopt it.  One complexity would be that if there are multiple JRI reference keywords, we would either need one inlining keyword per reference if we want it to be reversible, or <code>"$inline"</code> would have to support meta-data along with the target.</span><a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<div id="disambiguator">
+<section id="section-4.3.1">
+          <h4 id="name-disambiguating-reference-se">
+<a href="#section-4.3.1" class="section-number selfRef">4.3.1. </a><a href="#name-disambiguating-reference-se" class="section-name selfRef">Disambiguating reference semantics</a>
+          </h4>
+<p id="section-4.3.1-1">Context specifications MAY define keywords that, when appearing adjacent to JRI referencing keywords, clarify the semantics of that reference within the semantics of that context specification.  For example, a specification for code generation might want to indicate whether a reference indicates linking two distinct pieces of generated code in a particular way rather than simply being an artifact of document organization that should be ignored.<a href="#section-4.3.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="context-fallback">
+<section id="section-4.3.2">
+          <h4 id="name-context-specific-fallback-t">
+<a href="#section-4.3.2" class="section-number selfRef">4.3.2. </a><a href="#name-context-specific-fallback-t" class="section-name selfRef">Context-specific fallback to object-level semantics</a>
+          </h4>
+<p id="section-4.3.2-1">Context specifications that use keyword-level semantics SHOULD define whether and under what circumstances it is safe for tooling to fall back to object-level semantics.  Whether or not this is feasible depends in part over whether an evaluation path that does not include the reference keyword (e.g. <code>"$ref"</code>) changes the context semantics.  This might be safe if there are no adjacent keywords to the reference keyword, and the presence of the reference is not considered inherently semantically meaningful.<a href="#section-4.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-2">To a significant degree, this is a less a question of JRI behavior, and more a question of what documents are considered equivalent according to the context specification.<a href="#section-4.3.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="incorporating-a-subset-of-jri">
+<section id="section-4.4">
+        <h3 id="name-incorporating-a-subset-of-j">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-incorporating-a-subset-of-j" class="section-name selfRef">Incorporating a subset of JRI</a>
+        </h3>
+<p id="section-4.4-1">Since, as noted in <a href="#iri-behavior" class="auto internal xref">Section 2.1</a>, JRI keywords do not directly interact with each other, context specifications MAY restrict their usage of JRI in any of the following ways:<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.4-2.1">Incorporating only a subset of the JRI keywords<a href="#section-4.4-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.4-2.2">Restricting the locations within a document in which each JRI keyword can appear<a href="#section-4.4-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-4.4-2.3">Further restricting the syntax of JRI keywords<a href="#section-4.4-2.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-4.4-3">Context specifications MUST NOT change the behavior of JRI keywords in any way, including by making their behavior dependent on non-JRI keywords.  Context specifications MAY indirectly impact JRI keyword behavior as dictated by <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> and <span>[<a href="#RFC3987" class="cite xref">RFC3987</a>]</span> in accordance with those specifications, such as by setting a base IRI.<a href="#section-4.4-3" class="pilcrow">¶</a></p>
+<p id="section-4.4-4">Additionally, context specifications MUST NOT define keyword behavior for any JRI keyword that they do not incorporate.  This is to ensure that context-independent implementations of JRI can reliably process any keyword that appears to be a JRI keyword.<a href="#section-4.4-4" class="pilcrow">¶</a></p>
+<p id="section-4.4-5">Extensible context specifications SHOULD NOT syntactically forbid the use of JRI keywords that they do not incorporate, as extensions might wish to incorporate additional JRI functionality.<a href="#section-4.4-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="avoiding-behavioral-overlap">
+<section id="section-4.5">
+        <h3 id="name-avoiding-behavioral-overlap">
+<a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-avoiding-behavioral-overlap" class="section-name selfRef">Avoiding behavioral overlap</a>
+        </h3>
+<p id="section-4.5-1">If a context specification defines or inherits (e.g. as a structured-suffix media type) functionality that overlaps with JRI care must be taken to avoid unintuitive or even undefined behavior.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.5-2">It is RECOMMENDED that context formats with functionality that overlaps with JRI not use any keywords that duplicate native functionality, and restrict the syntax of any keywords that partially overlap in order to minimize if not eliminate the overlap.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
+<p id="section-4.5-3">For further interoperability concerns see <a href="#interop-overlap" class="auto internal xref">Section 3.1.1</a>.<a href="#section-4.5-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="processing-jri-keywords-alongside-of-context-specification-keywords">
+<section id="section-4.6">
+        <h3 id="name-processing-jri-keywords-alo">
+<a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-processing-jri-keywords-alo" class="section-name selfRef">Processing JRI keywords alongside of context specification keywords</a>
+        </h3>
+<p id="section-4.6-1">Context specifications that define keywords with analogous functionality to JRI keywords SHOULD process each of them at the same point in the processing order as their analogous JRI keyword.  Changing the ordering of identifiers and references in particular is likely to produce counter-intuitive behavior, and reduces the interoperability of the JRI keywords with tools that are not context-aware.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
+<p id="section-4.6-2">Context specifications that define keywords with other behaviors MAY define any processing order for them.  However, it is RECOMMENDED that any keywords that might be impacted by the behavior of JRI identifier and location keywords be processed after those keywords.<a href="#section-4.6-2" class="pilcrow">¶</a></p>
+<p id="section-4.6-3">JRI referencing is only interoperable if all non-JRI keywords (other than those overlapping in functionality with JRI identifiers and locations) are processed after JRI referencing keywords.  However, the semantics of keywords appearing alongside of JRI references is determined by context specifications, which therefore MAY define other ordering requirements.<a href="#section-4.6-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="relationship-to-web-linking">
+<section id="section-5">
+      <h2 id="name-relationship-to-web-linking">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-relationship-to-web-linking" class="section-name selfRef">Relationship to Web Linking</a>
+      </h2>
+<p id="section-5-1">The functionality of JRI could mostly be implemented using <span>[<a href="#RFC8288" class="cite xref">RFC8288</a>]</span> web linking.  However, there are a variety of competing JSON-based formats for linking, many of which impose structural constraints likely to conflict with the needs of context specifications.  JRI is a simpler and more focused specification, intended to be easily incorporated into a variety of possible formats.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The following keywords are roughly analogous to web links:<a href="#section-5-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-3.1">The <code>"$id"</code> keyword effectively defines a link with relation type "self".<a href="#section-5-3.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-5-3.2">Reference keywords with object semantics effectively defines a link with relation type "full".<a href="#section-5-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-5-3.3">Reference keywords with keyword semantics effectively defines a link with the generic relation type "related".<a href="#section-5-3.3" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-5-4">In the absence of other link metadata or context specification guidance, the target of a reference keyword MAY be treated as carrying a target media type hint (as in <span>[<a href="#RFC8288" class="cite xref">RFC8288</a>], <a href="https://rfc-editor.org/rfc/rfc8288#section-3.4.1" class="relref">Section 3.4.1</a></span>) suggesting that the target media type is identical to the media type of the document containing the reference.<a href="#section-5-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="interop">
+<section id="section-6">
+      <h2 id="name-interoperability-considerat">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-interoperability-considerat" class="section-name selfRef">Interoperability Considerations</a>
+      </h2>
+<p id="section-6-1">See also <a href="#interop-subset" class="auto internal xref">Section 3.1</a>.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<div id="jri-behavior-negotiation">
+<section id="section-6.1">
+        <h3 id="name-jri-behavior-negotiation">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-jri-behavior-negotiation" class="section-name selfRef">JRI behavior negotiation</a>
+        </h3>
+<p id="section-6.1-1">To maximize the usefulness of standalone tooling, such tools need to be able to determine the degree to which JRI is used and the interoperability assurances on which it can rely.<span class="cref" id="_41">This section is more-or-less brainstorming.  The problem it is solving is real, but whether these solutions belong in this specification or not is open to question.</span><a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<div id="media-type-parameters-for-safe-processing">
+<section id="section-6.1.1">
+          <h4 id="name-media-type-parameters-for-s">
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-media-type-parameters-for-s" class="section-name selfRef">Media type parameters for safe processing</a>
+          </h4>
+<p id="section-6.1.1-1">Context specifications defining media types SHOULD define the <code>jri-safety</code> and <code>jri-keywords</code> media type parameters to enable standalone implementations, including standalone subset implementations, to determine whether they can safely process the document.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-2">These parameters are intended for use in environments where a standalone implementation is likely to encounter documents with unexpected media types involving unpredictable JRI usage.  Standalone implementations MAY use other heuristics and information sources to determine whether to process a document.<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-3">Non-media type context data formats MAY define a mechanism analogous to these media type parameters, but such mechanisms will not be interoperable.<a href="#section-6.1.1-3" class="pilcrow">¶</a></p>
+<div id="the-jri-safety-media-type-parameter">
+<section id="section-6.1.1.1">
+            <h5 id="name-the-jri-safety-media-type-p">
+<a href="#section-6.1.1.1" class="section-number selfRef">6.1.1.1. </a><a href="#name-the-jri-safety-media-type-p" class="section-name selfRef">The "jri-safety" media type parameter</a>
+            </h5>
+<p id="section-6.1.1.1-1">The value of the <code>jri-safety</code> parameter MUST be case-insensitive, and MUST be either <code>interoperable</code> or <code>contextual</code>.  The default value is <code>contextual</code>, indicating that an implementation MUST be aware of and support the relevant context specification in order to safely process JRI keywords in the document.  A value of <code>interoperable</code> indicates that the document is context-independent, and safe to process by a standalone implementation.<a href="#section-6.1.1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="the-jri-keywords-media-type-parameter">
+<section id="section-6.1.2">
+          <h4 id="name-the-jri-keywords-media-type">
+<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-the-jri-keywords-media-type" class="section-name selfRef">The "jri-keywords" media type parameter</a>
+          </h4>
+<p id="section-6.1.2-1">The value of the <code>jri-keywords</code> parameter MUST be a case-sensitive comma-separated list of JRI keyword names, which MUST NOT contain whitespace.  These keywords MAY be in any order and SHOULD be unique.  This indicates that only the listed keywords are used in the document. In the absence of this parameter, an implementation MUST assume that any JRI keyword can be used.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="a-json-schema-vocabulary-for-safe-processing">
+<section id="section-6.1.3">
+          <h4 id="name-a-json-schema-vocabulary-fo">
+<a href="#section-6.1.3" class="section-number selfRef">6.1.3. </a><a href="#name-a-json-schema-vocabulary-fo" class="section-name selfRef">A JSON Schema vocabulary for safe processing</a>
+          </h4>
+<p id="section-6.1.3-1"><span class="cref" id="_42">A simple annotation vocabulary could indicate where exactly in a document JRI keywords can appear, and what behavior they might have.  Unlike the media type parameters, this approach could distinguish between <code>"$ref"</code>/<code>"$id"</code>/<code>"$anchor"</code> within a schema vs those property names with JRI-correct values within <code>enum</code>, <code>const</code>, or <code>examples</code>.  This would make it possible to use a generic JRI cache as the base for a JSON Schema implementation.</span><a href="#section-6.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-7">
+      <h2 id="name-security-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-7-1">On-demand retrieval and processing of referenced resources brings the security risks inherent in handling any data from an untrusted source.  It is RECOMMENDED that implementations supporting this behavior support defining allow/deny lists for limiting retrieval to trusted sources.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">Implementations of a JRI cache that implement a functional caching system (rather than a simple lookup table) need to address the security considerations of the caching process(es) that they support.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<div id="infinite">
+<section id="section-7.1">
+        <h3 id="name-guarding-against-infinite-r">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-guarding-against-infinite-r" class="section-name selfRef">Guarding Against Infinite Recursion</a>
+        </h3>
+<p id="section-7.1-1">An implementation MUST guard against infinite reference loops.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1-2">Processing rules for context specifications MAY make it safe to have cyclic references by creating conditions under which a reference will or will not be followed.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.1-3">Cyclic references cannot safely be removed and replaced with their targets in a way that is both interoperable and context-independent.  Without a context-specific mechanism for terminating the cycle, any cycles detected during such a process MUST be considered an error.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-8">
+      <h2 id="name-iana-considerations">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+    </h2>
+</section>
+</div>
+<section id="section-9">
+      <h2 id="name-references">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-9.1">
+        <h3 id="name-normative-references">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3986">[RFC3986]</dt>
+        <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3987">[RFC3987]</dt>
+        <dd>
+<span class="refAuthor">Duerst, M.</span> and <span class="refAuthor">M. Suignard</span>, <span class="refTitle">"Internationalized Resource Identifiers (IRIs)"</span>, <span class="seriesInfo">RFC 3987</span>, <span class="seriesInfo">DOI 10.17487/RFC3987</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3987">https://www.rfc-editor.org/rfc/rfc3987</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6901">[RFC6901]</dt>
+        <dd>
+<span class="refAuthor">Bryan, P., Ed.</span>, <span class="refAuthor">Zyp, K.</span>, and <span class="refAuthor">M. Nottingham, Ed.</span>, <span class="refTitle">"JavaScript Object Notation (JSON) Pointer"</span>, <span class="seriesInfo">RFC 6901</span>, <span class="seriesInfo">DOI 10.17487/RFC6901</span>, <time datetime="2013-04" class="refDate">April 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6901">https://www.rfc-editor.org/rfc/rfc6901</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8259">[RFC8259]</dt>
+      <dd>
+<span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<section id="section-9.2">
+        <h3 id="name-informative-references">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="async2.0">[async2.0]</dt>
+        <dd>
+<span class="refTitle">"AsyncAPI Specification v2.0.0"</span>, <time datetime="2019-09-11" class="refDate">11 September 2019</time>, <span>&lt;<a href="https://www.asyncapi.com/docs/reference/specification/v2.0.0">https://www.asyncapi.com/docs/reference/specification/v2.0.0</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.bhutton-json-schema-01">[I-D.bhutton-json-schema-01]</dt>
+        <dd>
+<span class="refAuthor">Wright, A.</span>, <span class="refAuthor">Andrews, H.</span>, <span class="refAuthor">Hutton, B.</span>, and <span class="refAuthor">G. Dennis</span>, <span class="refTitle">"JSON Schema: A Media Type for Describing JSON Documents"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bhutton-json-schema-01</span>, <time datetime="2022-06-10" class="refDate">10 June 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01">https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.fge-json-schema-validation-00">[I-D.fge-json-schema-validation-00]</dt>
+        <dd>
+<span class="refAuthor">Zyp, K.</span> and <span class="refAuthor">G. Court</span>, <span class="refTitle">"JSON Schema: interactive and non interactive validation"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-fge-json-schema-validation-00</span>, <time datetime="2013-01-31" class="refDate">31 January 2013</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-fge-json-schema-validation-00">https://datatracker.ietf.org/doc/html/draft-fge-json-schema-validation-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-httpapi-yaml-mediatypes">[I-D.ietf-httpapi-yaml-mediatypes]</dt>
+        <dd>
+<span class="refAuthor">Polli, R.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">E. Aro</span>, <span class="refTitle">"YAML Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-httpapi-yaml-mediatypes-04</span>, <time datetime="2022-11-23" class="refDate">23 November 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-yaml-mediatypes-04">https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-yaml-mediatypes-04</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-httpapi-yaml-mediatypes-03">[I-D.ietf-httpapi-yaml-mediatypes-03]</dt>
+        <dd>
+<span class="refAuthor">Polli, R.</span>, <span class="refAuthor">Wilde, E.</span>, and <span class="refAuthor">E. Aro</span>, <span class="refTitle">"YAML Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-httpapi-yaml-mediatypes-03</span>, <time datetime="2022-08-05" class="refDate">5 August 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-yaml-mediatypes-03">https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-yaml-mediatypes-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.pbryan-zyp-json-ref-03">[I-D.pbryan-zyp-json-ref-03]</dt>
+        <dd>
+<span class="refAuthor">Bryan, P. C.</span> and <span class="refAuthor">K. Zyp</span>, <span class="refTitle">"JSON Reference"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-pbryan-zyp-json-ref-03</span>, <time datetime="2012-09-16" class="refDate">16 September 2012</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-pbryan-zyp-json-ref-03">https://datatracker.ietf.org/doc/html/draft-pbryan-zyp-json-ref-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.zyp-json-schema-03">[I-D.zyp-json-schema-03]</dt>
+        <dd>
+<span class="refAuthor">Zyp, K.</span> and <span class="refAuthor">G. Court</span>, <span class="refTitle">"A JSON Media Type for Describing the Structure and Meaning of JSON Documents"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-zyp-json-schema-03</span>, <time datetime="2010-11-22" class="refDate">22 November 2010</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-zyp-json-schema-03">https://datatracker.ietf.org/doc/html/draft-zyp-json-schema-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="oas3.1">[oas3.1]</dt>
+        <dd>
+<span class="refAuthor">Darrel Miller</span>, <span class="refAuthor">Jeremy Whitlock</span>, <span class="refAuthor">Marsh Gardiner</span>, <span class="refAuthor">Mike Ralphson</span>, <span class="refAuthor">Ron Ratovsky</span>, and <span class="refAuthor">Uri Sarid</span>, <span class="refTitle">"OpenAPI Specification v3.1.0"</span>, <time datetime="2021-02-15" class="refDate">15 February 2021</time>, <span>&lt;<a href="https://spec.openapis.org/oas/v3.0.1.html">https://spec.openapis.org/oas/v3.0.1.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC20">[RFC20]</dt>
+        <dd>
+<span class="refAuthor">Cerf, V.</span>, <span class="refTitle">"ASCII format for network interchange"</span>, <span class="seriesInfo">STD 80</span>, <span class="seriesInfo">RFC 20</span>, <span class="seriesInfo">DOI 10.17487/RFC0020</span>, <time datetime="1969-10" class="refDate">October 1969</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc20">https://www.rfc-editor.org/rfc/rfc20</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3629">[RFC3629]</dt>
+        <dd>
+<span class="refAuthor">Yergeau, F.</span>, <span class="refTitle">"UTF-8, a transformation format of ISO 10646"</span>, <span class="seriesInfo">STD 63</span>, <span class="seriesInfo">RFC 3629</span>, <span class="seriesInfo">DOI 10.17487/RFC3629</span>, <time datetime="2003-11" class="refDate">November 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3629">https://www.rfc-editor.org/rfc/rfc3629</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8288">[RFC8288]</dt>
+        <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Web Linking"</span>, <span class="seriesInfo">RFC 8288</span>, <span class="seriesInfo">DOI 10.17487/RFC8288</span>, <time datetime="2017-10" class="refDate">October 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8288">https://www.rfc-editor.org/rfc/rfc8288</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9111">[RFC9111]</dt>
+      <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</section>
+<div id="media-types-iri-fragments-and-non-fragment-json-pointers">
+<section id="appendix-A">
+      <h2 id="name-media-types-iri-fragments-a">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-media-types-iri-fragments-a" class="section-name selfRef">Media types, IRI fragments, and non-fragment JSON Pointers</a>
+      </h2>
+<p id="appendix-A-1">As stated by <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>], <a href="https://rfc-editor.org/rfc/rfc3986#section-3.5" class="relref">Section 3.5</a></span>, fragment syntax and semantics are defined by media types.  Attempting to use fragments other than as defined by a media type is behavior that is not in compliance with internet standards.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">In particular, <span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span> does not define a fragment syntax for <code>application/json</code>, and <span>[<a href="#RFC6901" class="cite xref">RFC6901</a>], <a href="https://rfc-editor.org/rfc/rfc6901#section-6" class="relref">Section 6</a></span> explicitly notes that JSON Pointer is not the fragment identifier syntax for <code>application/json</code>.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-3">JRI is also intended to be usable with resources that do not define a media type, and therefore do not have a defined fragment syntax.<span class="cref" id="_20">It's unclear what the best approach to this is right now, but I have come up with several possible ways to specify a primary resource IRI (no-fragment) and a piece of data (JSON Pointer or otherwise) that performs the secondary resouce identification.</span><a href="#appendix-A-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="jsonpointer">
+<section id="appendix-B">
+      <h2 id="name-json-pointer-compatibility">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-json-pointer-compatibility" class="section-name selfRef">JSON Pointer compatibility</a>
+      </h2>
+<p id="appendix-B-1">This section defines how to determine if a format is compatible with JSON Pointer by specifying what aspects of a format do and do not need to be mapped to JSON concepts.  It is up to individual implementations and context specifications to determine if any particular format is JSON Pointer-compatible, and how to support evaluating pointers that use JSON Pointer syntax for documents in that format.  An example of how to do this is the YAML media type's correlation of YAML and JSON in <span>[<a href="#I-D.ietf-httpapi-yaml-mediatypes" class="cite xref">I-D.ietf-httpapi-yaml-mediatypes</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-yaml-mediatypes-04#section-3.3" class="relref">Section 3.3</a></span><a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">JSON Pointer is only defined for JSON Documents.  However, the evaluation algorithm defined in <span>[<a href="#RFC6901" class="cite xref">RFC6901</a>], <a href="https://rfc-editor.org/rfc/rfc6901#section-4" class="relref">Section 4</a></span> is written in terms of JSON Arrays and JSON Objects with Unicode member names.  Notably, non-object/array JSON data is not involved at all, except as the result of the evaluation which does not depend on the type of the result value.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-3"><span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span> defines JSON Objects and Arrays sufficiently to determine whether an in-memory data structure can be serialized into JSON.<a href="#appendix-B-3" class="pilcrow">¶</a></p>
+<p id="appendix-B-4">If a data format's parsed in-memory representation can be serialized according to JSON's requirements, using unique placeholder values for scalar values that are not serializable in JSON, then JSON Pointer can be evaluated on that serialization to determine the location of the result.  If necessary, the unique placeholder value(s) could then be used to recreate the corresponding value from the original (non-JSON) document.<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<p id="appendix-B-5">Any document that can be converted as described in the previous paragraph could equivalently evaluate syntactically valid JSON Pointers by substituting its own object and array definitions for JSON Objects and Arrays, and adjusting the string comparison rules as needed if it does not use Unicode.<a href="#appendix-B-5" class="pilcrow">¶</a></p>
+<p id="appendix-B-6">Note even in a non-JSON Pointer-compatible format, many individual documents can still be JSON Pointer-compatible.  For example, YAML is not compatible due to allowing non-string property values, but the very commonly used JSON-compatible subset of YAML is, of course, JSON Pointer-compatible.  The proposed YAML media type registration <span>[<a href="#I-D.ietf-httpapi-yaml-mediatypes-03" class="cite xref">I-D.ietf-httpapi-yaml-mediatypes-03</a>], <a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-yaml-mediatypes-03#section-3.3" class="relref">Section 3.3</a></span> addresses this, including the evaluation of JSON Pointers over YAML documents.<a href="#appendix-B-6" class="pilcrow">¶</a></p>
+<p id="appendix-B-7">On the other hand, the mixture of elements and attributes in XML means that XML is never JSON Pointer-compatible.  There is no obvious single way to map XML to JSON-like objects and arrays, as demonstrated by the need for the <code>xml</code> keyword in <span>[<a href="#oas3.1" class="cite xref">oas3.1</a>]</span>.<a href="#appendix-B-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-C">
+      <h2 id="name-acknowledgements">
+<a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+    </h2>
+</section>
+</div>
+<div id="faq">
+<section id="appendix-D">
+      <h2 id="name-faq">
+<a href="#name-faq" class="section-name selfRef">FAQ</a>
+      </h2>
+<p id="appendix-D-1">Q: Why this document?
+:<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="changelog">
+<section id="appendix-E">
+      <h2 id="name-change-log">
+<a href="#name-change-log" class="section-name selfRef">Change Log</a>
+      </h2>
+<p id="appendix-E-1">RFC EDITOR PLEASE DELETE THIS SECTION.<a href="#appendix-E-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-F">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Henry Andrews</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:andrews_henry@yahoo.com" class="email">andrews_henry@yahoo.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>

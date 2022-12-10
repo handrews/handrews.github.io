@@ -4,6 +4,10 @@
 
 Most of my technical writing is at the [Modern JSON Schema (& APIs)](https://modern-json-schema.com) blog.
 
+## JSON Reference and Identification (JRI)
+
+* [The JRI draft proposal](./renderings/draft-handrews-jri.html)
+
 ## Other Writing
 
 ### JSON Schema vocabualry works-in-progress
