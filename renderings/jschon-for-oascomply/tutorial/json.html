@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="JSON Pointer" href="jsonpointer.html" />
+    <link rel="prev" title="Tutorial" href="../tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorial</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsonpointer.html">JSON Pointer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsonschema.html">JSON Schema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="catalog.html">The Catalog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="referencing.html">Advanced Referencing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorial.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">JSON</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorial/json.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="json">
+<h1>JSON<a class="headerlink" href="#json" title="Permalink to this heading"></a></h1>
+<p>The <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> class is an implementation of the JSON data model.
+It is used to represent a JSON document that may be evaluated by a JSON schema.
+The <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> class is itself a subclass of
+<a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>.</p>
+<p>A <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instance may be constructed from any JSON-compatible
+Python object. Let’s take a look at a few simple examples, printing the JSON type
+of each. We begin by importing the <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> class:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">jschon</span> <span class="kn">import</span> <span class="n">JSON</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;string&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;number&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;null&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="p">((</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;array&#39;</span>
+</pre></div>
+</div>
+<p>Instances with the JSON types <code class="docutils literal notranslate"><span class="pre">&quot;array&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;object&quot;</span></code> are constructed
+recursively. Here we create an array and an object:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arr</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">({</span><span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Nested <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instances may be accessed using square-bracket
+notation:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">JSON(2)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]</span>
+<span class="go">JSON(True)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> implements the <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code>
+interfaces for instances with the JSON types <code class="docutils literal notranslate"><span class="pre">&quot;array&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;object&quot;</span></code>, respectively:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]</span>
+<span class="go">[JSON(1), JSON(2), JSON(3)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="go">{&#39;foo&#39;: JSON(True), &#39;bar&#39;: JSON(False)}</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instances have several attributes, in addition to the
+<a class="reference internal" href="../reference/json.html#jschon.json.JSON.type" title="jschon.json.JSON.type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">type</span></code></a> attribute seen above. These can be useful when
+working with complex JSON structures. Consider the following example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;1a&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;2a&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;2b&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;1b&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;3a&quot;</span><span class="p">:</span> <span class="s2">&quot;baz&quot;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;3b&quot;</span><span class="p">:</span> <span class="s2">&quot;quux&quot;</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>
+</pre></div>
+</div>
+<p>A leaf node’s <a class="reference internal" href="../reference/json.html#jschon.json.JSON.data" title="jschon.json.JSON.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> attribute holds the value from which
+it was constructed:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1a&quot;</span><span class="p">][</span><span class="s2">&quot;2a&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="go">&#39;foo&#39;</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../reference/json.html#jschon.json.JSON.path" title="jschon.json.JSON.path"><code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code></a> property returns a <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>
+instance representing the path to the node from the document root:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1b&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;3a&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">path</span>
+<span class="go">JSONPointer(&#39;/1b/0/3a&#39;)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../reference/json.html#jschon.json.JSON.parent" title="jschon.json.JSON.parent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parent</span></code></a> attribute gives the containing instance:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1a&quot;</span><span class="p">][</span><span class="s2">&quot;2b&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span>
+<span class="go">JSON({&#39;2a&#39;: &#39;foo&#39;, &#39;2b&#39;: &#39;bar&#39;})</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../reference/json.html#jschon.json.JSON.key" title="jschon.json.JSON.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a> is the index of the node within its parent:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1b&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;3b&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">key</span>
+<span class="go">&#39;3b&#39;</span>
+</pre></div>
+</div>
+<p>Notice that, although an array item’s sequential index is an integer, its
+<a class="reference internal" href="../reference/json.html#jschon.json.JSON.key" title="jschon.json.JSON.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a> is a string. This makes it interoperable with
+<a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1b&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">key</span>
+<span class="go">&#39;1&#39;</span>
+</pre></div>
+</div>
+<p>An <code class="docutils literal notranslate"><span class="pre">&quot;object&quot;</span></code> node’s <a class="reference internal" href="../reference/json.html#jschon.json.JSON.data" title="jschon.json.JSON.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> is a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict[str,</span> <span class="pre">JSON]</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1a&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="go">{&#39;2a&#39;: JSON(&#39;foo&#39;), &#39;2b&#39;: JSON(&#39;bar&#39;)}</span>
+</pre></div>
+</div>
+<p>An <code class="docutils literal notranslate"><span class="pre">&quot;array&quot;</span></code> node’s <a class="reference internal" href="../reference/json.html#jschon.json.JSON.data" title="jschon.json.JSON.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> is a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[JSON]</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1b&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="go">[JSON({&#39;3a&#39;: &#39;baz&#39;}), JSON({&#39;3b&#39;: &#39;quux&#39;})]</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../reference/json.html#jschon.json.JSON.value" title="jschon.json.JSON.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a> property returns the instance data as a
+JSON-compatible Python object:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span><span class="p">[</span><span class="s2">&quot;1b&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span class="go">[{&#39;3a&#39;: &#39;baz&#39;}, {&#39;3b&#39;: &#39;quux&#39;}]</span>
+</pre></div>
+</div>
+<p>Equality testing strictly follows the JSON data model. So, whereas the
+following two Python lists compare equal:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> equivalents are not equal, because the arrays’
+items have different JSON types:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span> <span class="o">==</span> <span class="n">JSON</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>A <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instance may be compared with <em>any</em> Python object.
+Internally, the non-<a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> object is coerced to its <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>
+equivalent before performing the comparison. Notice that tuples and lists are
+considered structurally equivalent:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">==</span> <span class="n">JSON</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> also implements the <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> and <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>
+inequality operators, which may be used for numeric or string comparisons:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">3.01</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>jschon is not a JSON encoder/decoder. However, the <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>
+class supports both serialization and deserialization of JSON documents, via the
+Python standard library’s <code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> module.</p>
+<p>Serializing a <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instance is simply a matter of getting
+its string representation:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">JSON</span><span class="p">({</span><span class="s2">&quot;xyz&quot;</span><span class="p">:</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)}))</span>
+<span class="go">&#39;{&quot;xyz&quot;: [null, false, true]}&#39;</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instances can be deserialized from JSON files and JSON
+strings using the <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loadf" title="jschon.json.JSON.loadf"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loadf()</span></code></a> and <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loads" title="jschon.json.JSON.loads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loads()</span></code></a>
+class methods, respectively:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="o">.</span><span class="n">loadf</span><span class="p">(</span><span class="s1">&#39;/path/to/file.json&#39;</span><span class="p">)</span>
+<span class="go">JSON(...)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSON</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s1">&#39;{&quot;1&quot;: &quot;spam&quot;, &quot;2&quot;: &quot;eggs&quot;}&#39;</span><span class="p">)</span>
+<span class="go">JSON({&#39;1&#39;: &#39;spam&#39;, &#39;2&#39;: &#39;eggs&#39;})</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tutorial.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jsonpointer.html" class="btn btn-neutral float-right" title="JSON Pointer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

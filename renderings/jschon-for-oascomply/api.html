@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jschon.catalog" href="reference/catalog.html" />
+    <link rel="prev" title="Welcome to the experimental jschon branch for OpenAPI support!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#package-api">Package API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#catalog">Catalog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.create_catalog"><code class="docutils literal notranslate"><span class="pre">create_catalog()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-patch">JSON Patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-pointer">JSON Pointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-schema">JSON Schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uri">URI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reference">Module Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/catalog.html">jschon.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/exc.html">jschon.exc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/formats.html">jschon.formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/json.html">jschon.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/jsonformat.html">jschon.jsonformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/jsonpatch.html">jschon.jsonpatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/jsonpointer.html">jschon.jsonpointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/jsonschema.html">jschon.jsonschema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/output.html">jschon.output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/resource.html">jschon.resource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/uri.html">jschon.uri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/utils.html">jschon.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/vocabulary.html">jschon.vocabulary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h1>
+<section id="package-api">
+<h2>Package API<a class="headerlink" href="#package-api" title="Permalink to this heading"></a></h2>
+<section id="catalog">
+<h3>Catalog<a class="headerlink" href="#catalog" title="Permalink to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jschon.create_catalog">
+<span class="sig-prename descclassname"><span class="pre">jschon.</span></span><span class="sig-name descname"><span class="pre">create_catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">versions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'catalog'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve_references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.create_catalog" title="Permalink to this definition"></a></dt>
+<dd><p>Create and return a <a class="reference internal" href="reference/catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> instance,
+initialized with a meta-schema and keyword support for each of the
+specified JSON Schema <cite>versions</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>versions</strong> (<em>str</em>) – Any of <code class="docutils literal notranslate"><span class="pre">2019-09</span></code>, <code class="docutils literal notranslate"><span class="pre">2020-12</span></code>, <code class="docutils literal notranslate"><span class="pre">next</span></code>.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – A unique name for the <a class="reference internal" href="reference/catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> instance.</p></li>
+<li><p><strong>resolve_references</strong> (<em>bool</em>) – Passed through to any calls made to the
+<a class="reference internal" href="reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> constructor; defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>;
+if set to <code class="docutils literal notranslate"><span class="pre">False</span></code> a separate call to
+<a class="reference internal" href="reference/catalog.html#jschon.catalog.Catalog.resolve_references" title="jschon.catalog.Catalog.resolve_references"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resolve_references()</span></code></a> is required prior to
+evaluating any schemas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any of <cite>versions</cite> is unrecognized.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="reference/catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><em>Catalog</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/catalog.html#jschon.catalog.LocalSource" title="jschon.catalog.LocalSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalSource</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/catalog.html#jschon.catalog.RemoteSource" title="jschon.catalog.RemoteSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteSource</span></code></a></p></li>
+</ul>
+</section>
+<section id="json">
+<h3>JSON<a class="headerlink" href="#json" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/json.html#jschon.json.JSONCompatible" title="jschon.json.JSONCompatible"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONCompatible</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/resource.html#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/jsonformat.html#jschon.jsonformat.JSONFormat" title="jschon.jsonformat.JSONFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONFormat</span></code></a></p></li>
+</ul>
+</section>
+<section id="json-patch">
+<h3>JSON Patch<a class="headerlink" href="#json-patch" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/jsonpatch.html#jschon.jsonpatch.JSONPatch" title="jschon.jsonpatch.JSONPatch"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPatch</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/jsonpatch.html#jschon.jsonpatch.JSONPatchOperation" title="jschon.jsonpatch.JSONPatchOperation"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPatchOperation</span></code></a></p></li>
+</ul>
+</section>
+<section id="json-pointer">
+<h3>JSON Pointer<a class="headerlink" href="#json-pointer" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/jsonpointer.html#jschon.jsonpointer.RelativeJSONPointer" title="jschon.jsonpointer.RelativeJSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">RelativeJSONPointer</span></code></a></p></li>
+</ul>
+</section>
+<section id="json-schema">
+<h3>JSON Schema<a class="headerlink" href="#json-schema" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a></p></li>
+<li><p><a class="reference internal" href="reference/jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a></p></li>
+</ul>
+</section>
+<section id="uri">
+<h3>URI<a class="headerlink" href="#uri" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/uri.html#jschon.uri.URI" title="jschon.uri.URI"><code class="xref py py-class docutils literal notranslate"><span class="pre">URI</span></code></a></p></li>
+</ul>
+</section>
+</section>
+<section id="module-reference">
+<h2>Module Reference<a class="headerlink" href="#module-reference" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/catalog.html">jschon.catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/exc.html">jschon.exc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/formats.html">jschon.formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/json.html">jschon.json</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/jsonformat.html">jschon.jsonformat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/jsonpatch.html">jschon.jsonpatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/jsonpointer.html">jschon.jsonpointer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/jsonschema.html">jschon.jsonschema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/output.html">jschon.output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/resource.html">jschon.resource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/uri.html">jschon.uri</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/utils.html">jschon.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/vocabulary.html">jschon.vocabulary</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to the experimental jschon branch for OpenAPI support!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reference/catalog.html" class="btn btn-neutral float-right" title="jschon.catalog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

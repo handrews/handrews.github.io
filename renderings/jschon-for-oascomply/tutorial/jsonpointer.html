@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON Pointer &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="JSON Schema" href="jsonschema.html" />
+    <link rel="prev" title="JSON" href="json.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">JSON Pointer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsonschema.html">JSON Schema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="catalog.html">The Catalog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="referencing.html">Advanced Referencing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorial.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">JSON Pointer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorial/jsonpointer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="json-pointer">
+<h1>JSON Pointer<a class="headerlink" href="#json-pointer" title="Permalink to this heading"></a></h1>
+<p>The <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> class is an implementation of the
+<span class="target" id="index-0"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc6901.html"><strong>RFC 6901</strong></a> JSON Pointer specification. In jschon, <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>
+is commonly used to represent paths to nodes within <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>
+and <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> documents, and to extract nodes from
+those documents. But <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> is designed to work
+with <em>any</em> JSON-compatible Python object – including, for example, native <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>
+and <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> objects.</p>
+<p>Let’s see how <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> works. We begin with an import:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">jschon</span> <span class="kn">import</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">JSONPointer</span>
+</pre></div>
+</div>
+<p>Now, consider the following example. This <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instance describes
+how characters in JSON object keys must be escaped in order to form <em>reference tokens</em>
+within an <span class="target" id="index-1"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc6901.html"><strong>RFC 6901</strong></a> JSON pointer string:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">escape_rule</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;~&quot;</span><span class="p">:</span> <span class="s2">&quot;~0&quot;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;/&quot;</span><span class="p">:</span> <span class="s2">&quot;~1&quot;</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Nodes within this instance can be referenced in the usual way, as described in the
+<a class="reference internal" href="json.html"><span class="doc">JSON</span></a> guide:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">escape_rule</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;/&quot;</span><span class="p">]</span>
+<span class="go">JSON(&#39;~1&#39;)</span>
+</pre></div>
+</div>
+<p>If we look at the <a class="reference internal" href="../reference/json.html#jschon.json.JSON.path" title="jschon.json.JSON.path"><code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code></a> property of this node, we see
+that the string representation of the JSON pointer includes the <em>escaped</em> form of
+the <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code> key:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">escape_rule</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;/&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">path</span>
+<span class="go">JSONPointer(&#39;/1/~1&#39;)</span>
+</pre></div>
+</div>
+<p>Now let’s get that path into a variable and inspect it a little more closely:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slash_path</span> <span class="o">=</span> <span class="n">escape_rule</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;/&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">path</span>
+</pre></div>
+</div>
+<p>A <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> is a <code class="xref py py-obj docutils literal notranslate"><span class="pre">Sequence[str]</span></code>, with each
+item in the sequence being the <em>unescaped</em> object key or array index at the next
+node down the path to the referenced value:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">slash_path</span><span class="p">]</span>
+<span class="go">[&#39;1&#39;, &#39;/&#39;]</span>
+</pre></div>
+</div>
+<p>You can create a <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code> of keys directly from a
+<a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> instance:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">slash_path</span><span class="p">)</span>
+<span class="go">(&#39;1&#39;, &#39;/&#39;)</span>
+</pre></div>
+</div>
+<p>Notice that the array index is represented as a string, too. In fact, it
+matches the <a class="reference internal" href="../reference/json.html#jschon.json.JSON.key" title="jschon.json.JSON.key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">key</span></code></a> attribute on the corresponding
+<a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> node:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">escape_rule</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">key</span>
+<span class="go">&#39;1&#39;</span>
+</pre></div>
+</div>
+<p>To extract the referenced object from a JSON document, we use the
+<a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer.evaluate" title="jschon.jsonpointer.JSONPointer.evaluate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">evaluate()</span></code></a> method:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slash_path</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">escape_rule</span><span class="p">)</span>
+<span class="go">JSON(&#39;~1&#39;)</span>
+</pre></div>
+</div>
+<p>So far, we’ve seen how to work with the <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>
+instance that appears as the <a class="reference internal" href="../reference/json.html#jschon.json.JSON.path" title="jschon.json.JSON.path"><code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code></a> of a <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>
+node. Now let’s look at how to construct a <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>.
+Consider the following example document:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="s2">&quot;😎&quot;</span><span class="p">}}}}</span>
+</pre></div>
+</div>
+<p>The obvious way to make a <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> that points
+to the leaf node in this example would be:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/c/d&#39;</span><span class="p">)</span>
+<span class="go">JSONPointer(&#39;/a/b/c/d&#39;)</span>
+</pre></div>
+</div>
+<p>Then, as we’d expect:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/c/d&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+<span class="go">&#39;😎&#39;</span>
+</pre></div>
+</div>
+<p>But here are a few alternative ways to create the same JSON pointer:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">])</span>
+<span class="go">JSONPointer(&#39;/a/b/c/d&#39;)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="s1">&#39;/b/c&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">])</span>
+<span class="go">JSONPointer(&#39;/a/b/c/d&#39;)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b&#39;</span><span class="p">,</span> <span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/c/d&#39;</span><span class="p">))</span>
+<span class="go">JSONPointer(&#39;/a/b/c/d&#39;)</span>
+</pre></div>
+</div>
+<p>As you can see, the <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> constructor accepts
+– and concatenates – any number of arguments. Each argument can be either:</p>
+<ul class="simple">
+<li><p>an <span class="target" id="index-2"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc6901.html"><strong>RFC 6901</strong></a> JSON pointer string (with reserved characters escaped); or</p></li>
+<li><p>an iterable of unescaped keys or array indices – which may itself be a
+<a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> instance.</p></li>
+</ul>
+<p>A special case is the <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> constructed without
+any args:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">()</span>
+<span class="go">JSONPointer(&#39;&#39;)</span>
+</pre></div>
+</div>
+<p>This represents a reference to an entire document:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: {&#39;d&#39;: &#39;😎&#39;}}}}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">/</span></code> operator provides a convenient way to extend a <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;a&#39;</span> <span class="o">/</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="go">JSONPointer(&#39;/a/b/c/d&#39;)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/c/d&#39;</span><span class="p">)</span>
+<span class="go">JSONPointer(&#39;/a/b/c/d&#39;)</span>
+</pre></div>
+</div>
+<p>It works by copying the left-hand operand (a <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>
+instance) and appending the right-hand operand (an unescaped key, or an iterable
+of unescaped keys). Note that <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> is immutable,
+so each invocation of <code class="docutils literal notranslate"><span class="pre">/</span></code> produces a new <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a>
+instance.</p>
+<p>As a <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>, <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> supports getting
+a key by its index:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/c/d&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="go">&#39;a&#39;</span>
+</pre></div>
+</div>
+<p>And taking a slice into a <a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> returns a new
+<a class="reference internal" href="../reference/jsonpointer.html#jschon.jsonpointer.JSONPointer" title="jschon.jsonpointer.JSONPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPointer</span></code></a> instance composed of the specified slice
+of the original’s keys:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/c/d&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">JSONPointer(&#39;/b/c&#39;)</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="json.html" class="btn btn-neutral float-left" title="JSON" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jsonschema.html" class="btn btn-neutral float-right" title="JSON Schema" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

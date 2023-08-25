@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Extending JSON Schema &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="File-based schemas" href="file_based_schemas.html" />
+    <link rel="prev" title="Examples" href="../examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Extending JSON Schema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_based_schemas.html">File-based schemas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_validation.html">Format validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recursive_schema_extension.html">Recursive schema extension</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+      <li class="breadcrumb-item active">Extending JSON Schema</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/extending_json_schema.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="extending-json-schema">
+<h1>Extending JSON Schema<a class="headerlink" href="#extending-json-schema" title="Permalink to this heading"></a></h1>
+<p>In this example, we define a custom keyword – <code class="docutils literal notranslate"><span class="pre">&quot;enumRef&quot;</span></code> – that provides
+us with the capability to validate JSON string instances against enumerations
+(which may consist of many thousands of terms) that we have obtained and cached
+from remote terminology services.</p>
+<p>First, we create a vocabulary that describes the syntax of our new keyword.
+This is a JSON meta-schema that we’ll save to <code class="docutils literal notranslate"><span class="pre">data/enumRef-vocabulary.json</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;A meta-schema describing the syntax of a vocabulary that supports remote enumerations&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/enumRef/enumRef-vocabulary&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$vocabulary&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;https://example.com/enumRef&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;$dynamicAnchor&quot;</span><span class="p">:</span> <span class="s2">&quot;meta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;boolean&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;enumRef&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;uri-reference&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Next, we create an extension to the JSON Schema 2020-12 meta-schema that
+includes our new vocabulary. We’ll save this to <code class="docutils literal notranslate"><span class="pre">data/enumRef-metaschema.json</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;An extension to the JSON Schema 2020-12 meta-schema, incorporating a vocabulary that supports remote enumerations&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/enumRef/enumRef-metaschema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$vocabulary&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;https://json-schema.org/draft/2020-12/vocab/core&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;https://json-schema.org/draft/2020-12/vocab/applicator&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;https://json-schema.org/draft/2020-12/vocab/unevaluated&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;https://json-schema.org/draft/2020-12/vocab/validation&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;https://json-schema.org/draft/2020-12/vocab/meta-data&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;https://json-schema.org/draft/2020-12/vocab/format-annotation&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;https://json-schema.org/draft/2020-12/vocab/content&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;https://example.com/enumRef&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;$dynamicAnchor&quot;</span><span class="p">:</span> <span class="s2">&quot;meta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="s2">&quot;boolean&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;allOf&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/meta/core&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/meta/applicator&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/meta/unevaluated&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/meta/validation&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/meta/meta-data&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/meta/format-annotation&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/meta/content&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/enumRef/enumRef-vocabulary&quot;</span><span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, we implement the <code class="docutils literal notranslate"><span class="pre">&quot;enumRef&quot;</span></code> keyword by defining an
+<code class="xref py py-class docutils literal notranslate"><span class="pre">EnumRefKeyword</span></code> class. The following script includes an example
+implementation using a simple local cache, a few lines of boilerplate code
+to compile the meta-schema and vocabulary definition files, and an example
+schema that we use to evaluate both valid and invalid sample JSON instances:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="kn">from</span> <span class="nn">jschon</span> <span class="kn">import</span> <span class="n">create_catalog</span><span class="p">,</span> <span class="n">URI</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">JSONSchema</span><span class="p">,</span> <span class="n">JSONSchemaError</span><span class="p">,</span> <span class="n">LocalSource</span>
+<span class="kn">from</span> <span class="nn">jschon.jsonschema</span> <span class="kn">import</span> <span class="n">Result</span>
+<span class="kn">from</span> <span class="nn">jschon.vocabulary</span> <span class="kn">import</span> <span class="n">Keyword</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span>
+
+<span class="c1"># cache of enumeration values obtained from remote terminology services</span>
+<span class="n">remote_enum_cache</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;https://example.com/remote-enum-colours&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;orange&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;indigo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;violet&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+
+<span class="c1"># define a class that implements the &quot;enumRef&quot; keyword</span>
+<span class="k">class</span> <span class="nc">EnumRefKeyword</span><span class="p">(</span><span class="n">Keyword</span><span class="p">):</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;enumRef&quot;</span>
+
+    <span class="c1"># ignore non-string instances</span>
+    <span class="n">instance_types</span> <span class="o">=</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parentschema</span><span class="p">:</span> <span class="n">JSONSchema</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parentschema</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># raise an exception during schema construction if a reference is invalid</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">remote_enum_cache</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">JSONSchemaError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown remote enumeration </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Result</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># the keyword&#39;s value is a reference to a remote enumeration</span>
+        <span class="n">enum_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1"># evaluate the current JSON instance node against the enumeration</span>
+        <span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">data</span> <span class="ow">in</span> <span class="n">remote_enum_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">enum_ref</span><span class="p">):</span>
+            <span class="c1"># (optionally) on success, annotate the result</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">enum_ref</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># on failure, mark the result as failed, with an (optional) error message</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The instance is not a member of the </span><span class="si">{</span><span class="n">enum_ref</span><span class="si">}</span><span class="s2"> enumeration&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># initialize the catalog, with JSON Schema 2020-12 vocabulary support</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">create_catalog</span><span class="p">(</span><span class="s1">&#39;2020-12&#39;</span><span class="p">)</span>
+
+<span class="c1"># add a local source for loading the enumRef meta-schema and vocabulary</span>
+<span class="c1"># definition files</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">add_uri_source</span><span class="p">(</span>
+    <span class="n">URI</span><span class="p">(</span><span class="s2">&quot;https://example.com/enumRef/&quot;</span><span class="p">),</span>
+    <span class="n">LocalSource</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.json&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># implement the enumRef vocabulary using the EnumRefKeyword class</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_vocabulary</span><span class="p">(</span>
+    <span class="n">URI</span><span class="p">(</span><span class="s2">&quot;https://example.com/enumRef&quot;</span><span class="p">),</span>
+    <span class="n">EnumRefKeyword</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># create a schema for validating that a string is a member of a remote enumeration</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">({</span>
+    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/enumRef/enumRef-metaschema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/remote-enum-test-schema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;enumRef&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/remote-enum-colours&quot;</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="c1"># validate the schema against its meta-schema</span>
+<span class="n">schema_validity</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Schema validity check: </span><span class="si">{</span><span class="n">schema_validity</span><span class="o">.</span><span class="n">valid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># declare a valid JSON instance</span>
+<span class="n">valid_json</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+
+<span class="c1"># declare an invalid JSON instance</span>
+<span class="n">invalid_json</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">(</span><span class="s2">&quot;purple&quot;</span><span class="p">)</span>
+
+<span class="c1"># evaluate the valid instance</span>
+<span class="n">valid_result</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">valid_json</span><span class="p">)</span>
+
+<span class="c1"># evaluate the invalid instance</span>
+<span class="n">invalid_result</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">invalid_json</span><span class="p">)</span>
+
+<span class="c1"># print output for the valid case</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Valid JSON result: </span><span class="si">{</span><span class="n">valid_result</span><span class="o">.</span><span class="n">valid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valid JSON detailed output:&#39;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pp</span><span class="p">(</span><span class="n">valid_result</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;detailed&#39;</span><span class="p">))</span>
+
+<span class="c1"># print output for the invalid case</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid JSON result: </span><span class="si">{</span><span class="n">invalid_result</span><span class="o">.</span><span class="n">valid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Invalid JSON detailed output:&#39;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pp</span><span class="p">(</span><span class="n">invalid_result</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="s1">&#39;detailed&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The script produces the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Schema</span> <span class="n">validity</span> <span class="n">check</span><span class="p">:</span> <span class="kc">True</span>
+<span class="n">Valid</span> <span class="n">JSON</span> <span class="n">result</span><span class="p">:</span> <span class="kc">True</span>
+<span class="n">Valid</span> <span class="n">JSON</span> <span class="n">detailed</span> <span class="n">output</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;valid&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+ <span class="s1">&#39;instanceLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;keywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;absoluteKeywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;https://example.com/remote-enum-test-schema#&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;instanceLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;keywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;/type&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;absoluteKeywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;https://example.com/remote-enum-test-schema#/type&#39;</span><span class="p">},</span>
+                 <span class="p">{</span><span class="s1">&#39;instanceLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;keywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;/enumRef&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;absoluteKeywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;https://example.com/remote-enum-test-schema#/enumRef&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;annotation&#39;</span><span class="p">:</span> <span class="s1">&#39;https://example.com/remote-enum-colours&#39;</span><span class="p">}]}</span>
+<span class="n">Invalid</span> <span class="n">JSON</span> <span class="n">result</span><span class="p">:</span> <span class="kc">False</span>
+<span class="n">Invalid</span> <span class="n">JSON</span> <span class="n">detailed</span> <span class="n">output</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;valid&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+ <span class="s1">&#39;instanceLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;keywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;absoluteKeywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;https://example.com/remote-enum-test-schema#&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;errors&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;instanceLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;keywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;/enumRef&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;absoluteKeywordLocation&#39;</span><span class="p">:</span> <span class="s1">&#39;https://example.com/remote-enum-test-schema#/enumRef&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;The instance is not a member of the &#39;</span>
+                      <span class="s1">&#39;https://example.com/remote-enum-colours enumeration&#39;</span><span class="p">}]}</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="file_based_schemas.html" class="btn btn-neutral float-right" title="File-based schemas" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

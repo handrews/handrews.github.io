@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jschon.vocabulary.applicator &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="jschon.vocabulary.core" href="core.html" />
+    <link rel="prev" title="jschon.vocabulary.annotation" href="annotation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#package-api">Package API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#module-reference">Module Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../catalog.html">jschon.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../exc.html">jschon.exc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../formats.html">jschon.formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../json.html">jschon.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonformat.html">jschon.jsonformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonpatch.html">jschon.jsonpatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonpointer.html">jschon.jsonpointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonschema.html">jschon.jsonschema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../output.html">jschon.output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource.html">jschon.resource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uri.html">jschon.uri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils.html">jschon.utils</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../vocabulary.html">jschon.vocabulary</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.ArrayOfSubschemas"><code class="docutils literal notranslate"><span class="pre">ArrayOfSubschemas</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Keyword"><code class="docutils literal notranslate"><span class="pre">Keyword</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Metaschema"><code class="docutils literal notranslate"><span class="pre">Metaschema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.ObjectOfSubschemas"><code class="docutils literal notranslate"><span class="pre">ObjectOfSubschemas</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Subschema"><code class="docutils literal notranslate"><span class="pre">Subschema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.SubschemaMixin"><code class="docutils literal notranslate"><span class="pre">SubschemaMixin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="annotation.html">jschon.vocabulary.annotation</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">jschon.vocabulary.applicator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="core.html">jschon.vocabulary.core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html">jschon.vocabulary.format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy.html">jschon.vocabulary.legacy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html">jschon.vocabulary.validation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../vocabulary.html">jschon.vocabulary</a></li>
+      <li class="breadcrumb-item active">jschon.vocabulary.applicator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/vocabulary/applicator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-jschon.vocabulary.applicator">
+<span id="jschon-vocabulary-applicator"></span><h1>jschon.vocabulary.applicator<a class="headerlink" href="#module-jschon.vocabulary.applicator" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AdditionalPropertiesKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">AdditionalPropertiesKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.AdditionalPropertiesKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AdditionalPropertiesKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.AdditionalPropertiesKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AdditionalPropertiesKeyword.depends_on">
+<span class="sig-name descname"><span class="pre">depends_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('properties',</span> <span class="pre">'patternProperties')</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.AdditionalPropertiesKeyword.depends_on" title="Permalink to this definition"></a></dt>
+<dd><p>Keywords that must be evaluated before this keyword can be evaluated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AdditionalPropertiesKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('object',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.AdditionalPropertiesKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AdditionalPropertiesKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.AdditionalPropertiesKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AdditionalPropertiesKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'additionalProperties'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.AdditionalPropertiesKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AdditionalPropertiesKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.AdditionalPropertiesKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AllOfKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">AllOfKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.AllOfKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AllOfKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.AllOfKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AllOfKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.AllOfKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AllOfKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'allOf'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.AllOfKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AllOfKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.AllOfKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AnyOfKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">AnyOfKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.AnyOfKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AnyOfKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.AnyOfKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AnyOfKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.AnyOfKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AnyOfKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'anyOf'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.AnyOfKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.AnyOfKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.AnyOfKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ContainsKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">ContainsKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ContainsKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ContainsKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ContainsKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ContainsKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('array',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ContainsKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ContainsKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ContainsKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ContainsKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'contains'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ContainsKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ContainsKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ContainsKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.DependentSchemasKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">DependentSchemasKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.DependentSchemasKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.DependentSchemasKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.DependentSchemasKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.DependentSchemasKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('object',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.DependentSchemasKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.DependentSchemasKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.DependentSchemasKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.DependentSchemasKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dependentSchemas'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.DependentSchemasKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.DependentSchemasKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.DependentSchemasKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ElseKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">ElseKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ElseKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ElseKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ElseKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ElseKeyword.depends_on">
+<span class="sig-name descname"><span class="pre">depends_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('if',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ElseKeyword.depends_on" title="Permalink to this definition"></a></dt>
+<dd><p>Keywords that must be evaluated before this keyword can be evaluated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ElseKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ElseKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ElseKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'else'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ElseKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ElseKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ElseKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.IfKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">IfKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.IfKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.IfKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.IfKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.IfKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.IfKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.IfKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'if'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.IfKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.IfKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.IfKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ItemsKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">ItemsKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ItemsKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ItemsKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ItemsKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ItemsKeyword.depends_on">
+<span class="sig-name descname"><span class="pre">depends_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('prefixItems',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ItemsKeyword.depends_on" title="Permalink to this definition"></a></dt>
+<dd><p>Keywords that must be evaluated before this keyword can be evaluated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ItemsKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('array',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ItemsKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ItemsKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ItemsKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ItemsKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'items'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ItemsKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ItemsKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ItemsKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.NotKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">NotKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.NotKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.NotKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.NotKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.NotKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.NotKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.NotKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'not'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.NotKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.NotKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.NotKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.OneOfKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">OneOfKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.OneOfKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.OneOfKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.OneOfKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.OneOfKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.OneOfKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.OneOfKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'oneOf'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.OneOfKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.OneOfKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.OneOfKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PatternPropertiesKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">PatternPropertiesKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PatternPropertiesKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PatternPropertiesKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PatternPropertiesKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PatternPropertiesKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('object',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PatternPropertiesKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PatternPropertiesKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PatternPropertiesKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PatternPropertiesKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'patternProperties'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PatternPropertiesKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PatternPropertiesKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PatternPropertiesKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PrefixItemsKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">PrefixItemsKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PrefixItemsKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PrefixItemsKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PrefixItemsKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PrefixItemsKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('array',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PrefixItemsKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PrefixItemsKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PrefixItemsKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PrefixItemsKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'prefixItems'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PrefixItemsKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PrefixItemsKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PrefixItemsKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertiesKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">PropertiesKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PropertiesKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertiesKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PropertiesKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertiesKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('object',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertiesKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertiesKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertiesKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertiesKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'properties'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertiesKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertiesKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertiesKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertyNamesKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">PropertyNamesKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PropertyNamesKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertyNamesKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.PropertyNamesKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertyNamesKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('object',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertyNamesKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertyNamesKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertyNamesKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertyNamesKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'propertyNames'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertyNamesKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.PropertyNamesKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.PropertyNamesKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ThenKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">ThenKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ThenKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ThenKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.ThenKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ThenKeyword.depends_on">
+<span class="sig-name descname"><span class="pre">depends_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('if',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ThenKeyword.depends_on" title="Permalink to this definition"></a></dt>
+<dd><p>Keywords that must be evaluated before this keyword can be evaluated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ThenKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ThenKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ThenKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'then'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.ThenKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.ThenKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.ThenKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedItemsKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">UnevaluatedItemsKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedItemsKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedItemsKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedItemsKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedItemsKeyword.depends_on">
+<span class="sig-name descname"><span class="pre">depends_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('prefixItems',</span> <span class="pre">'items',</span> <span class="pre">'contains',</span> <span class="pre">'if',</span> <span class="pre">'then',</span> <span class="pre">'else',</span> <span class="pre">'allOf',</span> <span class="pre">'anyOf',</span> <span class="pre">'oneOf',</span> <span class="pre">'not')</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedItemsKeyword.depends_on" title="Permalink to this definition"></a></dt>
+<dd><p>Keywords that must be evaluated before this keyword can be evaluated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedItemsKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('array',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedItemsKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedItemsKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedItemsKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedItemsKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'unevaluatedItems'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedItemsKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedItemsKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedItemsKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.applicator.</span></span><span class="sig-name descname"><span class="pre">UnevaluatedPropertiesKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.depends_on">
+<span class="sig-name descname"><span class="pre">depends_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('properties',</span> <span class="pre">'patternProperties',</span> <span class="pre">'additionalProperties',</span> <span class="pre">'if',</span> <span class="pre">'then',</span> <span class="pre">'else',</span> <span class="pre">'dependentSchemas',</span> <span class="pre">'allOf',</span> <span class="pre">'anyOf',</span> <span class="pre">'oneOf',</span> <span class="pre">'not')</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.depends_on" title="Permalink to this definition"></a></dt>
+<dd><p>Keywords that must be evaluated before this keyword can be evaluated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.instance_types">
+<span class="sig-name descname"><span class="pre">instance_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('object',)</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.instance_types" title="Permalink to this definition"></a></dt>
+<dd><p>The types of instance that the keyword can evaluate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'unevaluatedProperties'</span></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.applicator.UnevaluatedPropertiesKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="annotation.html" class="btn btn-neutral float-left" title="jschon.vocabulary.annotation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="core.html" class="btn btn-neutral float-right" title="jschon.vocabulary.core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

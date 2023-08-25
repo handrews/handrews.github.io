@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jschon.catalog &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="jschon.exc" href="exc.html" />
+    <link rel="prev" title="API Reference" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#package-api">Package API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#module-reference">Module Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">jschon.catalog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.catalog.Catalog"><code class="docutils literal notranslate"><span class="pre">Catalog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.catalog.LocalSource"><code class="docutils literal notranslate"><span class="pre">LocalSource</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.catalog.RemoteSource"><code class="docutils literal notranslate"><span class="pre">RemoteSource</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.catalog.Source"><code class="docutils literal notranslate"><span class="pre">Source</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exc.html">jschon.exc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats.html">jschon.formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="json.html">jschon.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonformat.html">jschon.jsonformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonpatch.html">jschon.jsonpatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonpointer.html">jschon.jsonpointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonschema.html">jschon.jsonschema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html">jschon.output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html">jschon.resource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uri.html">jschon.uri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html">jschon.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vocabulary.html">jschon.vocabulary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">jschon.catalog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/catalog.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-jschon.catalog">
+<span id="jschon-catalog"></span><h1>jschon.catalog<a class="headerlink" href="#module-jschon.catalog" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.catalog.</span></span><span class="sig-name descname"><span class="pre">Catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'catalog'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve_references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog" title="Permalink to this definition"></a></dt>
+<dd><p>The <a class="reference internal" href="#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> acts as a schema cache, enabling schemas and
+subschemas to be indexed, re-used, and cross-referenced by URI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – </p></li>
+<li><p><strong>resolve_references</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'catalog'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve_references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize a <a class="reference internal" href="#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – a unique name for this <a class="reference internal" href="#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> instance</p></li>
+<li><p><strong>resolve_references</strong> (<em>bool</em>) – passed through to any
+<code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSChema</span></code> constructor calls</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.add_resource">
+<span class="sig-name descname"><span class="pre">add_resource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.add_resource" title="Permalink to this definition"></a></dt>
+<dd><p>Add a (sub)resource to a cache.</p>
+<p>Note that this method is called automatically during resource construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the (sub)resource</p></li>
+<li><p><strong>schema</strong> – the <a class="reference internal" href="resource.html#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> instance to cache</p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – schema cache identifier</p></li>
+<li><p><strong>resource</strong> (<a class="reference internal" href="resource.html#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><em>JSONResource</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.add_schema">
+<span class="sig-name descname"><span class="pre">add_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.add_schema" title="Permalink to this definition"></a></dt>
+<dd><p>Add a (sub)schema to a cache.</p>
+<p>Note that this method is called automatically during schema construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the (sub)schema</p></li>
+<li><p><strong>schema</strong> (<a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – the <a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> instance to cache</p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – schema cache identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.add_uri_source">
+<span class="sig-name descname"><span class="pre">add_uri_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.add_uri_source" title="Permalink to this definition"></a></dt>
+<dd><p>Register a source for loading URI-identified JSON resources.</p>
+<p>A base URI of <code class="docutils literal notranslate"><span class="pre">None</span></code> registers a default source that handles any
+URI that does not match any registered base URI string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em> | </em><em>None</em>) – a normalized, absolute URI - including scheme, without
+a fragment, and ending with <code class="docutils literal notranslate"><span class="pre">'/'</span></code> or None to match complete URIs</p></li>
+<li><p><strong>source</strong> (<a class="reference internal" href="#jschon.catalog.Source" title="jschon.catalog.Source"><em>Source</em></a>) – a <a class="reference internal" href="#jschon.catalog.Source" title="jschon.catalog.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a> object</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exc.html#jschon.exc.CatalogError" title="jschon.exc.CatalogError"><strong>CatalogError</strong></a> – if <cite>base_uri</cite> is invalid</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.cache">
+<span class="sig-name descname"><span class="pre">cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cacheid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.cache" title="Permalink to this definition"></a></dt>
+<dd><p>Context manager for a schema cache.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">catalog</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span> <span class="k">as</span> <span class="n">cacheid</span><span class="p">:</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">cacheid</span><span class="o">=</span><span class="n">cacheid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The cache and its contents are popped from the catalog
+upon exiting the <code class="docutils literal notranslate"><span class="pre">with</span></code> block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cacheid</strong> (<em>Hashable</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>AbstractContextManager</em>[<em>Hashable</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.create_metadocument">
+<span class="sig-name descname"><span class="pre">create_metadocument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*meta_args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_cls=&lt;class</span> <span class="pre">'jschon.vocabulary.Metaschema'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**meta_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.create_metadocument" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>meta_cls</strong> (<em>Type</em><em>[</em><a class="reference internal" href="jsonformat.html#jschon.jsonformat.EvaluableJSON" title="jschon.jsonformat.EvaluableJSON"><em>EvaluableJSON</em></a><em>]</em>) – </p></li>
+<li><p><strong>meta_kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="jsonformat.html#jschon.jsonformat.EvaluableJSON" title="jschon.jsonformat.EvaluableJSON">EvaluableJSON</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.create_metaschema">
+<span class="sig-name descname"><span class="pre">create_metaschema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_core_vocabulary_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">default_vocabulary_uris</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.create_metaschema" title="Permalink to this definition"></a></dt>
+<dd><p>Create, cache and validate a <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Metaschema" title="jschon.vocabulary.Metaschema"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metaschema</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the metaschema</p></li>
+<li><p><strong>default_core_vocabulary_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em> | </em><em>None</em>) – the URI identifying the metaschema’s
+core <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Vocabulary" title="jschon.vocabulary.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a>, used in the absence
+of a <code class="docutils literal notranslate"><span class="pre">&quot;$vocabulary&quot;</span></code> keyword in the metaschema JSON file, or
+if a known core vocabulary is not present under <code class="docutils literal notranslate"><span class="pre">&quot;$vocabulary&quot;</span></code></p></li>
+<li><p><strong>default_vocabulary_uris</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – default <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Vocabulary" title="jschon.vocabulary.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a>
+URIs, used in the absence of a <code class="docutils literal notranslate"><span class="pre">&quot;$vocabulary&quot;</span></code> keyword in the
+metaschema JSON file</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – additional keyword arguments to pass through to the
+<a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> constructor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the newly created <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Metaschema" title="jschon.vocabulary.Metaschema"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metaschema</span></code></a> instance</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="exc.html#jschon.exc.CatalogError" title="jschon.exc.CatalogError"><strong>CatalogError</strong></a> – if the metaschema is not valid</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="vocabulary.html#jschon.vocabulary.Metaschema" title="jschon.vocabulary.Metaschema"><em>Metaschema</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.create_vocabulary">
+<span class="sig-name descname"><span class="pre">create_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">kwclasses</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.create_vocabulary" title="Permalink to this definition"></a></dt>
+<dd><p>Create a <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Vocabulary" title="jschon.vocabulary.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> object, which
+may be used by a <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Metaschema" title="jschon.vocabulary.Metaschema"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metaschema</span></code></a> to provide
+keyword classes used in schema construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the vocabulary</p></li>
+<li><p><strong>kwclasses</strong> (<em>Type</em><em>[</em><a class="reference internal" href="vocabulary.html#jschon.vocabulary.Keyword" title="jschon.vocabulary.Keyword"><em>Keyword</em></a><em>]</em>) – the <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Keyword" title="jschon.vocabulary.Keyword"><code class="xref py py-class docutils literal notranslate"><span class="pre">Keyword</span></code></a> classes
+constituting the vocabulary</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the newly created <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Vocabulary" title="jschon.vocabulary.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="vocabulary.html#jschon.vocabulary.Vocabulary" title="jschon.vocabulary.Vocabulary"><em>Vocabulary</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.del_resource">
+<span class="sig-name descname"><span class="pre">del_resource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.del_resource" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a (sub)resource from a cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the (sub)schema</p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – schema cache identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.del_schema">
+<span class="sig-name descname"><span class="pre">del_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.del_schema" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a (sub)schema from a cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the (sub)schema</p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – schema cache identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.enable_formats">
+<span class="sig-name descname"><span class="pre">enable_formats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">format_attr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.enable_formats" title="Permalink to this definition"></a></dt>
+<dd><p>Enable validation of the specified format attributes.</p>
+<p>These may include formats defined in <a class="reference internal" href="formats.html#module-jschon.formats" title="jschon.formats"><code class="xref py py-mod docutils literal notranslate"><span class="pre">jschon.formats</span></code></a>
+and elsewhere.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>format_attr</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.get_catalog">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'catalog'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.get_catalog" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><em>Catalog</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.get_metadocument">
+<span class="sig-name descname"><span class="pre">get_metadocument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_cls=&lt;class</span> <span class="pre">'jschon.jsonformat.EvaluableJSON'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.get_metadocument" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>meta_cls</strong> (<em>Type</em><em>[</em><a class="reference internal" href="jsonformat.html#jschon.jsonformat.EvaluableJSON" title="jschon.jsonformat.EvaluableJSON"><em>EvaluableJSON</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="jsonformat.html#jschon.jsonformat.EvaluableJSON" title="jschon.jsonformat.EvaluableJSON">EvaluableJSON</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.get_metaschema">
+<span class="sig-name descname"><span class="pre">get_metaschema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.get_metaschema" title="Permalink to this definition"></a></dt>
+<dd><p>Get a metaschema identified by <cite>uri</cite> from the <code class="docutils literal notranslate"><span class="pre">'__meta__'</span></code> cache, or
+load it from configured sources if not already cached.</p>
+<p>Note that metaschemas that do not declare a known core vocabulary
+in <code class="docutils literal notranslate"><span class="pre">&quot;$vocabulary&quot;</span></code> must first be created using <a class="reference internal" href="#jschon.catalog.Catalog.create_metaschema" title="jschon.catalog.Catalog.create_metaschema"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_metaschema()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the metaschema</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="exc.html#jschon.exc.CatalogError" title="jschon.exc.CatalogError"><strong>CatalogError</strong></a> – if the object referenced by <cite>uri</cite> is not
+a <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Metaschema" title="jschon.vocabulary.Metaschema"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metaschema</span></code></a>, or if it is not valid</p></li>
+<li><p><a class="reference internal" href="exc.html#jschon.exc.JSONSchemaError" title="jschon.exc.JSONSchemaError"><strong>JSONSchemaError</strong></a> – if the metaschema is loaded from sources
+but no known core vocabulary is present in <code class="docutils literal notranslate"><span class="pre">&quot;$vocabulary&quot;</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="vocabulary.html#jschon.vocabulary.Metaschema" title="jschon.vocabulary.Metaschema"><em>Metaschema</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.get_resource">
+<span class="sig-name descname"><span class="pre">get_resource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadocument_uri=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid='default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls=&lt;class</span> <span class="pre">'jschon.resource.JSONResource'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factory=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.get_resource" title="Permalink to this definition"></a></dt>
+<dd><p>Get a (sub)resource identified by <cite>uri</cite> from a cache, or
+load it from a <a class="reference internal" href="#jschon.catalog.Source" title="jschon.catalog.Source"><code class="xref py py-class docutils literal notranslate"><span class="pre">Source</span></code></a> if not already cached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the (sub)resource</p></li>
+<li><p><strong>metadocument_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – passed to the resource constrructor when
+loading a new instance from a source; currently this is only
+used with <code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code> instances where it is passed
+as the <code class="docutils literal notranslate"><span class="pre">metaschema_uri</span></code> parameter</p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – schema cache identifier</p></li>
+<li><p><strong>cls</strong> (<em>Union</em><em>[</em><em>Type</em><em>[</em><a class="reference internal" href="resource.html#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><em>JSONResource</em></a><em>]</em><em>, </em><em>Type</em><em>[</em><a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a><em>]</em><em>]</em>) – The <a class="reference internal" href="resource.html#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">jschon.resource.JSONResource</span></code></a> subclass to
+instantiate</p></li>
+<li><p><strong>factory</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><a class="reference internal" href="resource.html#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><em>JSONResource</em></a><em>]</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exc.html#jschon.exc.CatalogError" title="jschon.exc.CatalogError"><strong>CatalogError</strong></a> – if a schema cannot be found for <cite>uri</cite>, or if the
+object referenced by <cite>uri</cite> does not match the type in the
+<code class="docutils literal notranslate"><span class="pre">cls</span></code> parameter</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="resource.html#jschon.resource.JSONResource" title="jschon.resource.JSONResource">JSONResource</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.get_schema">
+<span class="sig-name descname"><span class="pre">get_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metaschema_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.get_schema" title="Permalink to this definition"></a></dt>
+<dd><p>Get a (sub)schema identified by <cite>uri</cite> from a cache, or
+load it from disk if not already cached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the (sub)schema</p></li>
+<li><p><strong>metaschema_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em> | </em><em>None</em>) – passed to the <a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a>
+constructor when loading a new instance from disk</p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – schema cache identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exc.html#jschon.exc.CatalogError" title="jschon.exc.CatalogError"><strong>CatalogError</strong></a> – if a schema cannot be found for <cite>uri</cite>, or if the
+object referenced by <cite>uri</cite> is not a <a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.get_vocabulary">
+<span class="sig-name descname"><span class="pre">get_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.get_vocabulary" title="Permalink to this definition"></a></dt>
+<dd><p>Get a <a class="reference internal" href="vocabulary.html#jschon.vocabulary.Vocabulary" title="jschon.vocabulary.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> by its <cite>uri</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – the URI identifying the vocabulary</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exc.html#jschon.exc.CatalogError" title="jschon.exc.CatalogError"><strong>CatalogError</strong></a> – if <cite>uri</cite> is not a recognized vocabulary URI</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="vocabulary.html#jschon.vocabulary.Vocabulary" title="jschon.vocabulary.Vocabulary"><em>Vocabulary</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.is_format_enabled">
+<span class="sig-name descname"><span class="pre">is_format_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_attr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.is_format_enabled" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if validation is enabled for <cite>format_attr</cite>,
+False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.load_json">
+<span class="sig-name descname"><span class="pre">load_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.load_json" title="Permalink to this definition"></a></dt>
+<dd><p>Load a JSON-compatible object from the source for <cite>uri</cite>.</p>
+<p>If there are multiple candidate base URIs for <cite>uri</cite>, the most specific
+match (i.e. the longest one) is selected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – a normalized, absolute URI - including scheme, without
+a fragment</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="exc.html#jschon.exc.CatalogError" title="jschon.exc.CatalogError"><strong>CatalogError</strong></a> – if <cite>uri</cite> is invalid, a source is not available
+for <cite>uri</cite>, or if a loading error occurs</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None | bool | int | float | str | <em>Sequence</em>[<em>Any</em>] | <em>Mapping</em>[str, <em>Any</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.resolve_references">
+<span class="sig-name descname"><span class="pre">resolve_references</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cacheid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Catalog.resolve_references" title="Permalink to this definition"></a></dt>
+<dd><p>Ensures that all references in all schemas in a cache have been resolved.</p>
+<p>This method is a convenience method for use after instantiatng numerous schemas
+with <code class="docutils literal notranslate"><span class="pre">resolve_references=False</span></code>.  It ensures that reference resolution will
+not fail during <a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema.evaluate" title="jschon.jsonschema.JSONSchema.evaluate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">evaluate()</span></code></a> by calling
+<a class="reference internal" href="jsonschema.html#jschon.jsonschema.JSONSchema.resolve_references" title="jschon.jsonschema.JSONSchema.resolve_references"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resolve_references()</span></code></a> on each schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cacheid</strong> (<em>Hashable</em>) – The cache in which to resolve all schema references.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.catalog.Catalog.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#jschon.catalog.Catalog.name" title="Permalink to this definition"></a></dt>
+<dd><p>The unique name of this <a class="reference internal" href="#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.catalog.LocalSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.catalog.</span></span><span class="sig-name descname"><span class="pre">LocalSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_dir</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.LocalSource" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_dir</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>PathLike</em><em>]</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.LocalSource.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.LocalSource.__call__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>relative_path</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None | bool | int | float | str | <em>Sequence</em>[<em>Any</em>] | <em>Mapping</em>[str, <em>Any</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.LocalSource.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_dir</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.LocalSource.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_dir</strong> (<em>str</em><em> | </em><em>PathLike</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.catalog.RemoteSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.catalog.</span></span><span class="sig-name descname"><span class="pre">RemoteSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.RemoteSource" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_url</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.RemoteSource.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.RemoteSource.__call__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>relative_path</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None | bool | int | float | str | <em>Sequence</em>[<em>Any</em>] | <em>Mapping</em>[str, <em>Any</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.RemoteSource.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.RemoteSource.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_url</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.catalog.Source">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.catalog.</span></span><span class="sig-name descname"><span class="pre">Source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Source" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>suffix</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Source.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Source.__call__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>relative_path</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None | bool | int | float | str | <em>Sequence</em>[<em>Any</em>] | <em>Mapping</em>[str, <em>Any</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.catalog.Source.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.catalog.Source.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>suffix</strong> (<em>str</em><em> | </em><em>None</em>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exc.html" class="btn btn-neutral float-right" title="jschon.exc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

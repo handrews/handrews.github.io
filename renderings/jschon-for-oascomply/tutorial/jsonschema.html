@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON Schema &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Catalog" href="catalog.html" />
+    <link rel="prev" title="JSON Pointer" href="jsonpointer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsonpointer.html">JSON Pointer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">JSON Schema</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#initializing-the-catalog">Initializing the catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-schema">Creating a schema</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-schema-from-a-python-object">Creating a schema from a Python object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deserializing-a-schema-from-a-json-text-document">Deserializing a schema from a JSON text document</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#retrieving-a-schema-from-the-catalog">Retrieving a schema from the catalog</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="catalog.html">The Catalog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="referencing.html">Advanced Referencing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../tutorial.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">JSON Schema</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorial/jsonschema.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="json-schema">
+<h1>JSON Schema<a class="headerlink" href="#json-schema" title="Permalink to this heading"></a></h1>
+<p>The <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> class represents a <em>compiled</em> JSON
+schema document. Once instantiated, a <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a>
+object contains all the structural information and executable code it requires
+for evaluating <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> instances, and it may be re-used any
+number of times for such evaluation. References to other schemas are resolved
+during construction, guaranteeing further that any referenced schemas are also
+fully loaded, compiled and ready for use and re-use.</p>
+<p><a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> is a specialization of the <a class="reference internal" href="../reference/json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>
+class, and provides all the capabilities of its ancestor, as described in the
+<a class="reference internal" href="json.html"><span class="doc">JSON</span></a> guide. Only its JSON type is limited – to one of <code class="docutils literal notranslate"><span class="pre">&quot;object&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&quot;boolean&quot;</span></code> – in accordance with the JSON Schema specification. As we might
+expect, <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> introduces several new properties
+and behaviours, which we’ll explore in the following sections.</p>
+<section id="initializing-the-catalog">
+<h2>Initializing the catalog<a class="headerlink" href="#initializing-the-catalog" title="Permalink to this heading"></a></h2>
+<p>Before we can begin creating and working with schemas, we must set up a catalog.
+For the examples shown on the remainder of this page, we’ll use the following:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">jschon</span> <span class="kn">import</span> <span class="n">create_catalog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">create_catalog</span><span class="p">(</span><span class="s1">&#39;2020-12&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-a-schema">
+<h2>Creating a schema<a class="headerlink" href="#creating-a-schema" title="Permalink to this heading"></a></h2>
+<p>There are several different ways to instantiate a <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a>:</p>
+<ul class="simple">
+<li><p>Create it directly from a schema-compatible Python object such as a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> or a <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>.</p></li>
+<li><p>Deserialize it from a JSON file or a JSON string using the
+<a class="reference internal" href="../reference/json.html#jschon.json.JSON.loadf" title="jschon.json.JSON.loadf"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loadf()</span></code></a> or <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loads" title="jschon.json.JSON.loads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loads()</span></code></a>
+class method.</p></li>
+<li><p>Retrieve it from the <a class="reference internal" href="../reference/catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> by providing
+a schema URI, which maps to a schema file on disk.</p></li>
+</ul>
+<p>But first, let’s import the classes that we’ll be using:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">jschon</span> <span class="kn">import</span> <span class="n">JSONSchema</span><span class="p">,</span> <span class="n">URI</span>
+</pre></div>
+</div>
+<section id="creating-a-schema-from-a-python-object">
+<h3>Creating a schema from a Python object<a class="headerlink" href="#creating-a-schema-from-a-python-object" title="Permalink to this heading"></a></h3>
+<p>A <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> object can be created directly from
+any schema-compatible Python object, such as a <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> or a <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+<p>For boolean schemas and empty schemas, it’s as simple as:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">true_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">false_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">empty_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">({})</span>
+</pre></div>
+</div>
+<p>Creating a <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> object from any non-empty
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code>, however, requires that we specify a meta-schema. Here’s a
+very basic example of a schema that simply ensures that a JSON value represents
+an integer:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+<span class="gp">... </span><span class="p">},</span> <span class="n">metaschema_uri</span><span class="o">=</span><span class="n">URI</span><span class="p">(</span><span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The <cite>metaschema_uri</cite> parameter resolves to a <a class="reference internal" href="../reference/vocabulary.html#jschon.vocabulary.Metaschema" title="jschon.vocabulary.Metaschema"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metaschema</span></code></a>
+object, which provides the new <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> instance
+with <a class="reference internal" href="../reference/vocabulary.html#jschon.vocabulary.Keyword" title="jschon.vocabulary.Keyword"><code class="xref py py-class docutils literal notranslate"><span class="pre">Keyword</span></code></a> classes for each of its keywords. The
+meta-schema URI may be parameterized, as above, or it may be provided using the
+<code class="docutils literal notranslate"><span class="pre">&quot;$schema&quot;</span></code> keyword:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span>
+<span class="gp">... </span><span class="p">})</span>
+</pre></div>
+</div>
+<p>If both are provided, the <code class="docutils literal notranslate"><span class="pre">&quot;$schema&quot;</span></code> keyword takes precedence:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span>
+<span class="gp">... </span><span class="p">},</span> <span class="n">metaschema_uri</span><span class="o">=</span><span class="n">URI</span><span class="p">(</span><span class="s2">&quot;https://json-schema.org/draft/2019-09/schema&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_schema</span><span class="o">.</span><span class="n">metaschema_uri</span>
+<span class="go">URI(&#39;https://json-schema.org/draft/2020-12/schema&#39;)</span>
+</pre></div>
+</div>
+<p>An identifying URI is automatically generated for every root schema:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_schema</span><span class="o">.</span><span class="n">uri</span>
+<span class="go">URI(&#39;urn:uuid:f3adf4a3-c03d-4f30-9072-5bc7b8e9f078&#39;)</span>
+</pre></div>
+</div>
+<p>The schema URI is used as the key for caching the schema in the catalog, and
+is required for resolving references to itself and to any subschemas it may
+contain. If the schema is intended to be referenced from other schemas in the
+catalog, then a URI should be provided explicitly. This may either be passed via
+the <cite>uri</cite> parameter to the constructor, or declared in the schema document itself
+using the <code class="docutils literal notranslate"><span class="pre">&quot;$id&quot;</span></code> keyword. If both are provided, the <code class="docutils literal notranslate"><span class="pre">&quot;$id&quot;</span></code> keyword takes
+precedence:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;$id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com/the-real-id&quot;</span>
+<span class="gp">... </span><span class="p">},</span> <span class="n">uri</span><span class="o">=</span><span class="s2">&quot;https://example.com/not-the-real-id&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_schema</span><span class="o">.</span><span class="n">uri</span>
+<span class="go">URI(&#39;https://example.com/the-real-id&#39;)</span>
+</pre></div>
+</div>
+</section>
+<section id="deserializing-a-schema-from-a-json-text-document">
+<h3>Deserializing a schema from a JSON text document<a class="headerlink" href="#deserializing-a-schema-from-a-json-text-document" title="Permalink to this heading"></a></h3>
+<p>Suppose that we have a string containing a JSON schema, such as the following,
+which validates a numeric JSON value:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">schema_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{</span>
+<span class="gp">... </span><span class="s1">    &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,</span>
+<span class="gp">... </span><span class="s1">    &quot;$id&quot;: &quot;https://example.com/num-schema&quot;,</span>
+<span class="gp">... </span><span class="s1">    &quot;type&quot;: &quot;number&quot;</span>
+<span class="gp">... </span><span class="s1">}&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>We can deserialize this JSON text into a new <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a>
+instance using the <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loads" title="jschon.json.JSON.loads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loads()</span></code></a> class method:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">num_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">schema_text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the schema is stored in a JSON text file, we can deserialize directly from
+the file by providing the file path to the <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loadf" title="jschon.json.JSON.loadf"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loadf()</span></code></a> class
+method:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">num_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="o">.</span><span class="n">loadf</span><span class="p">(</span><span class="s1">&#39;/path/to/num-schema.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The argument to <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loadf" title="jschon.json.JSON.loadf"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loadf()</span></code></a> may be a plain <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, or
+any <code class="xref py py-class docutils literal notranslate"><span class="pre">PathLike</span></code> object; for example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;num-schema.json&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">num_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="o">.</span><span class="n">loadf</span><span class="p">(</span><span class="n">schema_path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Both <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loads" title="jschon.json.JSON.loads"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loads()</span></code></a> and <a class="reference internal" href="../reference/json.html#jschon.json.JSON.loadf" title="jschon.json.JSON.loadf"><code class="xref py py-meth docutils literal notranslate"><span class="pre">loadf()</span></code></a> accept
+keyword arguments that are passed through to the <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a>
+constructor, in case we need to parameterize the meta-schema URI, the schema URI, or
+any other <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> constructor argument:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">num_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">schema_text</span><span class="p">,</span> <span class="n">metaschema_uri</span><span class="o">=</span><span class="n">URI</span><span class="p">(</span><span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">num_schema</span> <span class="o">=</span> <span class="n">JSONSchema</span><span class="o">.</span><span class="n">loadf</span><span class="p">(</span><span class="n">schema_path</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">URI</span><span class="p">(</span><span class="s2">&quot;https://example.com/num-schema&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="retrieving-a-schema-from-the-catalog">
+<h3>Retrieving a schema from the catalog<a class="headerlink" href="#retrieving-a-schema-from-the-catalog" title="Permalink to this heading"></a></h3>
+<p>Finally, a <a class="reference internal" href="../reference/jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONSchema</span></code></a> object may be instantiated implicitly,
+when retrieving it by URI from the <a class="reference internal" href="../reference/catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a>. If the schema is not
+already cached, it is loaded from disk and compiled on the fly. This approach requires
+the catalog to be configured with an appropriate base URI-to-directory mapping. For
+more information, see <a class="reference internal" href="catalog.html#catalog-reference-loading"><span class="std std-ref">Reference loading</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jsonpointer.html" class="btn btn-neutral float-left" title="JSON Pointer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="catalog.html" class="btn btn-neutral float-right" title="The Catalog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

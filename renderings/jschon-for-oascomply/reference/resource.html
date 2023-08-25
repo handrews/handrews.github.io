@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jschon.resource &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="jschon.uri" href="uri.html" />
+    <link rel="prev" title="jschon.output" href="output.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#package-api">Package API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#module-reference">Module Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="catalog.html">jschon.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exc.html">jschon.exc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="formats.html">jschon.formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="json.html">jschon.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonformat.html">jschon.jsonformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonpatch.html">jschon.jsonpatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonpointer.html">jschon.jsonpointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jsonschema.html">jschon.jsonschema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html">jschon.output</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">jschon.resource</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.DuplicateResourceURIError"><code class="docutils literal notranslate"><span class="pre">DuplicateResourceURIError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.InconsistentResourceRootError"><code class="docutils literal notranslate"><span class="pre">InconsistentResourceRootError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.RelativeResourceURIError"><code class="docutils literal notranslate"><span class="pre">RelativeResourceURIError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.ResourceError"><code class="docutils literal notranslate"><span class="pre">ResourceError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.ResourceNotReadyError"><code class="docutils literal notranslate"><span class="pre">ResourceNotReadyError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.ResourceURINotSetError"><code class="docutils literal notranslate"><span class="pre">ResourceURINotSetError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.UnRootedResourceError"><code class="docutils literal notranslate"><span class="pre">UnRootedResourceError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.JSONResource"><code class="docutils literal notranslate"><span class="pre">JSONResource</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jschon.resource.ResourceURIs"><code class="docutils literal notranslate"><span class="pre">ResourceURIs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="uri.html">jschon.uri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html">jschon.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vocabulary.html">jschon.vocabulary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">jschon.resource</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/resource.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-jschon.resource">
+<span id="jschon-resource"></span><h1>jschon.resource<a class="headerlink" href="#module-jschon.resource" title="Permalink to this heading"></a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="jschon.resource.DuplicateResourceURIError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">DuplicateResourceURIError</span></span><a class="headerlink" href="#jschon.resource.DuplicateResourceURIError" title="Permalink to this definition"></a></dt>
+<dd><p>Raised if an empty relative URI is used for a resource root, which produces a duplicate URI of the resource that provided the initial base URI.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jschon.resource.InconsistentResourceRootError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">InconsistentResourceRootError</span></span><a class="headerlink" href="#jschon.resource.InconsistentResourceRootError" title="Permalink to this definition"></a></dt>
+<dd><p>Raised when <code class="xref py py-attr docutils literal notranslate"><span class="pre">resource_root</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_resource_root()</span></code> disagree during instantiation.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jschon.resource.RelativeResourceURIError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">RelativeResourceURIError</span></span><a class="headerlink" href="#jschon.resource.RelativeResourceURIError" title="Permalink to this definition"></a></dt>
+<dd><p>Raised when attempting to set a URI to a relative URI-reference without an available base URI.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jschon.resource.ResourceError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">ResourceError</span></span><a class="headerlink" href="#jschon.resource.ResourceError" title="Permalink to this definition"></a></dt>
+<dd><p>An error originating in the <a class="reference internal" href="#module-jschon.resource" title="jschon.resource"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code></a> module.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jschon.resource.ResourceNotReadyError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">ResourceNotReadyError</span></span><a class="headerlink" href="#jschon.resource.ResourceNotReadyError" title="Permalink to this definition"></a></dt>
+<dd><p>Raised if the <code class="docutils literal notranslate"><span class="pre">path</span></code>, <code class="docutils literal notranslate"><span class="pre">parent</span></code>, and <code class="docutils literal notranslate"><span class="pre">resource_root</span></code> attributes are not availalbe on resource initialization.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURINotSetError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">ResourceURINotSetError</span></span><a class="headerlink" href="#jschon.resource.ResourceURINotSetError" title="Permalink to this definition"></a></dt>
+<dd><p>Raised when accessing any URI property before the URI has been set.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jschon.resource.UnRootedResourceError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">UnRootedResourceError</span></span><a class="headerlink" href="#jschon.resource.UnRootedResourceError" title="Permalink to this definition"></a></dt>
+<dd><p>Raised when there is no <a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> root in the resource.</p>
+<p>This can happen if neither the current node nor any of its ancestors
+are explicitly marked as resoruce roots in some way, and the document
+root node, which is the default resource root, is not
+a <a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> instance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">JSONResource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog='catalog'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid='default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_base_uri=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_uri_factory=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_uris=frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve_references=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_recursion_args=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">itemclass=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**itemkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.JSONResource" title="Permalink to this definition"></a></dt>
+<dd><p>Supports URIs and <a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> management.</p>
+<blockquote>
+<div><p>This class faciliates the extension of <code class="docutils literal notranslate"><span class="pre">jschon</span></code> to formats
+beyond JSON Schema, and is not intended for direct use.
+<a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> subclasses representing document nodes
+in a URI-identified resource should inherit from this class, which
+overrides <a class="reference internal" href="json.html#jschon.json.JSON.pre_recursion_init" title="jschon.json.JSON.pre_recursion_init"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jschon.json.JSON.pre_recursion_init()</span></code></a> to set up
+the resource infrastructure.</p>
+</div></blockquote>
+<dl>
+<dt>.</dt><dd><p><a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> subclasses that can contain references among
+or within documents must implement <a class="reference internal" href="#jschon.resource.JSONResource.resolve_references" title="jschon.resource.JSONResource.resolve_references"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resolve_references()</span></code></a>.</p>
+<p>Resources have at least one URI and can serve as reference sources
+and / or targets.  They can be loaded by requesting them by URI
+from a <a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> instance, which is the
+typical way to resolve references from one resource to another.</p>
+<p>In some document formats, only certain nodes are relevant to resource
+identity.  This class supports the notion of a parent-in-resource,
+which is the nearest parent node that might impact resource identity.
+It also supports the determination of a resource root other than
+the document root.</p>
+<p>For example, in JSON Schema documents, only schema nodes can determine
+resource identity, and only the <cite>“$id”</cite> keyword indicates a resource
+root other than the document root.</p>
+<p>A resource can encompass multiple formats, such as in OpenAPI 3.1
+where a Schema Object is a JSON Schema-format structure, but is
+not a distinct resource from the OpenAPI document unless it
+contains <cite>“$id”</cite>.</p>
+<p>All constructor parameters are either passed through directly to
+<a class="reference internal" href="json.html#jschon.json.JSON.__init__" title="jschon.json.JSON.__init__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">jschon.json.JSON.__init__()</span></code></a> or are passed via its
+<code class="docutils literal notranslate"><span class="pre">pre_recursion_args</span></code> parameter to :meth:pre_recursion_init`;
+see those methods for parameter documentation.  The one exception
+is <code class="docutils literal notranslate"><span class="pre">pre_recursion_args</span></code> itself, which is merged with but in cases
+of conflict takes precedence over the pre-recursion arguments
+produced by this class.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog='catalog'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid='default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_base_uri=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_uri_factory=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_uris=frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve_references=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_recursion_args=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">itemclass=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**itemkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.JSONResource.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+<li><p><strong>parent</strong> (<a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>key</strong> (<em>str</em>) – </p></li>
+<li><p><strong>catalog</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><em>Catalog</em></a><em>]</em>) – </p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – </p></li>
+<li><p><strong>uri</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – </p></li>
+<li><p><strong>initial_base_uri</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – </p></li>
+<li><p><strong>default_uri_factory</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – </p></li>
+<li><p><strong>additional_uris</strong> (<em>Set</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – </p></li>
+<li><p><strong>resolve_references</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>pre_recursion_args</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – </p></li>
+<li><p><strong>itemclass</strong> (<em>Type</em><em>[</em><a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a><em>]</em>) – </p></li>
+<li><p><strong>itemkwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.is_resource_root">
+<span class="sig-name descname"><span class="pre">is_resource_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.JSONResource.is_resource_root" title="Permalink to this definition"></a></dt>
+<dd><p>True if this node is at the root of a distinct resource.</p>
+<p>This base class defines resource_root-ness to be equivalent
+to <code class="xref py py-attr docutils literal notranslate"><span class="pre">document_root</span></code>.  Resources that can have non-document-root
+resource roots must subclass and override this method.</p>
+<p>The document root should always be considered a resource root.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.pre_recursion_init">
+<span class="sig-name descname"><span class="pre">pre_recursion_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">catalog='catalog'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacheid='default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_uris=frozenset({})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_base_uri=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_uri_factory=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve_references=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.JSONResource.pre_recursion_init" title="Permalink to this definition"></a></dt>
+<dd><p>Configure identifiers and register with the catalog if needed.</p>
+<p>This method is intended to be called by <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> methods only.</p>
+<p>The resource is registered under the following conditions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uri</span></code> does not have a fragment</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uri</span></code> has an empty fragment, which is interpreted as a root
+JSON Pointer; the resource is then registered under the
+semantically equivalent absolute-URI (as defiend by RFC 3986 §4.3)</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">uri</span></code> has a non-JSON Pointer fragment</dt><dd><ul>
+<li><p>If also a resource root, the absolute-URI form is also registered</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uri</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and this node is a resource root, in which case</p></li>
+</ul>
+<p>a UUID URN is generated and registered</p>
+<p>The <a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> can resolve JSON Pointer fragment
+URIs without cluttering the cache with them.  The empty JSON Pointer
+fragment is special-cased due to its complex history in JSON Schema’s
+<code class="docutils literal notranslate"><span class="pre">&quot;$id&quot;</span></code> keyword.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uri</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – The URI under which this document is to be registered
+with the <a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a>, which may be adjusted
+as explaine above.  If created by the catalog, this will be the
+URI used to request the resource.</p></li>
+<li><p><strong>catalog</strong> (<em>Union</em><em>[</em><a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><em>Catalog</em></a><em>, </em><em>str</em><em>]</em>) – The catalog name or instance managing this resource.</p></li>
+<li><p><strong>cacheid</strong> (<em>Hashable</em>) – The identifier for the cache within the catalog
+in which this resource is stored.</p></li>
+<li><p><strong>uri</strong> – The primary URI initially used to identify the resource.
+This is handled and, if appropriate, registered with the relevant
+<a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a>, as documented above.  If it
+differs from a relative URI specified in the content, and if no
+<code class="docutils literal notranslate"><span class="pre">initial_base_uri</span></code> parameter is provided, it is treated as
+the retrieval URI in accordance with RFC 3986 §5.1.3, as that is
+how the <a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> sets it when instantiating
+a resource retrieved from storage.</p></li>
+<li><p><strong>additional_uris</strong> (<em>Set</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – Additional URIs under which this resource
+should be registered.  The caller is responsible for ensuring
+that these URIs, along with the <code class="docutils literal notranslate"><span class="pre">uri</span></code> parameter, do not
+conflict with each other in problematic ways.  URIs with non-empty
+JSON Pointer fragments are ignored;
+see <a class="reference internal" href="#jschon.resource.ResourceURIs.uris_for" title="jschon.resource.ResourceURIs.uris_for"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ResourceURIs.uris_for()</span></code></a> for an explanation.</p></li>
+<li><p><strong>initial_base_uri</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – A base URI, assumed to be determined in
+accordance with RFC 3986 §5.1, against which a relative <code class="docutils literal notranslate"><span class="pre">uri</span></code>
+parameter should be resolved.  If no initial base URI is passed
+and one is needed, one will be generated using the
+<code class="docutils literal notranslate"><span class="pre">default_uri_factory</span></code> parameter.</p></li>
+<li><p><strong>default_uri_factory</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – A callable that produces a unique URI
+on each invocation so that anonymous resources can be assigned
+a URI for internal <a class="reference internal" href="catalog.html#jschon.catalog.Catalog" title="jschon.catalog.Catalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catalog</span></code></a> registration.</p></li>
+<li><p><strong>resolve_references</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.resolve_references">
+<span class="sig-name descname"><span class="pre">resolve_references</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.JSONResource.resolve_references" title="Permalink to this definition"></a></dt>
+<dd><p>Resolve references, recursivey walking the document from this node.</p>
+<p>The exact behavior of reference resolution is determined by the
+<a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> subclass implementing this interface.</p>
+<p>See also <code class="xref py py-attr docutils literal notranslate"><span class="pre">references_resolved</span></code>; implementations should set
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">_references_resolved</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> to avoid expensive
+re-resolution.</p>
+<p>If references are not supported, reference resolution trivially
+succeeds.  This is the default behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.additional_uris">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_uris</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FrozenSet</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><span class="pre">URI</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.JSONResource.additional_uris" title="Permalink to this definition"></a></dt>
+<dd><p>URIs other than <a class="reference internal" href="#jschon.resource.JSONResource.uri" title="jschon.resource.JSONResource.uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">uri</span></code></a> registered with the catalog.</p>
+<p>This set is intended to be used for non-JSON Pointer-fragment
+URIs such as plain name fragments and alternate absolute-URIs
+under which this resource might be requested, none of which
+affect the resource’s base URI or are automatically propagated
+to child resource nodes.</p>
+<p>URIs in this set with an empty JSON Pointer fragment are converted
+to the absolute-URI form, which is semantically equivalent.</p>
+<p>If <a class="reference internal" href="#jschon.resource.JSONResource.uri" title="jschon.resource.JSONResource.uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">uri</span></code></a> (or its empty JSON Pointer fragment equivalent)
+is in the set assigned to this property, it will be ignored.</p>
+<p>To change <a class="reference internal" href="#jschon.resource.JSONResource.base_uri" title="jschon.resource.JSONResource.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a> and <a class="reference internal" href="#jschon.resource.JSONResource.pointer_uri" title="jschon.resource.JSONResource.pointer_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pointer_uri</span></code></a>, assign to
+<a class="reference internal" href="#jschon.resource.JSONResource.uri" title="jschon.resource.JSONResource.uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">uri</span></code></a> rather thian this attribute.</p>
+<p>This set is not guaranteed to be complete, as external code
+can add resources to catalogs directly.</p>
+<p>Setting this attribute will unregister removed URIs and register
+the added ones.  URIs with non-empty JSON Pointer fragments are
+dropped from this set for reasons described in the documentation
+for <code class="xref py py-meth docutils literal notranslate"><span class="pre">uri-for()</span></code>.  An empty JSON Pointer fragment will be stripped,
+and the result used (unless it is identical to <a class="reference internal" href="#jschon.resource.JSONResource.uri" title="jschon.resource.JSONResource.uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">uri</span></code></a>, in which
+case it wil be ignored(.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.base_uri">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">base_uri</span></span><a class="headerlink" href="#jschon.resource.JSONResource.base_uri" title="Permalink to this definition"></a></dt>
+<dd><p>The absolute-URI against which relative references are resolved.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.child_resource_nodes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">child_resource_nodes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><span class="pre">JSONResource</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.JSONResource.child_resource_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>All immediate <a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> descendents.</p>
+<p>This ignores intervening non-<a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> descendants,
+but does not distinguish between descendents in the same resource
+or in a distinct embedded resource.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.child_resource_roots">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">child_resource_roots</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><span class="pre">JSONResource</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.JSONResource.child_resource_roots" title="Permalink to this definition"></a></dt>
+<dd><p>Immediate descendents that are roots of embedded resources.</p>
+<p><a class="reference internal" href="#jschon.resource.JSONResource.child_resource_nodes" title="jschon.resource.JSONResource.child_resource_nodes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">child_resource_nodes</span></code></a> with non-roots filtered out.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.children_in_resource">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">children_in_resource</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><span class="pre">JSONResource</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.JSONResource.children_in_resource" title="Permalink to this definition"></a></dt>
+<dd><p>Immediate <a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> descendents in the same resource.</p>
+<p><a class="reference internal" href="#jschon.resource.JSONResource.child_resource_nodes" title="jschon.resource.JSONResource.child_resource_nodes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">child_resource_nodes</span></code></a>, but with roots of distinct embedded
+resources filtered out, leaving only children within the same resource.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.JSONResource.data" title="Permalink to this definition"></a></dt>
+<dd><p>The instance data.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>JSON type</p></th>
+<th class="head"><p>data type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>null</p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-odd"><td><p>boolean</p></td>
+<td><p>bool</p></td>
+</tr>
+<tr class="row-even"><td><p>number</p></td>
+<td><p>int | float</p></td>
+</tr>
+<tr class="row-odd"><td><p>string</p></td>
+<td><p>str</p></td>
+</tr>
+<tr class="row-even"><td><p>array</p></td>
+<td><p>list[JSON]</p></td>
+</tr>
+<tr class="row-odd"><td><p>object</p></td>
+<td><p>dict[str, JSON]</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.itemclass">
+<span class="sig-name descname"><span class="pre">itemclass</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.JSONResource.itemclass" title="Permalink to this definition"></a></dt>
+<dd><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code> class type of child instances.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.itemkwargs">
+<span class="sig-name descname"><span class="pre">itemkwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.JSONResource.itemkwargs" title="Permalink to this definition"></a></dt>
+<dd><p>Keyword arguments to the <a class="reference internal" href="#jschon.resource.JSONResource.itemclass" title="jschon.resource.JSONResource.itemclass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">itemclass</span></code></a> constructor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jschon.resource.JSONResource.key" title="Permalink to this definition"></a></dt>
+<dd><p>The index of the instance within its parent.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jschon.resource.JSONResource.parent" title="Permalink to this definition"></a></dt>
+<dd><p>The containing JSON instance.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.parent_in_resource">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parent_in_resource</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><span class="pre">JSONResource</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jschon.resource.JSONResource.parent_in_resource" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the nearest ancestor resource node in the same resource.</p>
+<p>This skips any intervening non-<a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> ancestor nodes,
+and returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if this node is a resource root.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.pointer_uri">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pointer_uri</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><span class="pre">URI</span></a></em><a class="headerlink" href="#jschon.resource.JSONResource.pointer_uri" title="Permalink to this definition"></a></dt>
+<dd><p>The URI of this node using its base URI and a JSON Pointer fragment.</p>
+<p>This property is similar to JSON Schema’s “canonical URI”, but
+is unambiguous and consistent with respect to fragments.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.resource_parent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resource_parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><span class="pre">JSONResource</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jschon.resource.JSONResource.resource_parent" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the nearest ancestor that is a <a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a>.</p>
+<p>This ancestor may or may not be part of the same resource, see
+also <a class="reference internal" href="#jschon.resource.JSONResource.parent_in_resource" title="jschon.resource.JSONResource.parent_in_resource"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parent_in_resource</span></code></a></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.resource_root">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resource_root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><span class="pre">JSONResource</span></a></em><a class="headerlink" href="#jschon.resource.JSONResource.resource_root" title="Permalink to this definition"></a></dt>
+<dd><p>The root this resource, which can differ from <code class="xref py py-attr docutils literal notranslate"><span class="pre">document_root</span></code>.</p>
+<p>See also <a class="reference internal" href="#jschon.resource.JSONResource.is_resource_root" title="jschon.resource.JSONResource.is_resource_root"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_resource_root()</span></code></a>; if no other ancestor node is
+indicated as a resource root, this should be equivalent to
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">document_root</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#jschon.resource.JSONResource.type" title="Permalink to this definition"></a></dt>
+<dd><p>The JSON type of the instance. One of
+<code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">boolean</span></code>, <code class="docutils literal notranslate"><span class="pre">number</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, <code class="docutils literal notranslate"><span class="pre">array</span></code>, <code class="docutils literal notranslate"><span class="pre">object</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="jschon.resource.JSONResource.uri">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uri</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><span class="pre">URI</span></a></em><a class="headerlink" href="#jschon.resource.JSONResource.uri" title="Permalink to this definition"></a></dt>
+<dd><p>The URI identifying the resource in the catalog’s cache.</p>
+<p>While <a class="reference internal" href="#jschon.resource.JSONResource.pointer_uri" title="jschon.resource.JSONResource.pointer_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pointer_uri</span></code></a> gives the location of this node in
+the JSON structure of the resource, this attribute is intended
+to be externally-facing when relevant.  While the code does not
+enforce this, callers are recommended to prefer:</p>
+<ul class="simple">
+<li><p>the <a class="reference internal" href="#jschon.resource.JSONResource.base_uri" title="jschon.resource.JSONResource.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a> if this is node is the resource root</p></li>
+<li><p>a URI with a non-JSON Pointer fragment attached to <a class="reference internal" href="#jschon.resource.JSONResource.base_uri" title="jschon.resource.JSONResource.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a></p></li>
+<li><p>the <a class="reference internal" href="#jschon.resource.JSONResource.pointer_uri" title="jschon.resource.JSONResource.pointer_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pointer_uri</span></code></a></p></li>
+</ul>
+<p>If this node is the <a class="reference internal" href="#jschon.resource.JSONResource.resource_root" title="jschon.resource.JSONResource.resource_root"><code class="xref py py-attr docutils literal notranslate"><span class="pre">resource_root</span></code></a>, the base URI can be
+changed by setting this property ao an absolute-URI, or to a
+URI with a non-JSON Pointer fragment (which will set <a class="reference internal" href="#jschon.resource.JSONResource.base_uri" title="jschon.resource.JSONResource.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a>
+to that URI’s base).  Setting a non-resource-root URI that
+disagrees with <a class="reference internal" href="#jschon.resource.JSONResource.base_uri" title="jschon.resource.JSONResource.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a> is not allowed; see
+<a class="reference internal" href="#jschon.resource.JSONResource.additional_uris" title="jschon.resource.JSONResource.additional_uris"><code class="xref py py-attr docutils literal notranslate"><span class="pre">additional_uris</span></code></a> for managing alternate URI registration.</p>
+<p>See :meth”<cite>ResourceURIs.uris_for</cite> for an explanation of how JSON
+Pointer fragment URIs are handled as catalog cache keyes.</p>
+<p>Assigning to this URI will unregister the old URI from the catalog
+and re-register this resource under the new URI, and update
+<a class="reference internal" href="#jschon.resource.JSONResource.base_uri" title="jschon.resource.JSONResource.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a> and <a class="reference internal" href="#jschon.resource.JSONResource.pointer_uri" title="jschon.resource.JSONResource.pointer_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pointer_uri</span></code></a> if appropriate.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.resource.</span></span><span class="sig-name descname"><span class="pre">ResourceURIs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">register_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_uris</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.ResourceURIs" title="Permalink to this definition"></a></dt>
+<dd><p>Data structure for organizing resource document node URIs by use case.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>register_uri</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>property_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>base_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>additional_uris</strong> (<em>Set</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">register_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">property_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_uris</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.ResourceURIs.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>register_uri</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>property_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>base_uri</strong> (<a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a>) – </p></li>
+<li><p><strong>additional_uris</strong> (<em>Set</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs.pointer_uri_for">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pointer_uri_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.ResourceURIs.pointer_uri_for" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs.uris_for">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uris_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_base_uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_uri_factory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.resource.ResourceURIs.uris_for" title="Permalink to this definition"></a></dt>
+<dd><p>Determine the URIs for various use cases.</p>
+<p>Absolute URIs (without a fragment) and URIs with non-JSON Pointer
+fragments are registered as-is.  If a non-JSON Pointer fragment
+is given for a resource root, the absolute form is assigned
+to <a class="reference internal" href="#jschon.resource.ResourceURIs.property_uri" title="jschon.resource.ResourceURIs.property_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">property_uri</span></code></a> (and <a class="reference internal" href="#jschon.resource.ResourceURIs.base_uri" title="jschon.resource.ResourceURIs.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a>) while the fragment URI
+is assigned to <a class="reference internal" href="#jschon.resource.ResourceURIs.additional_uris" title="jschon.resource.ResourceURIs.additional_uris"><code class="xref py py-attr docutils literal notranslate"><span class="pre">additional_uris</span></code></a>.</p>
+<p>JSON Pointer fragment URIs do not need to be registered with the
+catalog.  However, the empty JSON Pointer is semantically equivalent
+to not having a fragment, so in that case the absolute portion of
+that URI is assigned to <a class="reference internal" href="#jschon.resource.ResourceURIs.property_uri" title="jschon.resource.ResourceURIs.property_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">property_uri</span></code></a> and <a class="reference internal" href="#jschon.resource.ResourceURIs.base_uri" title="jschon.resource.ResourceURIs.base_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">base_uri</span></code></a>.</p>
+<p>JSON Pointer fragment URIs never appear in <a class="reference internal" href="#jschon.resource.ResourceURIs.additional_uris" title="jschon.resource.ResourceURIs.additional_uris"><code class="xref py py-attr docutils literal notranslate"><span class="pre">additional_uris</span></code></a>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">uri</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and this document node is a resource root,
+a UUID URN is generated for catalog registration purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> – The <a class="reference internal" href="#jschon.resource.JSONResource" title="jschon.resource.JSONResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONResource</span></code></a> node for which the URIs are
+being deterimined</p></li>
+<li><p><strong>uri</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – See <code class="xref py py-meth docutils literal notranslate"><span class="pre">pre_recursion_init()</span></code></p></li>
+<li><p><strong>initia_base_uri</strong> – See <code class="xref py py-meth docutils literal notranslate"><span class="pre">pre_recursion_init()</span></code></p></li>
+<li><p><strong>default_uri_factory</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – See <code class="xref py py-meth docutils literal notranslate"><span class="pre">pre_recursion_init()</span></code></p></li>
+<li><p><strong>initial_base_uri</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><em>URI</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#jschon.resource.ResourceURIs" title="jschon.resource.ResourceURIs">ResourceURIs</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs.additional_uris">
+<span class="sig-name descname"><span class="pre">additional_uris</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><span class="pre">URI</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jschon.resource.ResourceURIs.additional_uris" title="Permalink to this definition"></a></dt>
+<dd><p>Alternate URIs to register with the catalog.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs.base_uri">
+<span class="sig-name descname"><span class="pre">base_uri</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><span class="pre">URI</span></a></em><a class="headerlink" href="#jschon.resource.ResourceURIs.base_uri" title="Permalink to this definition"></a></dt>
+<dd><p>The base URI for the resource.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs.property_uri">
+<span class="sig-name descname"><span class="pre">property_uri</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="uri.html#jschon.uri.URI" title="jschon.uri.URI"><span class="pre">URI</span></a></em><a class="headerlink" href="#jschon.resource.ResourceURIs.property_uri" title="Permalink to this definition"></a></dt>
+<dd><p>The URI to return from the <code class="xref py py-attr docutils literal notranslate"><span class="pre">uri</span></code> property.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.resource.ResourceURIs.register_uri">
+<span class="sig-name descname"><span class="pre">register_uri</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#jschon.resource.ResourceURIs.register_uri" title="Permalink to this definition"></a></dt>
+<dd><p>Indicates if <a class="reference internal" href="#jschon.resource.ResourceURIs.property_uri" title="jschon.resource.ResourceURIs.property_uri"><code class="xref py py-attr docutils literal notranslate"><span class="pre">property_uri</span></code></a> should be registered with the catalog.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="output.html" class="btn btn-neutral float-left" title="jschon.output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="uri.html" class="btn btn-neutral float-right" title="jschon.uri" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

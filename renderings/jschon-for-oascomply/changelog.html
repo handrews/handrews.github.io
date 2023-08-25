@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Contributing" href="contributing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-11-1-in-development">v0.11.1 (in development)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-11-0-2023-06-03">v0.11.0 (2023-06-03)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-10-3-2023-05-21">v0.10.3 (2023-05-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-10-2-2023-04-20">v0.10.2 (2023-04-20)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-10-1-2023-04-11">v0.10.1 (2023-04-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-10-0-2023-04-01">v0.10.0 (2023-04-01)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-9-0-2022-08-14">v0.9.0 (2022-08-14)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-5-2022-05-10">v0.8.5 (2022-05-10)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-4-2022-02-03">v0.8.4 (2022-02-03)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-3-2022-01-31">v0.8.3 (2022-01-31)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-1-2022-01-30">v0.8.1 (2022-01-30)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-8-0-2022-01-29">v0.8.0 (2022-01-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-7-3-2021-10-24">v0.7.3 (2021-10-24)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-7-2-2021-08-28">v0.7.2 (2021-08-28)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-7-1-2021-08-08">v0.7.1 (2021-08-08)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-7-0-2021-08-08">v0.7.0 (2021-08-08)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-6-0-2021-06-10">v0.6.0 (2021-06-10)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-5-0-2021-06-01">v0.5.0 (2021-06-01)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-4-0-2021-05-21">v0.4.0 (2021-05-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-3-0-2021-05-15">v0.3.0 (2021-05-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-2-0-2021-04-18">v0.2.0 (2021-04-18)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-1-1-2021-04-06">v0.1.1 (2021-04-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-1-0-2021-03-31">v0.1.0 (2021-03-31)</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Changelog</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/changelog.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading"></a></h1>
+<section id="v0-11-1-in-development">
+<h2>v0.11.1 (in development)<a class="headerlink" href="#v0-11-1-in-development" title="Permalink to this heading"></a></h2>
+<p>Bug Fixes:</p>
+<ul class="simple">
+<li><p>Allow adding a source with a base URI of <code class="docutils literal notranslate"><span class="pre">None</span></code> to match full URIs as the <code class="docutils literal notranslate"><span class="pre">relative_path</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JSONPointer</span></code> and <code class="docutils literal notranslate"><span class="pre">RelativeJSONPointer</span></code> now have class attributes defining
+the exceptions that they use, which can be overidden in subclasses</p></li>
+<li><p>Cached property for accessing document root node from within JSON documents</p></li>
+<li><p>Cached properties for accessing document and resource root schemas from subschemas</p></li>
+<li><p>JSON.instantiate_{sequence|mapping}() functions allow more
+fine-grained control of JSON subclass document structure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;$schema&quot;</span></code> can change value in subschemas that have an <code class="docutils literal notranslate"><span class="pre">&quot;$id&quot;</span></code></p></li>
+<li><p>Support mutually referencing embedded subschema resources with the
+<code class="docutils literal notranslate"><span class="pre">resolve_references</span></code> constructor parameters and methods on
+<code class="docutils literal notranslate"><span class="pre">JSONSchema</span></code>, <code class="docutils literal notranslate"><span class="pre">Catalog</span></code>, and <code class="docutils literal notranslate"><span class="pre">create_catalog</span></code>.</p></li>
+</ul>
+</section>
+<section id="v0-11-0-2023-06-03">
+<h2>v0.11.0 (2023-06-03)<a class="headerlink" href="#v0-11-0-2023-06-03" title="Permalink to this heading"></a></h2>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RelativeJSONPointerError</span></code> superseded by <code class="docutils literal notranslate"><span class="pre">RelativeJSONPointerMalformedError</span></code>
+and <code class="docutils literal notranslate"><span class="pre">RelativeJSONPointerReferenceError</span></code></p></li>
+</ul>
+<p>Deprecations:</p>
+<ul class="simple">
+<li><p>Exception classes dropped from the top-level package API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jschon.exceptions</span></code> module renamed to <code class="docutils literal notranslate"><span class="pre">jschon.exc</span></code></p></li>
+</ul>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p>Exception classes documented</p></li>
+<li><p>Custom keyword example refactored to raise exception in constructor</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JschonError</span></code> base exception class introduced</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JSONPointerError</span></code> partitioned into <code class="docutils literal notranslate"><span class="pre">JSONPointerMalformedError</span></code>,
+<code class="docutils literal notranslate"><span class="pre">JSONPointerReferenceError</span></code>, <code class="docutils literal notranslate"><span class="pre">RelativeJSONPointerMalformedError</span></code>
+and <code class="docutils literal notranslate"><span class="pre">RelativeJSONPointerReferenceError</span></code></p></li>
+</ul>
+</section>
+<section id="v0-10-3-2023-05-21">
+<h2>v0.10.3 (2023-05-21)<a class="headerlink" href="#v0-10-3-2023-05-21" title="Permalink to this heading"></a></h2>
+<p>Bug Fixes:</p>
+<ul class="simple">
+<li><p>Non-scalar annotation values are now fully unwrapped from the JSON class</p></li>
+</ul>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p>Spell ‘meta-schema’ consistently in tutorials and examples</p></li>
+</ul>
+</section>
+<section id="v0-10-2-2023-04-20">
+<h2>v0.10.2 (2023-04-20)<a class="headerlink" href="#v0-10-2-2023-04-20" title="Permalink to this heading"></a></h2>
+<p>Experimental:</p>
+<ul class="simple">
+<li><p>“$id” no longer allows empty fragments in draft-next</p></li>
+</ul>
+<p>Bug Fixes:</p>
+<ul class="simple">
+<li><p>“$id” allows non-normalized URI references</p></li>
+<li><p>“$id” allows empty fragments in 2019-09 and 2020-12</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Set default (2019-09, 2020-12) for <code class="docutils literal notranslate"><span class="pre">--testsuite-version</span></code> pytest option</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">integer</span></code> is no longer considered a type for keyword evaluation restriction purposes</p></li>
+<li><p>Drop <code class="docutils literal notranslate"><span class="pre">Keyword.can_evaluate()</span></code> method</p></li>
+<li><p>Preload rather than implicit-load standard meta-schemas</p></li>
+</ul>
+</section>
+<section id="v0-10-1-2023-04-11">
+<h2>v0.10.1 (2023-04-11)<a class="headerlink" href="#v0-10-1-2023-04-11" title="Permalink to this heading"></a></h2>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Rename submodules <cite>json-schema-spec-2019-09</cite> and <cite>json-schema-spec-2020-12</cite> to
+<cite>json-schema-2019-09</cite> and <cite>json-schema-2020-12</cite>, respectively
+(run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">init</span></code> to update local git config)</p></li>
+<li><p>LocalSource now includes the filename in the CatalogError when the file is not found</p></li>
+</ul>
+</section>
+<section id="v0-10-0-2023-04-01">
+<h2>v0.10.0 (2023-04-01)<a class="headerlink" href="#v0-10-0-2023-04-01" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;format_validator</span></code> decorator</p></li>
+<li><p><cite>json-pointer</cite> format validator</p></li>
+<li><p>Annotation filtering for <cite>basic</cite> output format (#32)</p></li>
+<li><p>JSON <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code> literals</p></li>
+<li><p>Relative JSON Pointer <code class="docutils literal notranslate"><span class="pre">+</span></code>/<code class="docutils literal notranslate"><span class="pre">-</span></code> array index adjustments</p></li>
+<li><p>Unknown keywords are collected as annotations</p></li>
+<li><p>Automatically create metaschemas as referenced by <code class="docutils literal notranslate"><span class="pre">&quot;$schema&quot;</span></code>
+on first access of the now-cached <code class="docutils literal notranslate"><span class="pre">JSONSchema.metaschema</span></code> property</p></li>
+<li><p>Automatically detect the core vocabulary in metaschemas,
+but allow specifying a default to use when none is detectable</p></li>
+</ul>
+<p>Experimental:</p>
+<ul class="simple">
+<li><p>Catalog support for the <cite>next</cite> JSON Schema draft</p></li>
+<li><p><cite>hierarchical</cite> output format</p></li>
+<li><p>In-place JSON Patch <cite>add</cite>, <cite>remove</cite> and <cite>replace</cite> operations on <code class="docutils literal notranslate"><span class="pre">JSON</span></code> class</p></li>
+</ul>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Catalog.add_format_validators()</span></code> superseded by <code class="docutils literal notranslate"><span class="pre">&#64;format_validator</span></code> / <code class="docutils literal notranslate"><span class="pre">Catalog.enable_formats()</span></code></p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">Catalog.session()</span></code> context manager to <code class="docutils literal notranslate"><span class="pre">Catalog.cache()</span></code></p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">session</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">cacheid</span></code> in many places</p></li>
+<li><p>Rename public functions in the <code class="docutils literal notranslate"><span class="pre">jsonpatch</span></code> module</p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">*Applicator*</span></code> keyword class mixins to <code class="docutils literal notranslate"><span class="pre">*Subschema*</span></code></p></li>
+</ul>
+<p>Bug Fixes:</p>
+<ul class="simple">
+<li><p>“$dynamicRef” works with non-plain-name fragment URIs</p></li>
+<li><p>Fixed remote anchor ref resolution</p></li>
+</ul>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p>Rename <cite>User Guide</cite> to <cite>Tutorial</cite></p></li>
+<li><p>Restructure the API docs index page</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;output_formatter</span></code> decorator now identifies output formats explicitly</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">JSONCompatible</span></code> and <code class="docutils literal notranslate"><span class="pre">Result</span></code> classes to the top-level package API</p></li>
+<li><p>Remove implicit fall-through to looking up a schema in the <cite>__meta__</cite> cache
+if not found in the parameterized cache, in <code class="docutils literal notranslate"><span class="pre">Catalog.get_schema()</span></code> (#40)</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">Catalog.get_metaschema()</span></code>, analogous to <code class="docutils literal notranslate"><span class="pre">Catalog.get_schema()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Catalog.create_metaschema()</span></code> and <code class="docutils literal notranslate"><span class="pre">Catalog.create_vocabulary()</span></code> return the created instance</p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">core_vocabulary</span></code> and <code class="docutils literal notranslate"><span class="pre">core_vocabulary_uri</span></code> parameters for
+<code class="docutils literal notranslate"><span class="pre">Metaschema.__init__()</span></code> and <code class="docutils literal notranslate"><span class="pre">Catalog.create_metaschema()</span></code> respectively to
+<code class="docutils literal notranslate"><span class="pre">default_core_vocabulary</span></code> and <code class="docutils literal notranslate"><span class="pre">default_core_vocabulary_uri</span></code></p></li>
+<li><p>Improve kwarg-based construction of <code class="docutils literal notranslate"><span class="pre">RelativeJSONPointer</span></code></p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">AnnotationKeyword</span></code> to <code class="docutils literal notranslate"><span class="pre">_AnnotationKeyword</span></code></p></li>
+<li><p>Rename <code class="docutils literal notranslate"><span class="pre">vocabularies</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">create_catalog()</span></code> to <code class="docutils literal notranslate"><span class="pre">versions</span></code></p></li>
+<li><p>Allow passthrough of arguments to pytest when invoking tox</p></li>
+<li><p>Add pytest command line options <code class="docutils literal notranslate"><span class="pre">--testsuite-file</span></code> and <code class="docutils literal notranslate"><span class="pre">--testsuite-description</span></code></p></li>
+<li><p>Python 3.11 is now tested (no changes were required to support it)</p></li>
+<li><p>Pinned <code class="docutils literal notranslate"><span class="pre">hypothesis&lt;6.0.4</span></code> to avoid
+<a class="reference external" href="https://github.com/python/cpython/issues/102126">python/cpython#102126</a>
+in Python 3.10.10 and 3.11.2</p></li>
+</ul>
+</section>
+<section id="v0-9-0-2022-08-14">
+<h2>v0.9.0 (2022-08-14)<a class="headerlink" href="#v0-9-0-2022-08-14" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>JSON array/object mutation</p></li>
+<li><p>JSON serialization to string/file</p></li>
+<li><p>JSON deserialization from remote location</p></li>
+</ul>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p>Rename Scope to Result</p></li>
+<li><p>Remove JSON support for decimal.Decimal (#31)</p></li>
+<li><p>Rename Keyword.types to Keyword.instance_types</p></li>
+<li><p>Rename Keyword.depends to Keyword.depends_on</p></li>
+<li><p>Move translation vocabulary implementation to its own repo (jschon-translation)</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Allow any JSON-compatible value to be set as an error on a Result node</p></li>
+<li><p>Array/object applicator keywords – additionalProperties, unevaluatedProperties,
+propertyNames, additionalItems, items, prefixItems, unevaluatedItems – now
+produce an error array of failing child indices</p></li>
+<li><p>Register output formatters with a decorator</p></li>
+<li><p>Remove JSON type checks for unsupported usage</p></li>
+<li><p>Append (rather than replace) the suffix when resolving a LocalSource filepath</p></li>
+<li><p>Flatten dict of subresults on Result node</p></li>
+<li><p>Provide a useful __str__ method for Result node</p></li>
+</ul>
+</section>
+<section id="v0-8-5-2022-05-10">
+<h2>v0.8.5 (2022-05-10)<a class="headerlink" href="#v0-8-5-2022-05-10" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Added JSONPointer prefix test operators (#29)</p></li>
+</ul>
+</section>
+<section id="v0-8-4-2022-02-03">
+<h2>v0.8.4 (2022-02-03)<a class="headerlink" href="#v0-8-4-2022-02-03" title="Permalink to this heading"></a></h2>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Add PEP-561 py.typed marker to signal to type checkers that
+this library has usable type annotations.</p></li>
+</ul>
+</section>
+<section id="v0-8-3-2022-01-31">
+<h2>v0.8.3 (2022-01-31)<a class="headerlink" href="#v0-8-3-2022-01-31" title="Permalink to this heading"></a></h2>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Include translation vocabulary definition files in the distribution.</p></li>
+</ul>
+</section>
+<section id="v0-8-1-2022-01-30">
+<h2>v0.8.1 (2022-01-30)<a class="headerlink" href="#v0-8-1-2022-01-30" title="Permalink to this heading"></a></h2>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>The requests dependency for remote $refs is now an optional install.</p></li>
+</ul>
+</section>
+<section id="v0-8-0-2022-01-29">
+<h2>v0.8.0 (2022-01-29)<a class="headerlink" href="#v0-8-0-2022-01-29" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Added support for remote schema references and, more generally, ‘sources’ for loading
+URI-identified JSON resources</p></li>
+<li><p>Added a JSON Patch implementation</p></li>
+<li><p>Added a Relative JSON Pointer implementation</p></li>
+<li><p>Added experimental support for a JSON translation vocabulary</p></li>
+</ul>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p>Replaced the Catalog.add_directory method with the more general Catalog.add_uri_source</p></li>
+</ul>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Fixed error messaging for the “required” keyword</p></li>
+<li><p>Eliminated extraneous error messages from “additionalProperties” and “items” by reverting
+to the Draft 7 approach for applying these keywords (#17)</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Implemented a Catalog instance registry, replacing the default instance approach</p></li>
+<li><p>Moved JSON Schema vocabulary initialization from the Catalog class to the create_catalog function</p></li>
+<li><p>Replaced the AnyJSONCompatible type variable with a JSONCompatible type alias</p></li>
+<li><p>Removed isinstance type checks that would only fail if type hints were disregarded</p></li>
+<li><p>Removed printing of JSON instance values for “enum” and “const” error messages</p></li>
+<li><p>Decorated several JSON and JSONSchema properties with &#64;cached_property</p></li>
+<li><p>Constrained the Keyword.types and Keyword.depends class attributes to allow tuples only</p></li>
+<li><p>Removed unused code supporting instantiation of JSON arrays/objects from collections of JSON
+class instances</p></li>
+<li><p>Changed type hints for JSON inequality operators to indicate that they are supported only
+for strings and numbers</p></li>
+<li><p>Removed unnecessary type coercion in JSON inequality operators</p></li>
+<li><p>Generalized Keyword class mixins to support custom subschema construction by custom
+applicator keywords</p></li>
+<li><p>Added a required positional arg <cite>instance</cite> to the Scope constructor</p></li>
+<li><p>Removed the <cite>path</cite>, <cite>instpath</cite> and <cite>relpath</cite> Scope constructor args</p></li>
+<li><p>Added a <cite>cls</cite> keyword arg to Scope.__call__ supporting custom Scope classes</p></li>
+<li><p>Generalized output formatting, to support custom output formats by extensions</p></li>
+<li><p>Added a globals property to the root of the Scope tree, for arbitrary evaluation state</p></li>
+<li><p>Added a Keyword.static class attribute, obviating the need to override can_evaluate</p></li>
+</ul>
+</section>
+<section id="v0-7-3-2021-10-24">
+<h2>v0.7.3 (2021-10-24)<a class="headerlink" href="#v0-7-3-2021-10-24" title="Permalink to this heading"></a></h2>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p>Added example of extending JSON Schema with a custom keyword, vocab and meta-schema</p></li>
+<li><p>Various improvements to wording and structuring of docs</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>The <cite>default</cite> param of create_catalog() now defaults to True</p></li>
+<li><p>Allow “$id” and “$schema” to be omitted from meta-schema documents</p></li>
+<li><p>Renamed JSON.value to JSON.data; JSON.value now returns the instance data as a
+JSON-compatible Python object (#18)</p></li>
+<li><p>Switched to reStructuredText across the board - top-level <code class="docutils literal notranslate"><span class="pre">*.rst</span></code> files are now
+included in the docs and in the published package</p></li>
+</ul>
+</section>
+<section id="v0-7-2-2021-08-28">
+<h2>v0.7.2 (2021-08-28)<a class="headerlink" href="#v0-7-2-2021-08-28" title="Permalink to this heading"></a></h2>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Fixed “absoluteKeywordLocation” output for “$ref”, “$dynamicRef” and “$recursiveRef” nodes (#15)</p></li>
+</ul>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p>Restructured examples; example outputs are now verified by unit tests</p></li>
+<li><p>Added examples of loading schemas from files</p></li>
+</ul>
+</section>
+<section id="v0-7-1-2021-08-08">
+<h2>v0.7.1 (2021-08-08)<a class="headerlink" href="#v0-7-1-2021-08-08" title="Permalink to this heading"></a></h2>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p>Renamed Catalogue to Catalog</p></li>
+</ul>
+</section>
+<section id="v0-7-0-2021-08-08">
+<h2>v0.7.0 (2021-08-08)<a class="headerlink" href="#v0-7-0-2021-08-08" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Top-level catalogue initialization function</p></li>
+<li><p>Session id-based schema caching</p></li>
+</ul>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p>Removed the Catalogue.create_default_catalogue method</p></li>
+</ul>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p>Added sections on getting started and running the tests</p></li>
+<li><p>Improved JSONSchema and Catalogue usage docs</p></li>
+</ul>
+</section>
+<section id="v0-6-0-2021-06-10">
+<h2>v0.6.0 (2021-06-10)<a class="headerlink" href="#v0-6-0-2021-06-10" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Detailed and verbose output format options</p></li>
+</ul>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p>JSONSchema.validate() now returns a Scope result object</p></li>
+</ul>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Fixed the instance location (shown in output) for object keys evaluated by “propertyNames”</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Failing schema nodes no longer have error messages, and are excluded from basic output</p></li>
+<li><p>A Scope.passed property indicates a scope’s assertion result, while Scope.valid indicates its
+validation result (these can only differ for an “if” keyword subscope)</p></li>
+<li><p>Improved the API (used by keywords) and internal structure of the Scope class</p></li>
+<li><p>Dropped the Annotation and Error classes</p></li>
+</ul>
+</section>
+<section id="v0-5-0-2021-06-01">
+<h2>v0.5.0 (2021-06-01)<a class="headerlink" href="#v0-5-0-2021-06-01" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>An output method on Scope, providing output formatting</p></li>
+</ul>
+<p>Breaking changes:</p>
+<ul class="simple">
+<li><p>Dropped the Evaluator class</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Moved Metaschema, Vocabulary and Keyword into the vocabulary subpackage</p></li>
+</ul>
+</section>
+<section id="v0-4-0-2021-05-21">
+<h2>v0.4.0 (2021-05-21)<a class="headerlink" href="#v0-4-0-2021-05-21" title="Permalink to this heading"></a></h2>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Fixed error and annotation collection for array items (#8)</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Improved and better encapsulated the Scope class’s internal logic</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">doc</span></code> dependencies to setup.py</p></li>
+<li><p>Support testing with Python 3.10</p></li>
+</ul>
+</section>
+<section id="v0-3-0-2021-05-15">
+<h2>v0.3.0 (2021-05-15)<a class="headerlink" href="#v0-3-0-2021-05-15" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Evaluator class providing output formatting</p></li>
+<li><p>Multiple Catalogue instances now supported; with an optional default catalogue</p></li>
+</ul>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Fixed percent-encoding of the URI fragment form of JSON pointers</p></li>
+</ul>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p>Created user guides and API reference documentation; published to Read the Docs</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Improvements to base URI-directory mapping and file loading in the Catalogue</p></li>
+<li><p>Tweaks to annotation and error collection in the Scope class affecting output generation</p></li>
+<li><p>Auto-generated schema URIs are now formatted as <code class="docutils literal notranslate"><span class="pre">'urn:uuid:&lt;uuid&gt;'</span></code></p></li>
+</ul>
+</section>
+<section id="v0-2-0-2021-04-18">
+<h2>v0.2.0 (2021-04-18)<a class="headerlink" href="#v0-2-0-2021-04-18" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Class methods for constructing JSON instances from JSON strings/files</p></li>
+</ul>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Fixed unevaluatedItems-contains interaction</p></li>
+</ul>
+<p>Miscellaneous:</p>
+<ul class="simple">
+<li><p>Top-level package API defined in <code class="docutils literal notranslate"><span class="pre">__init.py__</span></code></p></li>
+<li><p>Improved handling of floats in JSON constructor input</p></li>
+<li><p>Removed mod operator from JSON class</p></li>
+<li><p>Added development setup (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.[dev]</span></code>)</p></li>
+<li><p>Added JSON class usage info to the README</p></li>
+</ul>
+</section>
+<section id="v0-1-1-2021-04-06">
+<h2>v0.1.1 (2021-04-06)<a class="headerlink" href="#v0-1-1-2021-04-06" title="Permalink to this heading"></a></h2>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li><p>Fixed $dynamicRef resolution (#3)</p></li>
+</ul>
+</section>
+<section id="v0-1-0-2021-03-31">
+<h2>v0.1.0 (2021-03-31)<a class="headerlink" href="#v0-1-0-2021-03-31" title="Permalink to this heading"></a></h2>
+<p>Features:</p>
+<ul class="simple">
+<li><p>JSON class implementing the JSON data model</p></li>
+<li><p>JSON Pointer implementation</p></li>
+<li><p>JSON Schema implementation, supporting drafts 2019-09 and 2020-12 of the specification</p></li>
+<li><p>Catalogue for managing (meta)schemas, vocabularies and format validators</p></li>
+<li><p>URI class (wraps rfc3986.URIReference)</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="contributing.html" class="btn btn-neutral float-left" title="Contributing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

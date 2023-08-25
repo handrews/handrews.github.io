@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jschon.vocabulary.core &mdash; jschon (experimental fork for oascomply) 0.11.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="jschon.vocabulary.format" href="format.html" />
+    <link rel="prev" title="jschon.vocabulary.applicator" href="applicator.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jschon (experimental fork for oascomply)
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#package-api">Package API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#module-reference">Module Reference</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../catalog.html">jschon.catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../exc.html">jschon.exc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../formats.html">jschon.formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../json.html">jschon.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonformat.html">jschon.jsonformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonpatch.html">jschon.jsonpatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonpointer.html">jschon.jsonpointer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jsonschema.html">jschon.jsonschema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../output.html">jschon.output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resource.html">jschon.resource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uri.html">jschon.uri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils.html">jschon.utils</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../vocabulary.html">jschon.vocabulary</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.ArrayOfSubschemas"><code class="docutils literal notranslate"><span class="pre">ArrayOfSubschemas</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Keyword"><code class="docutils literal notranslate"><span class="pre">Keyword</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Metaschema"><code class="docutils literal notranslate"><span class="pre">Metaschema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.ObjectOfSubschemas"><code class="docutils literal notranslate"><span class="pre">ObjectOfSubschemas</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Subschema"><code class="docutils literal notranslate"><span class="pre">Subschema</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.SubschemaMixin"><code class="docutils literal notranslate"><span class="pre">SubschemaMixin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../vocabulary.html#jschon.vocabulary.Vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="annotation.html">jschon.vocabulary.annotation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="applicator.html">jschon.vocabulary.applicator</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">jschon.vocabulary.core</a></li>
+<li class="toctree-l4"><a class="reference internal" href="format.html">jschon.vocabulary.format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="legacy.html">jschon.vocabulary.legacy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="validation.html">jschon.vocabulary.validation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Running the tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jschon (experimental fork for oascomply)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../vocabulary.html">jschon.vocabulary</a></li>
+      <li class="breadcrumb-item active">jschon.vocabulary.core</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/vocabulary/core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-jschon.vocabulary.core">
+<span id="jschon-vocabulary-core"></span><h1>jschon.vocabulary.core<a class="headerlink" href="#module-jschon.vocabulary.core" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.AnchorKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">AnchorKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.AnchorKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.AnchorKeyword.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.AnchorKeyword.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.AnchorKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.AnchorKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.AnchorKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$anchor'</span></em><a class="headerlink" href="#jschon.vocabulary.core.AnchorKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.AnchorKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.AnchorKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.AnchorKeyword.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#jschon.vocabulary.core.AnchorKeyword.static" title="Permalink to this definition"></a></dt>
+<dd><p><cite>static = True</cite> (equivalent to <cite>instance_types = ()</cite>) indicates that the keyword
+does not ever evaluate any instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.CommentKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">CommentKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.CommentKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.CommentKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.CommentKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.CommentKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$comment'</span></em><a class="headerlink" href="#jschon.vocabulary.core.CommentKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.CommentKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.CommentKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.CommentKeyword.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#jschon.vocabulary.core.CommentKeyword.static" title="Permalink to this definition"></a></dt>
+<dd><p><cite>static = True</cite> (equivalent to <cite>instance_types = ()</cite>) indicates that the keyword
+does not ever evaluate any instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DefsKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">DefsKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.DefsKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>JSONCompatible</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DefsKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.DefsKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DefsKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$defs'</span></em><a class="headerlink" href="#jschon.vocabulary.core.DefsKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DefsKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.DefsKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DefsKeyword.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#jschon.vocabulary.core.DefsKeyword.static" title="Permalink to this definition"></a></dt>
+<dd><p><cite>static = True</cite> (equivalent to <cite>instance_types = ()</cite>) indicates that the keyword
+does not ever evaluate any instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicAnchorKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">DynamicAnchorKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.DynamicAnchorKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicAnchorKeyword.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.DynamicAnchorKeyword.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicAnchorKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.DynamicAnchorKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicAnchorKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$dynamicAnchor'</span></em><a class="headerlink" href="#jschon.vocabulary.core.DynamicAnchorKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicAnchorKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.DynamicAnchorKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicAnchorKeyword.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#jschon.vocabulary.core.DynamicAnchorKeyword.static" title="Permalink to this definition"></a></dt>
+<dd><p><cite>static = True</cite> (equivalent to <cite>instance_types = ()</cite>) indicates that the keyword
+does not ever evaluate any instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicRefKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">DynamicRefKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.DynamicRefKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicRefKeyword.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.DynamicRefKeyword.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicRefKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.DynamicRefKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicRefKeyword.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.DynamicRefKeyword.resolve" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicRefKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.DynamicRefKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicRefKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$dynamicRef'</span></em><a class="headerlink" href="#jschon.vocabulary.core.DynamicRefKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.DynamicRefKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.DynamicRefKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.IdKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">IdKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.IdKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.IdKeyword.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.IdKeyword.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.IdKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.IdKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.IdKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$id'</span></em><a class="headerlink" href="#jschon.vocabulary.core.IdKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.IdKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.IdKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.IdKeyword.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#jschon.vocabulary.core.IdKeyword.static" title="Permalink to this definition"></a></dt>
+<dd><p><cite>static = True</cite> (equivalent to <cite>instance_types = ()</cite>) indicates that the keyword
+does not ever evaluate any instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.RefKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">RefKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.RefKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.RefKeyword.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.RefKeyword.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.RefKeyword.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.RefKeyword.evaluate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance</strong> (<a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><em>JSON</em></a>) – </p></li>
+<li><p><strong>result</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.Result" title="jschon.jsonschema.Result"><em>Result</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.RefKeyword.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.RefKeyword.resolve" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.RefKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.RefKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.RefKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$ref'</span></em><a class="headerlink" href="#jschon.vocabulary.core.RefKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.RefKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.RefKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.SchemaKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">SchemaKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.SchemaKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.SchemaKeyword.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.SchemaKeyword.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.SchemaKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.SchemaKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.SchemaKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$schema'</span></em><a class="headerlink" href="#jschon.vocabulary.core.SchemaKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.SchemaKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.SchemaKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.SchemaKeyword.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#jschon.vocabulary.core.SchemaKeyword.static" title="Permalink to this definition"></a></dt>
+<dd><p><cite>static = True</cite> (equivalent to <cite>instance_types = ()</cite>) indicates that the keyword
+does not ever evaluate any instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.VocabularyKeyword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jschon.vocabulary.core.</span></span><span class="sig-name descname"><span class="pre">VocabularyKeyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.VocabularyKeyword" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.VocabularyKeyword.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parentschema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jschon.vocabulary.core.VocabularyKeyword.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parentschema</strong> (<a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><em>JSONSchema</em></a>) – </p></li>
+<li><p><strong>value</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>bool</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.VocabularyKeyword.json">
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../json.html#jschon.json.JSON" title="jschon.json.JSON"><span class="pre">JSON</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.VocabularyKeyword.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.VocabularyKeyword.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'$vocabulary'</span></em><a class="headerlink" href="#jschon.vocabulary.core.VocabularyKeyword.key" title="Permalink to this definition"></a></dt>
+<dd><p>The keyword name as it appears in a schema object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.VocabularyKeyword.parentschema">
+<span class="sig-name descname"><span class="pre">parentschema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../jsonschema.html#jschon.jsonschema.JSONSchema" title="jschon.jsonschema.JSONSchema"><span class="pre">JSONSchema</span></a></em><a class="headerlink" href="#jschon.vocabulary.core.VocabularyKeyword.parentschema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jschon.vocabulary.core.VocabularyKeyword.static">
+<span class="sig-name descname"><span class="pre">static</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#jschon.vocabulary.core.VocabularyKeyword.static" title="Permalink to this definition"></a></dt>
+<dd><p><cite>static = True</cite> (equivalent to <cite>instance_types = ()</cite>) indicates that the keyword
+does not ever evaluate any instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="applicator.html" class="btn btn-neutral float-left" title="jschon.vocabulary.applicator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="format.html" class="btn btn-neutral float-right" title="jschon.vocabulary.format" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mark Jacobson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
