@@ -1,0 +1,458 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html xmlns:saxon="http://icl.com/saxon" lang="EN"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>URNs, Namespaces and Registries</title><style type="text/css">
+code           { font-family: monospace; }
+
+div.constraint,
+div.issue,
+div.note,
+div.notice     { margin-left: 2em; }
+
+ol.enumar      { list-style-type: decimal; }
+ol.enumla      { list-style-type: lower-alpha; }
+ol.enumlr      { list-style-type: lower-roman; }
+ol.enumua      { list-style-type: upper-alpha; }
+ol.enumur      { list-style-type: upper-roman; }
+
+
+div.exampleInner pre { margin-left: 1em;
+                       margin-top: 0em; margin-bottom: 0em}
+div.exampleOuter {border: 4px double gray;
+                  margin: 0em; padding: 0em}
+div.exampleInner { background-color: #d5dee3;
+                   border-top-width: 4px;
+                   border-top-style: double;
+                   border-top-color: #d3d3d3;
+                   border-bottom-width: 4px;
+                   border-bottom-style: double;
+                   border-bottom-color: #d3d3d3;
+                   padding: 4px; margin: 0em }
+div.exampleWrapper { margin: 4px }
+div.exampleHeader { font-weight: bold;
+                    margin: 4px}
+
+p { clear: both }
+
+.prefix { float:left; width: 15%; background: yellow; color: black;
+border: solid black thin; padding: .1em; margin-left: 2%;
+margin-right: 2%;}
+
+.http_fact, .nri_des, .principle, .constraint, .property, .practice { color: black; border:
+solid black thin; padding: .1em; margin-left: 5%; margin-right: 5%; clear: none}
+
+.principle  { background: #f7ebd7 }
+.http_fact, .constraint { background: #becece }
+.nri_des, .property   { background: #f7ebd7 }
+.practice   { background: #dfffff }
+
+pre em      { font-style: italic;
+              font-weight: bold;
+            }
+</style><link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/base.css"></head><body><div class="head"><p><a href="http://www.w3.org/"><img src="http://www.w3.org/Icons/w3c_home" alt="W3C" height="48" width="72"></a></p>
+<h1><a name="title" id="title"></a>URNs, Namespaces and Registries</h1>
+<h2><a name="w3c-doctype" id="w3c-doctype"></a>[Editor's Draft] TAG Finding CVS $Id: URNsAndRegistries-50.html,v 1.14 2019/01/30 09:31:06 ylafon Exp $  </h2><dl><dt>This version:</dt><dd><a href="http://www.w3.org/2001/tag/doc/URNsAndRegistries-50-2006-08-17">http://www.w3.org/2001/tag/doc/URNsAndRegistries-50-2006-08-17</a></dd><dt>Latest version:</dt><dd><a href="http://www.w3.org/2001/tag/doc/URNsAndRegistries-50">http://www.w3.org/2001/tag/doc/URNsAndRegistries-50</a></dd><dt>Editors:</dt><dd>Henry S. Thompson, University of Edinburgh <a href="mailto:ht@inf.ed.ac.uk">&lt;ht@inf.ed.ac.uk&gt;</a></dd><dd>David Orchard, BEA Systems <a href="mailto:dorchard@bea.com">&lt;dorchard@bea.com&gt;</a></dd></dl><p>This document is also available in these non-normative formats: <a href="http://www.w3.org/2001/tag/doc/URNsAndRegistries-50.xml">XML</a>.</p><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> ©  <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p></div><hr><div>
+<h2><a name="abstract" id="abstract"></a>Abstract</h2><p>This finding addresses the questions "When should URNs or URIs
+with novel URI schemes be used to
+name information resources for the Web?" and "Should registries be provided for
+such identifiers?".  The answers given are "Rarely if ever" and "Probably not".  Common arguments in favor
+of such novel naming schemas are examined, and their properties compared with
+those of the existing <code>http:</code> URI scheme.</p><p>Three case studies are then presented, illustrating how the
+<code>http:</code> URI scheme can be used to achieve many of the stated
+requirements for new URI schemes.</p></div><div>
+<h2><a name="status" id="status"></a>Status of this Document</h2><table border="1" summary="Editorial note: HST"><tr><td align="left" valign="top" width="50%"><b>Editorial note: HST</b></td><td align="right" valign="top" width="50%">2006-03-14</td></tr><tr><td colspan="2" align="left" valign="top">Further to a request from Roy Fielding, I had a brief look at <a href="http://www.ietf.org/internet-drafts/draft-ietf-simple-xcap-08.txt">XCAP</a>, seems to be using <code>http:</code> URIs now, although it introduces a new Application UID registry, and uses <code>ietf:</code> URNs for its namespaces. . .  If anyone (including Roy) remembers what Roy was particularly concerned at here, please let me know.</td></tr></table><p>This document has been produced by the <a href="/2001/tag/">W3C
+Technical Architecture Group (TAG)</a>. This finding addresses TAG
+<a href="http://www.w3.org/2001/tag/issues.html?type=1#URNsAndRegistries-50">issue
+URNsAndRegistries-50</a>.</p><p>This is the third draft of
+this finding, with the first section complete and adding three case studies. This finding is an editorial draft, not yet accepted by
+the TAG.</p><p><a href="/2001/tag/findings">Additional TAG findings</a>, both
+accepted and in draft state, may also be available. The TAG expects
+to incorporate this and other findings into [what?] that will be published according to the process of the
+<a href="/Consortium/Process-20010719/tr#Recs">W3C Recommendation
+Track</a>.</p><table border="1" summary="Editorial note: HST"><tr><td align="left" valign="top" width="50%"><b>Editorial note: HST</b></td><td align="right" valign="top" width="50%">2005-03-29</td></tr><tr><td colspan="2" align="left" valign="top">Are we ready to tell the world what will follow AWWW?</td></tr></table><p>Please send comments on this finding to the publicly archived TAG
+mailing list <a href="mailto:www-tag@w3.org">www-tag@w3.org</a>
+(<a href="http://lists.w3.org/Archives/Public/www-tag/">archive</a>).</p></div><div class="toc">
+<h2><a name="contents" id="contents"></a>Table of Contents</h2><p class="toc">1 <a href="#introduction">Introduction</a><br>
+2 <a href="#args_nri">Examining the need for new approaches to naming information resources</a><br>
+    2.1 <a href="#persist_con">Persistence</a><br>
+    2.2 <a href="#standard_con">Standardized</a><br>
+    2.3 <a href="#protocol_independent">Protocol Independence</a><br>
+    2.4 <a href="#loc_independent">Location Independence</a><br>
+    2.5 <a href="#taggable">Structured names</a><br>
+    2.6 <a href="#metadata">Uniform access to metadata</a><br>
+    2.7 <a href="#authority">Flexible Authority</a><br>
+3 <a href="#args_http">The value of  http: URIs</a><br>
+4 <a href="#iddiv1128776056">Case study: Naming namespaces</a><br>
+    4.1 <a href="#iddiv2128777624">Context</a><br>
+    4.2 <a href="#iddiv2141223296">Identification</a><br>
+    4.3 <a href="#iddiv2137840152">Persistence of Identifiers</a><br>
+    4.4 <a href="#iddiv2137842352">Dereferencability</a><br>
+    4.5 <a href="#iddiv2137969152">Erroneous appearance of dereferencability of identifiers</a><br>
+    4.6 <a href="#iddiv2137972536">Summary</a><br>
+5 <a href="#iddiv1142306584">Case Study: XRI</a><br>
+    5.1 <a href="#iddiv2142307488">Simple Document Retrieval Technical Analysis</a><br>
+        5.1.1 <a href="#iddiv3128765824">Run-time Resolution</a><br>
+    5.2 <a href="#iddiv2128769744">Persistent Dereferencability (location independence)</a><br>
+        5.2.1 <a href="#iddiv3124840392">Run-time resolution</a><br>
+        5.2.2 <a href="#iddiv3124841704">Configuration</a><br>
+    5.3 <a href="#iddiv2124844360">Persistence Identifiers</a><br>
+        5.3.1 <a href="#iddiv3139093760">Operational policy</a><br>
+        5.3.2 <a href="#iddiv3139095840">Intent</a><br>
+    5.4 <a href="#iddiv2139097224">Protocol Independence</a><br>
+    5.5 <a href="#iddiv2139098016">XRI alternative design</a><br>
+    5.6 <a href="#iddiv2128006416">Summary</a><br>
+6 <a href="#iddiv1141937128">Case study: new URI scheme with no protocol</a><br>
+</p>
+<h3><a name="appendices" id="appendices"></a>Appendix</h3><p class="toc">A <a href="#references">References</a><br>
+</p></div><hr><div class="body"><div class="div1">
+<h2><a name="introduction" id="introduction"></a>1 Introduction</h2><p>In <a href="#AWWW">[AWWW]</a> we find the following recommendations:
+</p><dl><dt class="label"><a href="http://www.w3.org/TR/webarch/#avoid-uri-aliases">Avoiding
+URI aliases</a></dt><dd><p>"A URI owner SHOULD NOT associate arbitrarily different URIs with the same resource."</p></dd><dt class="label"><a href="http://www.w3.org/TR/webarch/#pr-reuse-uri-schemes">Reuse
+URI schemes</a></dt><dd><p>"A specification SHOULD reuse an existing URI scheme (rather than create a new one) when it provides the desired properties of identifiers and their relation to resources."</p></dd><dt class="label"><a href="http://www.w3.org/TR/webarch/#http://www.w3.org/TR/webarch/#pr-uri-opacity">URI opacity</a></dt><dd><p>"Agents making use of URIs SHOULD NOT attempt to infer properties of the referenced resource."</p></dd><dt class="label"><a href="http://www.w3.org/TR/webarch/#http://www.w3.org/TR/webarch/#http://www.w3.org/TR/webarch/#pr-describe-resource">Available representation</a></dt><dd><p>"A URI owner SHOULD provide representations of the resource it identifies."</p></dd></dl><p>Recently, however, a number of proposals have emerged to create new
+identification mechanisms for the Web.  They propose new URN (sub-)namespaces or
+URI schemes and provide
+registries for instances thereof, in order to allow them to be used to identify
+and retrieve information resources.  This
+would appear to be incompatible with <a href="#AWWW">[AWWW]</a>'s simple positive
+recommendations.  In this finding we enumerate the arguments given in favor of
+these new proposals, which often turn out to be arguments <em>against</em>
+using <code>http:</code> URIs, and explain why they are mistaken and how the above
+principles can be understood to point the way constructively to alternative
+designs which do in fact make use of <code>http:</code> URIs.</p></div><div class="div1">
+<h2><a name="args_nri" id="args_nri"></a>2 Examining the need for new approaches to naming information resources</h2><p>This section is structured in terms of goals or requirements for resource
+identification mechanisms which have been offered as justifications for
+adopting a new approach.  They are drawn from a number of recent proposals
+(<a href="#NZL">[NZL]</a>, <a href="#RFC3688">[RFC 3688]</a>, <a href="#UBL">[UBL]</a>, <a href="#XRI">[XRI]</a>, <a href="#INFO">[RFC 4452]</a>)
+abstracting, merging and summarizing them.   Although we will examine some of
+these proposals in specific detail in the three cases studies below, in this
+section [<a name="nri" id="nri" title="myRI">Definition</a>: we will use the name <b>myRI</b> as a
+cover term for this general class of proposed alternatives to
+<code>http:</code>, both those proposing new URI schemes and those proposing
+new URN sub-schemes.]  In each case we state a requirement and examine the extent to which the existing <code>http:</code>-based identifier mechanism addresses it.</p><div class="div2">
+<h3><a name="persist_con" id="persist_con"></a>2.1 Persistence</h3><p class="prefix">NRI Goal</p><p class="nri_des">The relation between <a title="myRI" href="#nri">myRIs</a> and the information resource
+they identify should <em>persist indefinitely</em>.</p><p>Or, more realistically, that individual <a title="myRI" href="#nri">myRIs</a> should
+manifest syntactically whether or not they are <em>intended</em> to persist indefinitely.</p><p>This goal is difficult to get to grips with, as it appears to mean
+different things in different contexts:</p><ol class="enumar"><li><p>At its simplest, this is just a wish for an end to <code>404 Not
+Found</code>, i.e. that you should always be able to resolve a <a title="myRI" href="#nri">myRI</a>.</p></li><li><p>In the Information Science community, 'persistence' is a stronger
+requirement, namely, that <em>what</em> you get when you resolve a <a title="myRI" href="#nri">myRI</a> should never change.</p></li></ol><p class="prefix">http: fact</p><p class="http_fact"><code>http:</code> URIs support persistence as well as
+it is in-practice possible to do so.</p><p>As has been frequently observed, achieving either of the numbered types of
+persistence above is not a
+technology issue, it's a management issue.  It's up to the owners and operators
+of the mechanisms which implement <a title="myRI" href="#nri">myRI</a> resolution to enforce whatever degree
+of persistence they choose.  It follows that there is no difference here
+between <a title="myRI" href="#nri">myRI</a> and <code>http:</code>.</p><p>What of the more sophisticated reading, that a <a title="myRI" href="#nri">myRI</a> should manifest its
+minter's <em>intentions</em> with respect to persistence?  That's just a
+matter of naming conventions, and perfectly possible using <code>http:</code>.  We could, for example, say that all
+versionable/time-varying resources on our site are named with all lower-case
+letters, and all persistent/stable/non-varying resources are named with all
+upper-case letters.</p></div><div class="div2">
+<h3><a name="standard_con" id="standard_con"></a>2.2 Standardized</h3><p class="prefix">NRI Goal</p><p class="nri_des"><a title="myRI" href="#nri">myRIs</a> should be susceptible to
+standardization within administrative units</p><p>This goal appears to be directed at guaranteeing certain invariants, for
+example with respect to the structure of identifiers and the availability of
+the resources they identify.  This means they should not be 
+creatable in a distributed or unsupervised fashion.</p><p class="prefix">http: fact</p><p class="http_fact">Again, this is largely a management issue, not a
+technical one.  Whatever invariants are in view can as well be enforced on
+(sub-parts of) <code>http:</code>-served resource collections as on those
+identified via <a title="myRI" href="#nri">myRIs</a>.</p><p>Nothing in a specification can stop
+people from uttering URIs of any kind.  Domain names are as good, or as bad, at
+conveying ownership of a particular form of URI as URN namespaces or URI schemes.</p><p>Centralized authorities can be established for parts of domain space as
+easily as for areas "off the web", and enforcement mechanisms can be as
+effective.  For example, my employers constrain the mechanisms by
+which web pages are accepted for serving from certain parts of their domain so as to enforce invariants both of
+path structure <em>and</em> content markup.</p></div><div class="div2">
+<h3><a name="protocol_independent" id="protocol_independent"></a>2.3 Protocol Independence</h3><p class="prefix">NRI Goal</p><p class="nri_des">Access to resources identified by <a title="myRI" href="#nri">myRIs</a>
+should not be <em>dependent</em> on any particular protocol.</p><p>Exactly what this means is not clear -- although it is listed as a
+requirement in several cases, there is little or no discussion, so exactly why it should be a requirement for <a title="myRI" href="#nri">myRIs</a> is not clear.</p><p class="prefix">http: fact</p><p class="http_fact"><code>http:</code> URIs are no more protocol-dependent
+than any other identification mechanism.</p><p>For pure naming, that is, if retrieval is never intended,
+<code>http:</code> is as good as any <a title="myRI" href="#nri">myRI</a> approach, because no protocol at
+all is involved.  If retrieval <em>is</em> anticipated, then any <a title="myRI" href="#nri">myRI</a>
+approach must specify a mapping to one or more
+protocols.  All existing <a title="myRI" href="#nri">myRI</a> approaches in practice specify only one such
+mapping, to the <code>HTTP</code> protocol.  So they are in exactly the
+<em>same</em> position as <code>http:</code> -- if for some reason in the
+future the <code>HTTP</code> protocol becomes unavailable or inappropriate,
+both <a title="myRI" href="#nri">myRIs</a> and <code>http:</code> will have to specify a new mapping.</p><p>True protocol independence is difficult to imagine in practice, as many
+protocols depend on a tight coupling between message formats and client/server
+application models.  Protocols which don't allow servers any escape mechanism
+are thereby pretty much ruled out as transports for retrieval from <a title="myRI" href="#nri">myRIs</a> (or
+<code>http:</code> URIs).</p><p>It's appropriate to note here that in cases where
+the necessary form of client/server interaction for a particular kind of
+information resource, for example streaming video, cannot be provided by the
+protocols normally associated with existing URI schemes, new schemes may be
+appropriate.  Detailed discussion of this point can be found in <a href="#schemeProtocols">[Schemes and Protocols]</a>.  But none of the <a title="myRI" href="#nri">myRI</a> proposals are for resources of this kind.</p></div><div class="div2">
+<h3><a name="loc_independent" id="loc_independent"></a>2.4 Location Independence</h3><p class="prefix">NRI Goal</p><p class="nri_des"><a title="myRI" href="#nri">myRIs</a>
+should not be <em>locations</em>.</p><p>Practical realities and administrative changes will always defeat any
+attempt to guarantee that the representation of a particular resource will
+always be stored in exactly the same host/server/filestore/directory/file.  Any
+naming mechanism which equates locations in that sense with names is by
+construction inadequate.  It follows that this goal is a sensible one.</p><p class="prefix">http: fact</p><p class="http_fact"><code>http:</code> URIs are <em>not</em> locations.</p><p>Misunderstanding of <code>http:</code> URIs as locations has a long and,
+in part, justifiable history (they were, after all, originally called Uniform
+Resource Locators).  But it's not longer justifiable either in principle (the
+RFC for URIs <a href="#URI">[RFC 3986]</a> is quite clear on
+the subject) or in practice (there's lots of software support for server-side
+management of the
+relationship between <code>http:</code> URIs and their representations).  See
+for example the classic <a href="#coolURIs">[Cool URIs]</a> for a more detailed discussion
+of these points.</p></div><div class="div2">
+<h3><a name="taggable" id="taggable"></a>2.5 Structured names</h3><p class="prefix">NRI Goal</p><p class="nri_des"><a title="myRI" href="#nri">myRIs</a> should provide for structuring resource identifiers
+with shareable tags</p><p>This requirement has only been suggested by the authors of <a href="#XRI">[XRI]</a>.  It amounts to a wish to structure resource names using name/value pairs, with the names having some standardized, widely understood meaning.  This requirement is related to requirements appealed to in the design of End Point References <a href="#EPR">[EPRs]</a>, <a href="#TAGEPR">[TAG on EPRs]</a>.</p><p class="prefix">http: fact</p><p class="http_fact">The query component of <code>http:</code> URIs supports
+non-hierarchical structured naming.</p><p>It is open to any naming authority to establish
+conventions for the use of the query component of <code>http:</code> URIs under
+its control.  Since the query component is already structured in terms of
+simple name/value pairs, it is a good fit for the requirement.</p></div><div class="div2">
+<h3><a name="metadata" id="metadata"></a>2.6 Uniform access to metadata</h3><p class="prefix">NRI Goal</p><p class="nri_des"><a title="myRI" href="#nri">myRIs</a> should provide as well for access to metadata about
+as to representations of a resource.</p><p>Several <a title="myRI" href="#nri">myRI</a> proposals establish a constructive relation between the <a title="myRI" href="#nri">myRI</a>
+for a resource and the <a title="myRI" href="#nri">myRI</a> for metadata <em>about</em> that resource.</p><p class="prefix">http: fact</p><p class="http_fact">Naming conventions or response headers can provide this already</p><p>Naming authorities can impose such constraints on the <code>http:</code> URIs
+under their control.  Alternatively, and particularly where it is appropriate
+to allow for meta-metadata, etc., the <code>Link:</code> response header
+<a href="#RFC2068">[RFC 2068]</a> may
+provide equivalent functionality in a more extensible way.</p></div><div class="div2">
+<h3><a name="authority" id="authority"></a>2.7 Flexible Authority</h3><p class="prefix">NRI Goal</p><p class="nri_des"><a title="myRI" href="#nri">myRIs</a> require different approaches to identifying namespace authorities,
+in some cases simpler and in others richer than that provided by hierarchical domain names
+administered by IANA and resolved via DNS.</p><p class="prefix">http: fact</p><p class="http_fact"><code>http:</code> URIs can encode arbitrarily complex
+(or simple)
+namespace authority expressions.</p><p>Complex encodings of dependent and delegated naming authority can be implemented using proxies and
+redirection.  In the other direction, proper management of domain names for
+<code>http:</code> URIs can produce names which are very little different from
+the equivalent <a title="myRI" href="#nri">myRI</a> (compare e.g. <!--<a href="http://lccn.info/2002022641">--><code>http://lccn.info/2002022641<!--</a>--></code> to
+<code>info:lccn/2002022641</code>), while gaining all <code>http:</code>'s benefits of
+scalability and installed base.</p><table border="1" summary="Editorial note: HST"><tr><td align="left" valign="top" width="50%"><b>Editorial note: HST</b></td><td align="right" valign="top" width="50%">2006-06-06</td></tr><tr><td colspan="2" align="left" valign="top">HST now owns <code>lccn.info</code> and <code>oclcnum.info</code>, will sell to Stuart Weibel
+for a modest consideration :-)</td></tr></table></div></div><div class="div1">
+<h2><a name="args_http" id="args_http"></a>3 The value of  <code>http:</code> URIs</h2><p>The <code>http:</code> URI scheme implements a two-part approach to
+identifying resources.  It combines a universal distributed naming scheme for
+owners of resources with a hierarchical syntax for distinguishing
+resources which share the same owner.  Widely available mechanisms (DNS and web
+servers, respectively) exist to support the use of <code>http:</code> URIs to
+not only identify but actually retrieve representations of information resources.</p><p>Any requirement for naming resources, particularly if not only naming but
+also retrieval of representations is in prospect, which admits to a similar
+decomposition, that is, into a universal owner name and a hierarchical
+owner-relative name, can almost certainly be satisfied by the
+<code>http:</code> URI scheme.  <code>http:</code> provides substantial benefits, in terms of installed
+software base, user comprehension, scalability and, if required, security, at
+very low cost.</p><p>Anyone developing an alternative approach, that is, some form of <a title="myRI" href="#nri">myRI</a>,
+should consider carefully whether that approach is either isomorphic to
+<code>http:</code>, or makes covert appeal to <code>http:</code> for its
+implementation.  In either case, this strongly suggests that the fundamental
+requirements of the new approach do in fact admit to the two-part description
+given above, and therefore that <code>http:</code> itself would be a viable,
+and therefore a preferred, way forward.</p><p>The example in section <a href="#authority"><b>2.7 Flexible Authority</b></a> above is illustrative of
+the benefits that the ubiquitity of the installed base of support for
+<code>http:</code> provide -- within 15 minutes of registering the <code>lccn.info</code>
+domain, the <!--<a href="http://lccn.info">--><code>http://lccn.info/<!--</a>--></code> homepage had
+been put in place and was available to anyone with a web browser and
+access to the Web.</p></div><div class="div1">
+<h2><a name="iddiv1128776056" id="iddiv1128776056"></a>4 Case study: Naming namespaces</h2><p>In this section we look in detail into some of the background
+assumptions for the utility of <a title="myRI" href="#nri">myRIs</a> for one particular purpose, namely for
+naming namespaces.  We will compare the use of <code>http:</code> and of <a title="myRI" href="#nri">myRIs</a>
+for this purpose.</p><div class="div2">
+<h3><a name="iddiv2128777624" id="iddiv2128777624"></a>4.1 Context</h3><p>The XML Namespaces specification <a href="#XMLNS">[XML Namespaces]</a> is the
+context-defining specification for namespace names.   It specifies that
+namespace names are for use in <a href="http://www.w3.org/TR/xml-names11/#dt-expname">expanded names</a> consisting
+of a <a href="http://www.w3.org/TR/xml-names11/#dt-NSName">namespace name</a> (or no value) plus a <a href="http://www.w3.org/TR/xml-names11/#dt-localname">local name</a>.  An <a href="http://www.w3.org/TR/xml-names11/#dt-expname">expanded name</a> may be compared against other <a href="http://www.w3.org/TR/xml-names11/#dt-expname">expanded names</a>.  Very common scenarios are for performing well-formedness checking and for content model validation.  The namespace specification, roughly speaking, says that a
+namespace name cannot be assumed to be dereferenceable.  Any software
+component that is written assuming that any namespace name <em>must</em> be
+dereferencable is violating the namespace specification.  It may be that
+the namespace owner has guaranteed that they will provide a document at
+the namespace name, but namespace owners are not required to do so and not all do.  As a result of this, generic XML software should not be written to
+assume dereferencability of namespace names.</p><p>Any use of identifiers, from namespace names to isbn numbers to invoices, requires a context.  The context will define the use of the identifier
+and includes social and technical context.  A URI on the side of a bus
+will probably convey the social meaning that it can be typed into a browser.  Other contexts for the use of URIs include namespace names,
+references to documents, and identifiers for <em>things</em>.  It is never
+the case that a URI is simply "found" without a context.</p></div><div class="div2">
+<h3><a name="iddiv2141223296" id="iddiv2141223296"></a>4.2 Identification</h3><p>First we examine the use of an <code>http:</code> URI for a namespace name.   We will choose the <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=wsrm">OASIS WS-RM</a> TC's HTTP Namespace name as an example.</p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample141224280" id="idexample141224280"></a>Example 1: Namespace with http: scheme</div><div class="exampleInner"><pre>&lt;myns:foo xmlns:myns="http://docs.oasis-open.org/ws-rx/wsrm/200602"/&gt;</pre></div></div><p>Compare this with the use of a <code>urn:</code> URI for the namespace name.   We will use the OASIS UBL rules for namespace names.  The UBL rules are roughly that the namespace names for UBL Schemas holding OASIS Standard status <strong>must</strong> be of the form:  <code>urn:oasis:names:specification:ubl:schema:&lt;subtype&gt;:&lt;document-id&gt;</code>.  For example, the first namespace name for the first major release of the Invoice document has the form <code>urn:oasis:names:tc:ubl:schema:xsd:Invoice-1.0</code>, such as: 
+				</p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample141225056" id="idexample141225056"></a>Example 2: Namespace with urn: scheme</div><div class="exampleInner"><pre>&lt;myns:foo xmlns:myns="urn:oasis:names:tc:ubl:schema:xsd:Invoice-1.0"/&gt;</pre></div></div><p>In all XML namespace software, both approaches work correctly.   The software-only interaction pattern is clearly erroneous if it assumes that a namespace name is dereferenceable, and it is
+unlikely that XML software written today <em>requires</em> this assumption be valid.</p></div><div class="div2">
+<h3><a name="iddiv2137840152" id="iddiv2137840152"></a>4.3 Persistence of Identifiers</h3><p>Let us know examine the persistence of the identifiers.  The
+<code>oasis</code> URN namespace, as used in <code>urn:oasis:names:tc:ubl:schema:xsd:Invoice-1.0</code>, is assigned by the OASIS organization and registered with IANA.   OASIS has the authority to change its identifying scheme, subject to IANA review.  Additionally, the actual names are decided by OASIS.  As with all URNs, the persistence of any particular identifier and scheme are up to the registering organization.</p><p>An <code>http:</code> URI for OASIS namespace names, such as
+<code>http://docs.oasis-open.org/ws-rx/wsrm/200602</code>, is assigned by the
+OASIS organization because it owns the <code>oasis-open.org</code> domain.  They do not have to register the complete URI anywhere.  OASIS has the authority to change the template on it's own, without any review.  Additionally, the actual URIs are decided by OASIS.  As with all URIs, the persistence of any particular identifier and schema are up to the owner of the domain.   It is possible for the domain to cease being owned by OASIS, through lack of maintenance or even error. </p><p>We might imagine a scenario many years down the road where OASIS no longer
+exists.  It would not maintain the <code>oasis-open.org</code> domain name and
+<code>http:</code> identifiers using that domain would no longer be assigned.  Alternatively, OASIS does not produce or mint any new URNs.  In either case, the identifiers are not dereferenced so all the existing software works.</p><p>In URN and <code>http:</code> scheme cases, the persistence of the identifier is accomplished by the organization.  The ongoing existence of the organization does not affect the persistence of the identifiers.</p></div><div class="div2">
+<h3><a name="iddiv2137842352" id="iddiv2137842352"></a>4.4 Dereferencability</h3><p>But, if one of these identifiers appears in a document, how will a human
+find out the meaning?  One approach is examine the context
+surrounding the identifier, in this case the XML document and the Namespaces specification.  They will look in the XML Namespace specification and see what it says about namespaces.  There is no benefit to the <code>xri:</code>
+versus <code>http:</code> as the work in examining the XML document and XML
+namespace specifications are the same.  Alternatively, they may try to dereference the
+namespace name, but it's not deferenceable so they get no information.</p><p>It is natural for a human reading an XML document with an unknown namespace name to want to understand more about the namespace.
+This is why <a href="#AWWW">[AWWW]</a> recommends providing a document at a namespace name
+that provides both human and machine readable information.  The use of
+<code>http:</code> namespace names enables 3 separate scenarios:
+    <ol class="enumar"><li><p>an identifier
+can be created in a decentralized manner;</p></li><li><p>an identifier may
+be dereferenced by a person via a browser to aid understanding;</p></li><li><p>an
+identifier may be dereferenced by a computer and exploited for automatic
+processing by reason of its identifying schemas, WSDLs, policies, etc.</p></li></ol></p><p>These are two distinct interaction patterns, without and with human
+involvement. </p><p>In all dereferencable identifier scenarios, an identifier must be usable to generate an authority.  There may be interactions with multiple authorities to determine the "final" authority for the identifier.  The final authority uses the identifier to produce a document.</p><p>In the <code>http:</code> identifiers, the authority is specified immediately after the scheme.  The authority system in <code>http:</code> URIs is the internet's DNS and IP systems.  One or more DNS authorities produces an IP destination as the final authority.  That authority is then sent the remaining part of the URI for dereferencing.   In the case of <code>http://docs.oasis-open.org/ws-rx/wsrm/200602</code>, the HTTP interaction is </p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample137968744" id="idexample137968744"></a>Example 3: HTTP GET of namespace name</div><div class="exampleInner"><pre>GET /ws-rx/wsrm/200602 HTTP/1.1
+Host: docs.oasis-open.org</pre></div></div></div><div class="div2">
+<h3><a name="iddiv2137969152" id="iddiv2137969152"></a>4.5 Erroneous appearance of dereferencability of identifiers</h3><p>A common reason given for needing <a title="myRI" href="#nri">myRIs</a> for namespace
+names is that an <code>http:</code> identifier appears to humans as a location and
+hence dereferencable.  	The argument that <code>http:</code> URIs are "locations" is based upon
+incomplete understanding of the use of URIs.  A classic scenario is that a
+human looks at an XML document using a word-processing application, and the
+application formats the value of an <code>xmlns</code> attribute as a
+hyperlink, because it is an <code>http:</code> URI, say <a href="http://example.org/ns/foo">http://example.org/ns/foo</a>.  But as there is no document dereferencable from that URI, when the user clicks on the link an HTTP 404 will be returned.  The obvious downside is that the user has wasted some time, typically around 5-10 seconds.  There is no additional harm than that in clicking and getting a 404.</p><p>Under what circumstances are identifiers viewed as "clickable", that is what are the contexts?   In this document, neither of the <code>xmlns</code> links have shown up as clickable.  When these documents were pasted into an email, they were not converted to clickable.  The <code>http:</code> link was converted to clickable only when the <code>myns</code> attribute was typed by hand and auto-complete was on.  It was the e-mail program's "auto-complete" that saw an <code>http:</code> within a pair of quotes and made it clickable.   It also required that rich text or HTML formatting is selected in creator and receiver/viewer.  When viewed in plain text, the link is not clickable.  The clickable link arises when a document is typed by hand, with auto-complete turned on, and then viewed by with HTML formatting.   Neither of these applications is treating the document as XML, rather they are treating it as HTML.   In particular, none of the applications know anything about XML or the <code>xmlns</code> attribute.  Thus the context of usage has incorrectly view the <code>xmlns</code> attribute as HTML.  When this happens, that is people are reading and writing sample XML documents using HTML formatting, the worst downside is that a person may waste 5-10 seconds.  </p><p>Contrasting with this is the approach of using a <a title="myRI" href="#nri">myRI</a>.  A <a title="myRI" href="#nri">myRI</a> provides an
+identifier.  A human looking at an xml document with a <a title="myRI" href="#nri">myRI</a> namespace name will not be confused
+about whether it is dereferencable or not.  No software will "auto-complete"
+e.g. an <code>xri:...</code> identifier into a clickable link.  The 5-10 seconds of potentially wasted time 
+are avoided.</p></div><div class="div2">
+<h3><a name="iddiv2137972536" id="iddiv2137972536"></a>4.6 Summary</h3><p>Namespace names are just one example of a context of use.  Any use of an identifier, or any datatype for that matter, in an XML document has the same issues.  A provider of a
+identifier must specify how the identifier will be used in each specific sub-context of their XML language, whether it
+is intended as an identifier, a location, or both.  Using a <a title="myRI" href="#nri">myRI</a> instead of an <code>http:</code> URI does not make the software or human's job any easier.</p><p>This section has shown that http: uris have a large benefit over urns: when used as namespace names because the namespace name could 
+			optionally be dereferencable, and the only downside is a fairly minimal amount of wasted 
+			time when a namespace name appears dereferencable but isn't.</p></div></div><div class="div1">
+<h2><a name="iddiv1142306584" id="iddiv1142306584"></a>5 Case Study: XRI</h2><p>In this section we look in some detail into some of the background
+assumptions for the utility of <a title="myRI" href="#nri">myRIs</a> for
+persistent identifiers and location independence, and we will compare <code>http:</code> with the proposed
+<code>xri:</code> scheme in this regard.</p><div class="div2">
+<h3><a name="iddiv2142307488" id="iddiv2142307488"></a>5.1 Simple Document Retrieval Technical Analysis</h3><p>This sections provides an overview of document retrieval of <code>http:</code> versus <code>XRI:</code>   For comparison purposes, it shows document retrieval for a given
+URI and for a given XRI.  Consider the worked example from <a href="#XRI">[XRI]</a>, in which a
+department of a government agency published a document named
+<code>govdoc.pdf</code>.  It assigns a URI
+<code>http://department.agency.example.org/docs/govdoc.pdf</code>.  <a href="#XRI">[XRI]</a> observes that changing the organizational structure represented in the URI, for example to <code>http://newdept.agency.example.org/docs/govdoc.pdf</code>, or the path structure, for example to <code>http://newdept.agency.example.org/documents/govdoc.pdf</code>, breaks access.  </p><p><a href="#XRI">[XRI]</a> suggests that an <code>xri:</code> URI for the same
+resource can be designed to be
+location independent, for example <code>xri://@example.org*agency*department/docs/govdoc.pdf</code><a href="#XRI">[XRI]</a> deals with delegation by using stars ("*").  Another
+solution advised by <a href="#XRI">[XRI]</a> is to use identifiers that have bang ("!") symbols to indicate persistence.   An example is <code>xri://@!9990!AF8F!1C3D/!2495</code>.  We examine this scenarios in order.
+				</p><div class="div3">
+<h4><a name="iddiv3128765824" id="iddiv3128765824"></a>5.1.1 Run-time Resolution</h4><p>A client makes an HTTP request for the document at <code>http://department.agency.example.org/docs/govdoc.pdf</code></p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample128766296" id="idexample128766296"></a>Example 4: HTTP GET of document</div><div class="exampleInner"><pre>GET /docs/govdoc.pdf HTTP/1.1
+Host: department.agency.example.org
+
+response:
+200 OK
+
+PDF Document</pre></div></div><p><a href="#XRI">[XRI]</a> specifies that "XRI resolution is a two phase process.   The first phase, authority resolution, resolves to the XRI authority responsible for the resource.  The second phase, local access, uses URIs and metadata from the authority to interact with the identified resource."  <a href="#XRIResolution">[XRIResolution]</a> specifies that a <code>xri://@example.org*agency*department/docs/govdoc.pdf</code> is parsed to an XRI Authority of <code>@</code>, which is queried for <code>example.org</code>, which is queried for <code>*agency</code>, which is queried for <code>*department</code>.   <a href="#XRISyntax">[XRISyntax]</a> specifies that <code>@</code>represents an authority of type organization and it establishes a global context for identifiers for whom the authority is controlled by an organization or a resource in an organizational context, resulting in <code>http://example.org</code> ss the base authority for <code>@example.org</code>.  It is possible to do look-ahead as well, so a query of <code>@example.org*agency*department</code> might return resolution for <code>@example.org</code>, <code>@example.org*agency</code>, or <code>@example.org*agency*department</code>.  Resolution proceeds until a "/" is reached in the XRI.  The "=" represents an authority of type Person and it establishes a global context for identifiers for whom the authority is controlled by an individual person - resulting in <code>equals.example.org</code> is the authority to send the resolution request. The XRI Authority endpoints are described using XRI Descriptors.   There are other special characters, such as "!", "+", "$".  </p><p>Note:DaveO can't find where @ is resolved by local authority, how @example.org maps to http://example.org.  Would @foo.ca map to http://foo.ca?  There is some wording in XRI Resolution that says = examples resolves to http://equals.example.org/xri-resolve as found in the xrid:XRIDescriptor/xrid:Authority/xrid:uRI for this community, but I'm not sure what that means.    Somehow the @ and = authorities have to be built in, but I don't know if it's an HTTP GET or a default XRIDescriptor or ..  So, I don't know how this bootstrap problem is resolved.</p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample128769784" id="idexample128769784"></a>Example 5: HTTP GET to XRI resolver</div><div class="exampleInner"><pre>GET *example.org*agency*department HTTP/1.1
+Host: example.org
+Accept: application/xrid+xml
+
+response:
+200 OK
+
+&lt;xrid:XRIDescriptor&gt;
+   &lt;xrid:Service&gt;
+      &lt;xrid:Type/&gt;
+      &lt;xrid:URI&gt;http://department.agency.example.org&lt;xrid:URI&gt;
+   &lt;/xrid:Service&gt;
+&lt;/xrid:XRI Descriptor&gt;</pre></div></div><p>The XRIDescriptor's element specifies that the authority for *agency*department is department.agency.example.org.  An HTTP GET request is issued</p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample128770272" id="idexample128770272"></a>Example 6: HTTP GET to XRIDescriptor's URI</div><div class="exampleInner"><pre>GET /docs/govdoc.pdf HTTP/1.1
+Host: department.agency.example.org
+
+response:
+200 OK
+
+PDF Document</pre></div></div><p>There is the obvious bootstrap issue in the XRI system.  Any XRI client <strong>must</strong> understand the XRI descriptor format.  This is effectively a replacement for DNS, that is mapping names to addresses. Note that it recurses and uses the DNS/HTTP infrastructure in this example.  There are at least 2 separate HTTP GET requests to resolve the <code>xri:</code> identifier into a document. </p></div></div><div class="div2">
+<h3><a name="iddiv2128769744" id="iddiv2128769744"></a>5.2 Persistent Dereferencability (location independence)</h3><p>
+Another common reason for a new identifier scheme is to come up with an
+identifier that is location-independent or "movable" from one
+location to another.  The idea is that the document changes location but the identifier should still resolve to the same document.  In all cases, there must be some kind of mapping of the identifier to the "new" location if a location is changed.  There is a publishing step, where the "new" location is added into the registry for the identifier.  </p><div class="div3">
+<h4><a name="iddiv3124840392" id="iddiv3124840392"></a>5.2.1 Run-time resolution</h4><p>HTTP supports movement through various 3xx status codes.   Virtually all Web browsers and servers will correctly utilize the 3xx HTTP Status codes. </p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample124840760" id="idexample124840760"></a>Example 7: HTTP GET of document</div><div class="exampleInner"><pre>GET /docs/govdoc.pdf HTTP/1.1
+Host: department.agency.example.org
+
+response:
+301 Moved Permanently
+Location: newdept.agency.example.org/documents/govdoc.pdf 
+
+GET /documents/govdoc.pdf HTTP/1.1
+Host: newdept.agency.example.org
+
+response:
+200 OK
+
+PDF Document</pre></div></div><p>XRI supports movement through modifying the XRIDescriptor's URI element</p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample124841272" id="idexample124841272"></a>Example 8: HTTP GET to XRI resolver</div><div class="exampleInner"><pre>GET *example.org*agency*department HTTP/1.1
+Host: example.org
+Accept: application/xrid+xml
+
+response:
+200 OK
+
+&lt;xrid:XRIDescriptor&gt;
+   &lt;xrid:Service&gt;
+      &lt;xrid:Type/&gt;
+      &lt;xrid:URI&gt;http://newdept.agency.example.org&lt;xrid:URI&gt;
+   &lt;/xrid:Service&gt;
+&lt;/xrid:XRI Descriptor&gt;</pre></div></div><p>The XRIDescriptor's URI element specifies that the authority for *agency*department is newdept.agency.example.org.  An HTTP GET request is issued</p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample124841824" id="idexample124841824"></a>Example 9: HTTP GET to XRIDescriptor's URI</div><div class="exampleInner"><pre>GET /docs/govdoc.pdf HTTP/1.1
+Host: newdept.agency.example.org
+
+response:
+200 OK
+
+PDF Document</pre></div></div><p>NOTE: DaveO: I can't see in the XRI Resolver specs how the docs path is changed to documents.</p><p>With <code>http:</code> URIs, there is a dependency that the original URI cannot be re-used for some other purpose and that it must remain "viable", that is it can't be terminated.  If <code>department.agency.example.org</code> ever disappeared, all the clients would break on that document.  With XRI identifiers, there is a dependency upon the <code>@</code> authority and related resolvers.  The "long-term" viability question then is whether XRI resolvers will "last" longer than HTTP Servers on given domain names.  </p></div><div class="div3">
+<h4><a name="iddiv3124841704" id="iddiv3124841704"></a>5.2.2 Configuration</h4><p>There are two steps to making the document available at the new URI.  Firstly, the Web server must be configured to do the 301 and new Location (the redirect).  In Apache 2.2, this is a configuration line such as <code> Redirect /service http://foo2.example.com/service</code>.  Secondly, the document must be made available at http://newdept.agency.example.org/documents/govdoc.pdf.</p><p>XRI allows a simpler retrieval once the authority is known by removing the redirect step.  The authority maps the identifier to the new document and retrieval of <code>ns/foo</code> is avoided.  The change process is simpler as well.  The new address is an XML entry instead of a registry must be updated and the new <code>ns/latest/foo</code> must be added to the system.</p><p>Now the question is about the relative difficulties in updating an HTTP Server or to update an XRI resolver.  In either case there will be some kind of submission and approval process.  There is widespread deployment of HTTP and HTTP Administrators, it seems likely that the configuration change (one line redirect in Apache) is probably roughly equivalent to updating XRI descriptor element at a URI.</p><p>In both solutions, the mappings from old identifiers to new identifiers are stored.  XRI calls this out as "However such an approach would eventually lead to a spaghetti code of new-to-old XRI mappings.  It also has the drawback of preventing reassignment of the identifier "department" for another purpose."</p></div></div><div class="div2">
+<h3><a name="iddiv2124844360" id="iddiv2124844360"></a>5.3 Persistence Identifiers</h3><p>The persistence of an identifier has operational and expressive characteristics.</p><div class="div3">
+<h4><a name="iddiv3139093760" id="iddiv3139093760"></a>5.3.1 Operational policy</h4><p>Let us return to the persistence of the identifiers without regards to derefencability.  The <code>xri:</code> scheme is managed by the XRI committee within OASIS.   
+			OASIS has the authority to change the XRI scheme, probably at the request of the XRI committee.  It is possible for the XRI scheme to cease being maintained by the XRI committee, and even some other committee or organization take it over.  Should another organization choose to create an alternative XRI scheme, then there would probably be a dispute perhaps with a dispute resolution mechanism.   As the XRI specification says "As with URNs, the issue of whether a persistent sub-segment is in fact permanent (never reassigned)
+			 is a matter of operational policy for the assigning authority. XRIs can't help with the operational issue ..."</p><p>An <code>http:</code>-based naming scheme for documents is managed by the organization that owns the domain in the URI.  
+			The organization does not have to register new schemes anywhere.  In the case of <code>http://www.oasis-open.org</code> URIs, OASIS has the authority to assign and change the URIs or URI schemes on its own, without any review.   It is possible for the domain to cease being owned by OASIS, through lack of maintenance or even error.  Alternatively, the XRI community could use an <code>http:</code> based URI, such as <code>http://xri.net</code>.  Then the owner of the xri.net domain, presumably the XRI TC, would be responsible for managing the domain.  As with all names, the domain could lapse.  And as with <code>XRI</code> identifiers, there is the possibility of conflicts and disputes.</p><p>With all identifiers, the persistence of any particular identifier and scheme are up 
+			to the registering organization and the registration authority.  <code>http:</code> and <code>XRI:</code> are equivalent in the operational policies determining persistence.</p></div><div class="div3">
+<h4><a name="iddiv3139095840" id="iddiv3139095840"></a>5.3.2 Intent</h4><p>Both schemes can express the intent of persistence.   As the XRI specification says "XRIs can't help with the operational issue, but XRI syntax allows the 
+			 authority to express its intent".   XRI uses the bang ("!") symbol to indicate that the identifier that follows is persistent.  XRI uses the star ("*") symbol to indicate that the identifier that follows is re-assignable. The XRI specification suggest that "a much better solution would be to assign the resource "govdoc.pdf" an identifier that never 
+				needs to change or be reassigned ... such as <code>xri://@!9990!AF8F!1C3D/!2495</code>".  </p><p>It is possible for a URI authority to express its intent in the URIs it mints, so the same identification of persistence versus transience can be done using <code>http:</code> URIs.  The <code>http:</code> based XRI design will be shown shortly.</p><p>XRI and Web architecture effectively give the same guidance, that it is a much better solution to assign an identifier that never changes, as in <a href="#coolURIs">[Cool URIs]</a>.
+			 </p></div></div><div class="div2">
+<h3><a name="iddiv2139097224" id="iddiv2139097224"></a>5.4 Protocol Independence</h3><p>
+			Protocol independence is a goal of XRI.  The previous HTTP redirects have shown that HTTP can do redirects, and it can do redirects to non http resources.  Starting from HTTP, a redirect to an <code>ftp:</code> resource is possible.  An important but subtle aspect of the web architecture is that the <code>http:</code> scheme for identifiers does not require the HTTP protocol to be used.  This is explored in <a href="#schemeProtocols">[Schemes and Protocols]</a>.</p></div><div class="div2">
+<h3><a name="iddiv2139098016" id="iddiv2139098016"></a>5.5 XRI alternative design</h3><p>We suggest XRI should create URIs using the <code>http:</code> scheme, rather than inventing a non-URI based scheme.  The thread of documented good practices is that leads to this conclusion starts from <a href="#AWWW">[AWWW]</a>:</p><p class="prefix">Good Practice</p><p class="practice">To benefit from and increase the value of the World Wide Web, agents should provide URIs as identifiers for resources.</p><p class="prefix">Good Practice</p><p class="practice">A specification SHOULD reuse an existing URI scheme (rather than create a new one) when it provides the desired properties of identifiers and their relation to resources.</p><p>Intent is part of the potential 
+			 metadata in URIs discussed in <a href="#metadatainuri">[Metadata in URI]</a>.  </p><p class="prefix">Good Practice</p><p class="practice">URI assignment authorities and the Web servers deployed for them may benefit from an orderly mapping from resource metadata into URIs</p><p>The XRI community could define constraints on <code>http:</code> uris containing a particular domain, such as xri.net.  
+			The rules for persistence and location independence can be defined.  They could start with <code>http://xri.net</code> followed by roughly the current XRI rules and taking into account URI character constraints.  
+				For example, the previous XRI persistent identifier could be similar to: <code>http://xri.net/@;9990;AF8F;1C3D/;2495</code>.  An alternative common practice for persistent identifiers is using UUIDs in the URI, ie:<code>http://example.org/6B29FC40-CA47-1067-B31D-00DD010662DA</code>.  Location independent identifiers can be achieved using HTTP redirects.
+			There are many varieties of constraints upon any URIs and use of HTTP redirects.  One generalized framework for mapping XRIs or URNs to <code>http:</code> URIs 
+			is at <a href="#urn2http">[urn2http]</a>.    
+			</p></div><div class="div2">
+<h3><a name="iddiv2128006416" id="iddiv2128006416"></a>5.6 Summary</h3><p>We have shown that <code>http:</code> identifiers for XRIs can achieve the goals of XRI with substation benefits.  The XRI goals of persistent identifiers and location independence are already available with <code>http:</code> identifiers.  There are two concrete benefits to using XRIs identified in the previous analysis: that users cannot waste time 
+				by erroneously dereferencing namespace names that do not have namespace documents, and that an extra HTTP GET request is 
+				avoided when documents move.   The XRI identifier solution's downsides are adding a new identifier scheme with the software and 
+				human costs and seemingly mandatory increased network costs ( our example shows 2 HTTP GETs instead of 1).   
+				Given these costs and benefits, deploying a new registrar, resolution mechanism and related software to layer on top of existing web 
+				functionality is not justified.</p><p>Our analysis has shown that if the scheme definition for <code>xri:</code> says that it
+<em>is</em> dereferencable, and specifies a mechanism, then either that
+mechanism <em>is</em> HTTP, or it will have to provide all the
+functionality, and thus be heir to all the weaknesses, <em>of</em> HTTP. 
+In either case little benefit has been gained over just using the <code>http:</code>
+scheme itself.  Note we have not yet compared the authority resolution mechanisms and the dependence upon centralized authority.  
+We have also not compared the distributed authoring of identifiers either.</p><p> In the <a title="myRI" href="#nri">myRI</a> identifier scenario, the "location" to be
+used for knowledge is somewhere in the application or in some
+property of the <a title="myRI" href="#nri">myRI</a> such as a URI scheme or URN (sub)scheme.  The <a title="myRI" href="#nri">myRI</a> proposals includes means to
+transform a <a title="myRI" href="#nri">myRI</a> into
+a dereferencable address via lookup using a registry server.  This in turn requires the use of a
+dereferencable address for the server, or else all software intended
+for use with <a title="myRI" href="#nri">myRIs</a> must have the registry server locations
+"hard-coded".  As far as we can tell, all the <a title="myRI" href="#nri">myRI</a>
+proposals expect the results of server lookup to be an <code>http:</code> URI,
+and also appear to use an <code>http:</code> URL to identify the location of the
+registry server.</p></div></div><div class="div1">
+<h2><a name="iddiv1141937128" id="iddiv1141937128"></a>6 Case study: new URI scheme with no protocol</h2><p>
+A main advantage of <code>http:</code> URIs is the use of DNS to allow decentralized
+creation of vocabularies.  This does bear the cost that humans can be
+confused by the mixing of location and identifiers.  Another possibility
+is to create and register a scheme that does not have any protocol associated with
+it but follows all the rest of the <code>http:</code> syntax.  This is something like a cross between URNs and <code>http:</code> URIs.</p><div class="exampleOuter">
+<div class="exampleHeader"><a name="idexample141937944" id="idexample141937944"></a>Example 10: id: scheme</div><div class="exampleInner"><pre>&lt;myns:foo xmlns:myns="id://docs.oasis-open.org/tc/spec/date"/&gt;</pre></div></div><p>The intent is clear from the instance of the URI, that HTTP is not to be used for dereferencing.  Various programs do not "auto-complete" into clickable links.  However, similar to URNs, this does not allow the possibility for the dereferencing the link to retrieve a document.  If a human wants to find out about the specific namespace, how do they find out?  Returning to context, a human must understand that the <code>myns</code> is an XML namespace and how XML namespaces are used.  The use of <code>id:</code> or <code>http:</code> or <code>urn:</code> or <code>xri:</code> has done nothing to shield them from this requirement.  </p><p>There are very few advantages and significant downside to this approach. 
+For these reasons, David Orchard never proceeded down the registration path for <code>id:</code>.</p></div></div><div class="back"><div class="div1">
+<h2><a name="references" id="references"></a>A References</h2><dl><dt class="label"><a name="coolURIs" id="coolURIs"></a>Cool URIs</dt><dd>Berners-Lee, Tim <em>Cool URIs don't
+change</em>, W3C, 1998.  Available online as <a href="http://www.w3.org/Provider/Style/URI">http://www.w3.org/Provider/Style/URI</a>.</dd><dt class="label"><a name="URI" id="URI"></a>RFC 3986</dt><dd>Berners-Lee, T., Fielding, R. and L. Masinter <em>Uniform Resource Identifier (URI): Generic
+Syntax</em>, IETF, 2005.  Available online as <a href="http://www.faqs.org/rfcs/rfc3986.html">http://www.faqs.org/rfcs/rfc3986.html</a></dd><dt class="label"><a name="OASISURN" id="OASISURN"></a>oasis URN</dt><dd>Best, K and N. Walsh <em>A URN Namespace
+for OASIS</em>, IETF, 2001.  Available online
+as <a href="http://www.ietf.org/rfc/rfc3121">RFC 3121</a></dd><dt class="label"><a name="XMLNS" id="XMLNS"></a>XML Namespaces</dt><dd>Bray, T. et al eds. <em>Namespaces in XML 1.1</em>,
+W3C, 2004.  Available online as <a href="http://www.w3.org/TR/xml-names11/">http://www.w3.org/TR/xml-names11/</a></dd><dt class="label"><a name="UBL" id="UBL"></a>UBL</dt><dd>Crawford, Mark <em>UBL Naming and Design rules</em>, OASIS.  Available online
+as <a href="http://www.oasis-open.org/committees/download.php/10323/cd-UBL-NDR-1.0Rev1c.pdf">http://www.oasis-open.org/committees/download.php/10323/cd-UBL-NDR-1.0Rev1c.pdf</a></dd><dt class="label"><a name="urn2http" id="urn2http"></a>urn2http</dt><dd>Booth, David <em>Converting New URI Schemes or URN Sub-Schemes to HTTP</em>.  
+				Available online as <a href="http://dbooth.org/2006/urn2http/">http://dbooth.org/2006/urn2http/</a></dd><dt class="label"><a name="RFC2068" id="RFC2068"></a>RFC 2068</dt><dd>Fielding, R. et al. eds <em>Hypertext
+Transfer Protocol -- HTTP/1.1</em>, IETF, 1997, section 19.6.1.2.  Available
+online as <a href="http://www.ietf.org/rfc/rfc2068.txt">http://www.ietf.org/rfc/rfc2068.txt</a></dd><dt class="label"><a name="EPR" id="EPR"></a>EPRs</dt><dd>Gudgin, M., Hadley, M. and T. Rogers, eds <em>Web
+Services Addressing 1.0 - Core</em> ("Endpoint References" section), W3C, 2006.  Available online as <a href="http://www.w3.org/TR/ws-addr-core/#eprs">http://www.w3.org/TR/ws-addr-core/#eprs</a></dd><dt class="label"><a name="NZL" id="NZL"></a>NZL</dt><dd>Hendrikx, F., Wallis, C. and New Zealand
+Government, <em>A Uniform Resource Name (URN) Formal Namespace for the New
+Zealand Government</em>, RFC 4350, IETF, 2006.  Available online as <a href="http://www.ietf.org/rfc/rfc4350.txt">http://www.ietf.org/rfc/rfc4350.txt</a></dd><dt class="label"><a name="AWWW" id="AWWW"></a>AWWW</dt><dd>Jacobs, Ian and Norman Walsh, eds. <em>Architecture of the
+World Wide Web</em>, Volume 1, W3C, 2004.  Available online as <a href="http://www.w3.org/TR/webarch/">http://www.w3.org/TR/webarch/</a></dd><dt class="label"><a name="RFC3688" id="RFC3688"></a>RFC 3688</dt><dd>Mealling, M. ed. <em>The IETF XML
+Registry</em>, IETF, 2004.  Available online at <a href="http://ietfreport.isoc.org/idref/rfc3688/">http://ietfreport.isoc.org/idref/rfc3688/</a></dd><dt class="label"><a name="XRI" id="XRI"></a>XRI</dt><dd>Reed, D. and
+D. McAlpin eds. <em>An Introduction to XRIs</em>, OASIS, 2005. 
+Available online as <a href="http://www.oasis-open.org/apps/group_public/download.php/11857/xri-intro-V2.0-wd-04.pdf">http://www.oasis-open.org/apps/group_public/download.php/11857/xri-intro-V2.0-wd-04.pdf</a></dd><dt class="label"><a name="XRISyntax" id="XRISyntax"></a>XRISyntax</dt><dd>Reed, D. and D. McAlpin, eds. <em>XRI Syntax</em>, OASIS, 2005. 
+Available online as <a href="http://docs.oasis-open.org/xri/2.0/specs/xri-syntax-V2.0-cd-02.pdf">http://docs.oasis-open.org/xri/2.0/specs/xri-syntax-V2.0-cd-02.pdf</a></dd><dt class="label"><a name="INFO" id="INFO"></a>RFC 4452</dt><dd>Van de Sompel, H. et al eds <em>The "info" URI Scheme
+      for Information Assets with Identifiers in Public Namespaces</em>,
+IETF, 2006.  Available online at <a href="http://www.ietf.org/rfc/rfc4452.txt">http://www.ietf.org/rfc/rfc4452.txt</a></dd><dt class="label"><a name="XRIResolution" id="XRIResolution"></a>XRIResolution</dt><dd>Wachob, G. ed <em>XRI Resolution</em>, OASIS, 2005. 
+Available online as <a href="http://docs.oasis-open.org/xri/xri/V2.0/xri-resolution-V2.0-cd-01.pdf">http://docs.oasis-open.org/xri/xri/V2.0/xri-resolution-V2.0-cd-01.pdf
+				</a></dd><dt class="label"><a name="TAGEPR" id="TAGEPR"></a>TAG on EPRs</dt><dd><em>TAG Request for Change to WS
+Addressing Core</em>, TAG message to WS Addressing Working Group, 2005.  Available
+online as <a href="http://lists.w3.org/Archives/Public/www-tag/2005Oct/0057.html">http://lists.w3.org/Archives/Public/www-tag/2005Oct/0057.html</a></dd><dt class="label"><a name="schemeProtocols" id="schemeProtocols"></a>Schemes and Protocols</dt><dd>"Relationship of URI schemes
+to protocols and operations", TAG issue schemeProtocols-49, available online as <a href="http://www.w3.org/2001/tag/issues.html#schemeProtocols-49">http://www.w3.org/2001/tag/issues.html#schemeProtocols-49</a></dd><dt class="label"><a name="namesinnamespace" id="namesinnamespace"></a>The Disposition of Names in an XML Namespace</dt><dd>"The Disposition of Names in an XML Namespace", TAG issue nameSpaceState-48, available online as <a href="http://www.w3.org/TR/namespaceState/">http://www.w3.org/TR/namespaceState/</a></dd><dt class="label"><a name="metadatainuri" id="metadatainuri"></a>Metadata in URI</dt><dd>"Metadata in URI", TAG issue metadatainuri-31, available online as <a href="http://www.w3.org/2001/tag/doc/metaDataInURI-31">http://www.w3.org/2001/tag/doc/metaDataInURI-31</a></dd></dl></div></div></body></html>
+
