@@ -4045,7 +4045,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <li>The <a href="#pathsObject">Paths Object</a> MAY be empty. It may be counterintuitive, but this may tell the viewer that they got to the right place, but can’t access any documentation. They’d still have access to the <a href="#infoObject">Info Object</a> which may contain additional information regarding authentication.</li>
 <li>The <a href="#pathItemObject">Path Item Object</a> MAY be empty. In this case, the viewer will be aware that the path exists, but will not be able to see any of its operations or parameters. This is different from hiding the path itself from the <a href="#pathsObject">Paths Object</a>, because the user will be aware of its existence. This allows the documentation provider to finely control what the viewer can see.</li>
 </ol>
-<p><a id="revisionHistory"></a></section></section><section class="appendix"><h1><span>Appendix A: Revision History</span></h1></p>
+<p><a id="revisionHistory"></a></section></section><section><h1><span>Appendix A: Revision History</span></h1></p>
 <table>
 <thead>
 <tr>
@@ -4122,7 +4122,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 </tr>
 </tbody>
 </table>
-<p><a id="usingRFC6570Implementations"></a></section><section class="appendix"><h1><span>Appendix B: Using RFC6570 Implementations</span></h1></p>
+<p><a id="usingRFC6570Implementations"></a></section><section><h1><span>Appendix B: Using RFC6570 Implementations</span></h1></p>
 <p>Serialization is defined in terms of RFC6570 URI Templates in two scenarios:</p>
 <table>
 <thead>
@@ -4133,11 +4133,11 @@ While not part of the specification itself, certain libraries MAY choose to allo
 </thead>
 <tbody>
 <tr>
-<td>Parameter Object</td>
+<td><a href="#parameterObject">Parameter Object</a></td>
 <td>When <code>schema</code> is present</td>
 </tr>
 <tr>
-<td>Encoding Object</td>
+<td><a href="#encodingObject">Encoding Object</a></td>
 <td>When encoding for <code>application/x-www-form-urlencoded</code> and any of <code>style</code>, <code>explode</code>, or <code>allowReserved</code> are used</td>
 </tr>
 </tbody>
@@ -4209,9 +4209,9 @@ While not part of the specification itself, certain libraries MAY choose to allo
     <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
 </code></pre>
 <p>This example is equivalent to RFC6570’s <code>{?foo*,bar}</code>, and <em><strong>NOT</strong></em> <code>{?foo*}{&amp;bar}</code>.
-The <code>&amp;</code> operator has no equivalent in OpenAPI:</p>
+The <code>&amp;</code> operator has no equivalent in the Parameter Object.</p>
 </section><section><h2>Non-RFC6570 Field Values and Combinations</h2>
-<p>Configurations with no direct RFC6570 equivalence SHOULD also be handled according to RFC6570.
-Implementations MAY pass individual names and values to RFC6570 regular or reserved expansion (based on <code>allowReserved</code>), and then assemble the results into a string with the appropriate deliiters.</p>
+<p>Configurations with no direct RFC6570 equivalent SHOULD also be handled according to RFC6570.
+Implementations MAY pass individual names and values to RFC6570 regular or reserved expansion (based on <code>allowReserved</code>), and then assemble the results into a string with the appropriate delimiters.</p>
 <p>This includes the styles <code>pipeDelimited</code>, <code>spaceDelimited</code>, and <code>deepObject</code>, as well as the combination of the <code>form</code> style with <code>allowReserved: true</code>.</p>
 
