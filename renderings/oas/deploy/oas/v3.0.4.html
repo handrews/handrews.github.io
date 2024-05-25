@@ -73,9 +73,19 @@ This includes all fields that are used as keys in a map, except where explicitly
 </ul>
 <p><strong>Note:</strong> While APIs may be defined by OpenAPI documents in either YAML or JSON format, the API request and response bodies and other content are not required to be JSON or YAML.</p>
 <p><a id="documentStructure"></a></section><section><h2><span>OpenAPI Description Structure</span></h2></p>
-<p>An OpenAPI Description MAY be made up of a single document or be divided into multiple, connected parts at the discretion of the author. In the latter case, <code>$ref</code> fields MUST be used in the specification to reference those parts as follows from the <a href="https://json-schema.org">JSON Schema</a> definitions.  In a multi-document description, the document containing the <a href="#oasObject">OpenAPI Object</a> is known as the <strong>entry OpenAPI document.</strong></p>
+<p>An OpenAPI Description (OAD) MAY be made up of a single document or be divided into multiple, connected parts at the discretion of the author. In the latter case, <a href="#referenceObject">Reference Object</a> and <a href="#pathItemObject">Path Item Object</a> <code>$ref</code> keywords, as well as the <a href="#linkObject">Link Object</a> <code>operationRef</code> keyword, are used.</p>
+<p>Any document consisting entirely of an OpenAPI Object is known as a <strong>complete OpenAPI document</strong>.
+In a multi-document description, the document containing the <a href="#oasObject">OpenAPI Object</a> where parsing begins for a specific API’s description is known as that API’s <strong>entry OpenAPI document</strong>, or simply <strong>entry document</strong>.</p>
 <p>It is RECOMMENDED that the entry OpenAPI document be named: <code>openapi.json</code> or <code>openapi.yaml</code>.</p>
-<p><a id="dataTypes"></a></section><section><h2><span>Data Types</span></h2></p>
+<p><a id="structuralInteroperability"></a><section><h3><span>Structural Interoperability</span></h3></p>
+<p>When parsing an OAD, JSON or YAML objects are parsed into specific Objects (such as <a href="#operationObject">Operation Objects</a>, <a href="#responseObject">Response Objects</a>, <a href="#referenceObject">Reference Objects</a>, etc.) based on the parsing context.  Depending on how references are arranged, a given JSON or YAML object can be parsed in multiple different contexts:</p>
+<ul>
+<li>As a full OpenAPI Description document (an <a href="#oasObject">OpenAPI Object</a> taking up an entire document)</li>
+<li>As the Object type implied by its parent Object within the document</li>
+<li>As a reference target, with the Object type matching the reference source’s context</li>
+</ul>
+<p>If the same JSON/YAML object is parsed multiple times and the respective contexts require it to be parsed as <em>different</em> Object types, the resulting behavior is <em>implementation defined</em>, and MAY be treated as an error if detected.  An example would be referencing an empty Schema Object under <code>#/components/schemas</code> where a Path Item Object is expected, as an empty object is valid for both types.  For maximum interoperability, it is RECOMMENDED that OpenAPI Description authors avoid such scenarios.</p>
+<p><a id="dataTypes"></a></section></section><section><h2><span>Data Types</span></h2></p>
 <p>Primitive data types in the OAS are based on the types supported by the <a href="https://tools.ietf.org/html/draft-wright-json-schema-00#section-4.2">JSON Schema Specification Wright Draft 00</a>.
 Note that <code>integer</code> as a type is also supported and is defined as a JSON number without a fraction or exponent part.
 <code>null</code> is not supported as a type (see <a href="#schemaNullable"><code>nullable</code></a> for an alternative solution).
@@ -1265,7 +1275,7 @@ Parameter Objects MUST include either a <code>content</code> field or a <code>sc
 <tr>
 <td><a id="parameterAllowEmptyValue"> </a> allowEmptyValue</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>Sets the ability to pass empty-valued parameters. This is valid only for <code>query</code> parameters and allows sending a parameter with an empty value. Default value is <code>false</code>. If <a href="#parameterStyle"><code>style</code></a> is used, and if behavior is <code>n/a</code> (cannot be serialized), the value of <code>allowEmptyValue</code> SHALL be ignored. Use of this property is NOT RECOMMENDED, as it is likely to be removed in a later revision.</td>
+<td>If <code>true</code>, clients MAY pass a zero-length string value in place of parameters that would otherwise be omitted entirely, which the server SHOULD interpret as the parameter being unused. Default value is <code>false</code>. If <a href="#parameterStyle"><code>style</code></a> is used, and if behavior is <code>n/a</code> (cannot be serialized), the value of <code>allowEmptyValue</code> SHALL be ignored. Interactions between this field and the parameter’s <a href="#schemaObject">Schema Object</a> are implementation-defined. This field is valid only for <code>query</code> parameters. Use of this property is NOT RECOMMENDED, and it is likely to be removed in a later revision.</td>
 </tr>
 </tbody>
 </table>
@@ -1294,7 +1304,7 @@ When <code>example</code> or <code>examples</code> are provided in conjunction w
 <tr>
 <td><a id="parameterAllowReserved"> </a>allowReserved</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>Determines whether the parameter value SHOULD allow reserved characters, as defined by [[!RFC3986]] <code>:/?#[]@!$&amp;'()*+,;=</code> to be included without percent-encoding. This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>.</td>
+<td>When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are not allowed in the query string, or have a meaning other than their literal value (e.g. <code>+</code> as an escape for the space character in <code>application/x-www-form-urlencoded</code> query strings). This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>.</td>
 </tr>
 <tr>
 <td><a id="parameterSchema"> </a>schema</td>
@@ -1313,7 +1323,7 @@ When <code>example</code> or <code>examples</code> are provided in conjunction w
 </tr>
 </tbody>
 </table>
-<p>See also <a href="#usingRFC6570Implementations">Appendix B: Using RFC6570 Implementations</a> for additional guidance.</p>
+<p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance.</p>
 </section><section><h5>Fixed Fields and considerations for use with <code>content</code></h5>
 <p>For more complex scenarios, the <a href="#parameterContent"><code>content</code></a> property can define the media type and schema of the parameter, as well as give examples of its use.</p>
 <table>
@@ -2013,11 +2023,12 @@ definition may be used:</p>
 <tr>
 <td><a id="encodingAllowReserved"> </a>allowReserved</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>Determines whether the parameter value SHOULD allow reserved characters, as defined by [[!RFC3986]] <code>:/?#[]@!$&amp;'()*+,;=</code> to be included without percent-encoding. The default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.</td>
+<td>When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are not allowed in the query string, or have a meaning other than their literal value (e.g. <code>+</code> as an escape for the space character in <code>application/x-www-form-urlencoded</code> query strings).  The default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.</td>
 </tr>
 </tbody>
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
+<p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance.</p>
 </section><section><h4>Encoding Object Example</h4>
 <p><code>multipart/form-data</code> allows for binary parts:</p>
 <pre class="nohighlight"><code>
@@ -3253,8 +3264,7 @@ The <a href="#xmlObject">XML Object</a> contains additional information about th
         <span class="hljs-bullet">-</span> <span class="hljs-string">packSize</span>
 </code></pre>
 <p><a id="discriminatorObject"></a></section></section></section><section><h3><span>Discriminator Object</span></h3></p>
-<p>When request bodies or response payloads may be one of a number of different schemas, a <code>discriminator</code> object can be used to aid in serialization, deserialization, and validation.  The discriminator is a specific object in a schema which is used to inform the consumer of the specification of an alternative schema based on the value associated with it.</p>
-<p>When using the discriminator, <em>inline</em> schemas will not be considered.</p>
+<p>When request bodies or response payloads may be one of a number of different schemas, a Discriminator Object can be used to aid in serialization, deserialization, and validation by implicitly or explicitly associating the possible values of a named property with alternative schemas.</p>
 <section><h4>Fixed Fields</h4>
 <table>
 <thead>
@@ -3273,11 +3283,26 @@ The <a href="#xmlObject">XML Object</a> contains additional information about th
 <tr>
 <td><a id="discriminatorMapping"> </a> mapping</td>
 <td style="text-align:center">Map[<code>string</code>, <code>string</code>]</td>
-<td>An object to hold mappings between payload values and schema names or references.</td>
+<td>An object to hold mappings between payload values and schema names or URI references.</td>
 </tr>
 </tbody>
 </table>
-<p>The discriminator object is legal only when using one of the composite keywords <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code>.  Note that because the discriminating property’s value is used as a component name and/or as the key in the <code>mapping</code> object, the behavior of any value that is not a string is undefined.</p>
+</section><section><h4>Conditions for Using the Discriminator Object</h4>
+<p>The Discriminator Object is legal only when using one of the composite keywords <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code>.
+In both the <code>oneOf</code> and <code>anyOf</code> use cases, where those keywords are adjacent to <code>discriminator</code>, all possible schemas MUST be listed explicitly.
+To avoid redundancy, the discriminator MAY be added to a parent schema definition, and all schemas building on the parent schema via an <code>allOf</code> construct may be used as an alternate schema.
+It is implementation-defined as to whether all named <a href="#schemaObject">Schema Objects</a> under the <a href="#componentsObject">Components Object</a>, or only those that are otherwise directly referenced are searched for <code>allOf</code> references to the parent schema.
+However, it is RECOMMENDED to search all named schemas in the Components Object because it is common with the <code>allOf</code> usage for other parts of the API to only directly reference the parent schema.</p>
+<p>The behavior of any configuration of <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code> and <code>discriminator</code> that is not described above is undefined.</p>
+</section><section><h4>Options for Mapping Values to Schemas</h4>
+<p>The value of the property named in <code>propertyName</code> is used as the name of the associated schema under the <a href="#componentsObject">Components Object</a>, <em>unless</em> a <code>mapping</code> is present for that value.
+The <code>mapping</code> entry maps a specific property value to either a different schema component name, or to a schema identified by a URI.
+When using implicit or explicit schema component names, inline <code>oneOf</code> or <code>anyOf</code> subschemas are not considered.
+The behavior of a <code>mapping</code> value that is both a valid schema name and a valid relative URI reference is implementation-defined, but it is RECOMMENDED that it be treated as a schema name.
+To ensure that an ambiguous value (e.g. <code>&quot;foo&quot;</code>) is treated as a relative URI reference by all implementations, authors MUST prefix it with the <code>&quot;.&quot;</code> path segment (e.g. <code>&quot;./foo&quot;</code>).</p>
+<p>Mapping keys MUST be string values, but tooling MAY convert response values to strings for comparison.
+However, the exact nature of such conversions are implementation-defined.</p>
+<p><a id="discriminatorExamples"></a></section><section><h4><span>Examples</span></h4></p>
 <p>In OAS 3.0, a response payload MAY be described to be exactly one of any number of types:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">MyResponseType:</span>
@@ -3318,10 +3343,9 @@ The <a href="#xmlObject">XML Object</a> contains additional information about th
       <span class="hljs-attr">dog:</span> <span class="hljs-string">&#x27;#/components/schemas/Dog&#x27;</span>
       <span class="hljs-attr">monster:</span> <span class="hljs-string">https://gigantic-server.com/schemas/Monster/schema.json</span>
 </code></pre>
-<p>Here the discriminator <em>value</em> of <code>dog</code> will map to the schema <code>#/components/schemas/Dog</code>, rather than the default (implicit) value of <code>Dog</code>.  If the discriminator <em>value</em> does not match an implicit or explicit mapping, no schema can be determined and validation SHOULD fail. Mapping keys MUST be string values, but tooling MAY convert response values to strings for comparison.</p>
+<p>Here the discriminator <em>value</em> of <code>dog</code> will map to the schema <code>#/components/schemas/Dog</code>, rather than the default (implicit) value of <code>Dog</code>.  If the discriminator <em>value</em> does not match an implicit or explicit mapping, no schema can be determined and validation SHOULD fail.</p>
 <p>When used in conjunction with the <code>anyOf</code> construct, the use of the discriminator can avoid ambiguity where multiple schemas may satisfy a single payload.</p>
-<p>In both the <code>oneOf</code> and <code>anyOf</code> use cases, all possible schemas MUST be listed explicitly.  To avoid redundancy, the discriminator MAY be added to a parent schema definition, and all schemas comprising the parent schema in an <code>allOf</code> construct may be used as an alternate schema.</p>
-<p>For example:</p>
+<p>This example shows the <code>allOf</code> usage, which avoids needing to reference all child schemas in the parent:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">components:</span>
   <span class="hljs-attr">schemas:</span>
@@ -4045,7 +4069,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <li>The <a href="#pathsObject">Paths Object</a> MAY be empty. It may be counterintuitive, but this may tell the viewer that they got to the right place, but can’t access any documentation. They’d still have access to the <a href="#infoObject">Info Object</a> which may contain additional information regarding authentication.</li>
 <li>The <a href="#pathItemObject">Path Item Object</a> MAY be empty. In this case, the viewer will be aware that the path exists, but will not be able to see any of its operations or parameters. This is different from hiding the path itself from the <a href="#pathsObject">Paths Object</a>, because the user will be aware of its existence. This allows the documentation provider to finely control what the viewer can see.</li>
 </ol>
-<p><a id="revisionHistory"></a></section></section><section><h1><span>Appendix A: Revision History</span></h1></p>
+<p><a id="revisionHistory"></a></section></section><section class="appendix"><h1><span>Appendix A: Revision History</span></h1></p>
 <table>
 <thead>
 <tr>
@@ -4122,7 +4146,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 </tr>
 </tbody>
 </table>
-<p><a id="usingRFC6570Implementations"></a></section><section><h1><span>Appendix B: Using RFC6570 Implementations</span></h1></p>
+<p><a id="usingRFC6570Implementations"></a></section><section class="appendix"><h1><span>Appendix C: Using RFC6570 Implementations</span></h1></p>
 <p>Serialization is defined in terms of RFC6570 URI Templates in two scenarios:</p>
 <table>
 <thead>
@@ -4150,7 +4174,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <tr>
 <th>field</th>
 <th>value</th>
-<th>operator</th>
+<th>equivalent</th>
 </tr>
 </thead>
 <tbody>
@@ -4162,17 +4186,17 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <tr>
 <td>style</td>
 <td>matrix</td>
-<td><code>;</code></td>
+<td><code>;</code> prefix operator</td>
 </tr>
 <tr>
 <td>style</td>
 <td>label</td>
-<td><code>.</code></td>
+<td><code>.</code> prefix operator</td>
 </tr>
 <tr>
 <td>style</td>
 <td>form</td>
-<td><code>?</code></td>
+<td><code>?</code> prefix operator</td>
 </tr>
 <tr>
 <td>allowReserved</td>
@@ -4182,7 +4206,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <tr>
 <td>allowReserved</td>
 <td><code>true</code></td>
-<td><code>+</code></td>
+<td><code>+</code> prefix operator</td>
 </tr>
 <tr>
 <td>explode</td>
@@ -4192,12 +4216,13 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <tr>
 <td>explode</td>
 <td><code>true</code></td>
-<td><code>*</code></td>
+<td><code>*</code> modifier suffix</td>
 </tr>
 </tbody>
 </table>
-<p>Multiple <code>style: form</code> parameters are equivalent to a single RFC6570 <a href="https://www.rfc-editor.org/rfc/rfc6570#section-2.2">variable list</a> using the <code>?</code> operator:</p>
+<p>Multiple <code>style: form</code> parameters are equivalent to a single RFC6570 <a href="https://www.rfc-editor.org/rfc/rfc6570#section-2.2">variable list</a> using the <code>?</code> prefix operator:</p>
 <pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
 <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">foo</span>
   <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
   <span class="hljs-attr">schema:</span>
@@ -4208,10 +4233,133 @@ While not part of the specification itself, certain libraries MAY choose to allo
   <span class="hljs-attr">schema:</span>
     <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
 </code></pre>
-<p>This example is equivalent to RFC6570’s <code>{?foo*,bar}</code>, and <em><strong>NOT</strong></em> <code>{?foo*}{&amp;bar}</code>.
-The <code>&amp;</code> operator has no equivalent in the Parameter Object.</p>
+<p>This example is equivalent to RFC6570’s <code>{?foo*,bar}</code>, and <em><strong>NOT</strong></em> <code>{?foo*}{&amp;bar}</code>, which is problematic because if <code>foo</code> is not defined, the result will be an invalid URI.
+The <code>&amp;</code> prefix operator has no equivalent in the Parameter Object.</p>
 </section><section><h2>Non-RFC6570 Field Values and Combinations</h2>
 <p>Configurations with no direct RFC6570 equivalent SHOULD also be handled according to RFC6570.
-Implementations MAY pass individual names and values to RFC6570 regular or reserved expansion (based on <code>allowReserved</code>), and then assemble the results into a string with the appropriate delimiters.</p>
-<p>This includes the styles <code>pipeDelimited</code>, <code>spaceDelimited</code>, and <code>deepObject</code>, as well as the combination of the <code>form</code> style with <code>allowReserved: true</code>.</p>
+Implementations MAY create a properly delimited URI Template with variables for individual names and values using RFC6570 regular or reserved expansion (based on <code>allowReserved</code>).</p>
+<p>This includes:</p>
+<ul>
+<li>the styles <code>pipeDelimited</code>, <code>spaceDelimited</code>, and <code>deepObject</code>, which have no equivalents at all</li>
+<li>the combination of the style <code>form</code> with <code>allowReserved: true</code>, which is not allowed because only one prefix operator can be used at a time</li>
+<li>any parameter name that is not a legal RFC6570 variable name (alphanumerics, <code>_</code>, and percent-encoded characters)</li>
+</ul>
+<p>The Parameter Object’s <code>name</code> field has a much more permissive syntax than <a href="https://www.rfc-editor.org/rfc/rfc6570#section-2.3">RFC6570 variable name syntax</a>.
+A parameter name that includes characters outside of the allowed RFC6570 variable character set MUST be percent-encoded before it can be used in a URI Template, and MUST set <code>allowReserved: true</code> to avoid double percent-encoding.</p>
+</section><section><h2>Examples</h2>
+<p>Let’s say we want to use the following data in a form query string, where <code>formulas</code> is exploded, and <code>words</code> is not:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">formulas:</span>
+  <span class="hljs-attr">a:</span> <span class="hljs-string">x+y</span>
+  <span class="hljs-attr">b:</span> <span class="hljs-string">x/y</span>
+  <span class="hljs-attr">c:</span> <span class="hljs-string">x^y</span>
+<span class="hljs-attr">words:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">math</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">is</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">fun</span>
+</code></pre>
+<section><h3>RFC6570-Equivalent Expansion</h3>
+<p>This array of parameter objects uses regular <code>style: form</code> expansion, fully supported by RFC6570:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">formulas</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+    <span class="hljs-attr">additionalProperties:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+  <span class="hljs-attr">explode:</span> <span class="hljs-literal">true</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">words</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+    <span class="hljs-attr">items:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+</code></pre>
+<p>This translates to the following URI Template:</p>
+<pre class="highlight urlencoded"><code>
+{?formulas*,words}
+</code></pre>
+<p>when expanded with the data given earlier, we get:</p>
+<pre class="highlight urlencoded"><code>
+?a=x%2By&amp;b=x%2Fy&amp;c=x%5Ey&amp;words=math,is,fun
+</code></pre>
+</section><section><h3>Expansion With Non-RFC6570-Supported Options</h3>
+<p>But now let’s say that (for some reason), we really want that <code>/</code> in the <code>b</code> formula to show up as-is in the query string, and we want our words to be space-separated like in a written phrase.
+To do that, we’ll add <code>allowReserved: true</code> to <code>formulas</code>, and change to <code>style: spaceDelimited</code> for <code>words</code>:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">formulas</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+    <span class="hljs-attr">additionalProperties:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+  <span class="hljs-attr">explode:</span> <span class="hljs-literal">true</span>
+  <span class="hljs-attr">allowReserved:</span> <span class="hljs-literal">true</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">words</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">style:</span> <span class="hljs-string">spaceDelimited</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+    <span class="hljs-attr">items:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+</code></pre>
+<p>We can’t combine the <code>?</code> and <code>+</code> RFC6570 prefixes, and there’s no way with RFC6570 to replace the <code>,</code> separator with a space character.
+So we need to restructure the data to fit a manually constructed URI Template that passes all of the pieces through the right sort of expansion.</p>
+<p>Here is one such template.
+The exact variable names are unimportant, but in this example “f” and “w” are meant to suggest “formulas” and “words”, while “n” and “v” suggest “name” and “value”:</p>
+<pre class="highlight urlencoded"><code>
+?{+fn0}={+fv0}&amp;{+fn1}={+fv1}&amp;{+fn2}={+fv2}&amp;{wn}={wv0} {wv1} {wv2}
+</code></pre>
+<p>We’ll also need to pre-process the names and values for <code>formaulas</code> because while <code>/</code> and most other reserved characters are allowed in the query string by RFC3986, <code>[</code>, <code>]</code>, and <code>#</code> <a href="https://datatracker.ietf.org/doc/html/rfc3986#appendix-A">are not</a>, and <code>&amp;</code>, <code>=</code>, and <code>+</code> all have <a href="https://www.rfc-editor.org/rfc/rfc1866#section-8.2.1">special behavior</a> in the <code>application/x-www-form-urlencoded</code> format, which is what we are using in the query string.</p>
+<p>Setting <code>allowReserved: true</code> does <em>not</em> make reserved characters that are not allowed in URIs allowed, it just allows them to be <em>passed through expansion unchanged.</em>
+Therefore, any tooling still needs to percent-encode those characters because reserved expansion will not do it, but it <em>will</em> leave the percent-encoded triples unchanged.
+See also Appendix D for further guidance on percent-encoding and form media types, including guidance on handling the delimiter characters for <code>spaceDelimited</code>, <code>pipeDelimited</code>, and <code>deepObject</code> in parameter names and values.</p>
+<p>So here is our data structure that arranges the names and values to suit the template above, where names and values for <code>formulas</code> have <code>[]#&amp;=+</code> pre-percent encoded (although only <code>+</code> appears in this example):</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">fn0:</span> <span class="hljs-string">a</span>
+<span class="hljs-attr">fv0:</span> <span class="hljs-string">x%2By</span>
+<span class="hljs-attr">fn1:</span> <span class="hljs-string">b</span>
+<span class="hljs-attr">fv1:</span> <span class="hljs-string">x/y</span>
+<span class="hljs-attr">fn2:</span> <span class="hljs-string">c</span>
+<span class="hljs-attr">fv2:</span> <span class="hljs-string">x^y</span>
+<span class="hljs-attr">wn:</span> <span class="hljs-string">words</span>
+<span class="hljs-attr">wv0:</span> <span class="hljs-string">math</span>
+<span class="hljs-attr">wv1:</span> <span class="hljs-string">is</span>
+<span class="hljs-attr">wv2:</span> <span class="hljs-string">fun</span>
+</code></pre>
+<p>Expanding our manually assembled template with our restructured data yields the following query string:</p>
+<pre class="highlight urlencoded"><code>
+?a=x%2By&amp;b=x/y&amp;c=x%5Ey&amp;words=math%20is%20fun
+
+</code></pre>
+<p>The <code>/</code> and the pre-percent-encoded <code>%2B</code> have been left alone, but the disallowed <code>^</code> character (inside a value) and space characters (in the template but outside of the expanded variables) were percent-encoded.</p>
+</section><section><h3>Undefined Values and Manual URI Template Construction</h3>
+<p>Care must be taken when manually constructing templates to handle the values that <a href="https://datatracker.ietf.org/doc/html/rfc6570#section-2.3">RFC6570 considers to be <em>undefined</em></a> correctly:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">formulas:</span> {}
+<span class="hljs-attr">words:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">hello</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">world</span>
+</code></pre>
+<p>Using this data with our original RFC6570-friendly URI Template, <code>{?formulas*,words}</code>, produces the following:</p>
+<pre class="highlight urlencoded"><code>
+?words=hello,world
+</code></pre>
+<p>This means that the manually constructed URI Template and restructured data need to leave out the <code>formulas</code> object entirely so that the <code>words</code> parameter is the first and only parameter in the query string.</p>
+<p>Restructured data:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">wn:</span> <span class="hljs-string">words</span>
+<span class="hljs-attr">wv0:</span> <span class="hljs-string">hello</span>
+<span class="hljs-attr">wv1:</span> <span class="hljs-string">world</span>
+</code></pre>
+<p>Manually constructed URI Template:</p>
+<pre class="highlight urlencoded"><code>
+?{wn}={wv0} {wv1}
+</code></pre>
+<p>Result:</p>
+<pre class="highlight urlencoded"><code>
+?words=hello%20world
+</code></pre>
 
