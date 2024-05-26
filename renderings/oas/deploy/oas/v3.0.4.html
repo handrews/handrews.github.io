@@ -4228,6 +4228,7 @@ However, care must be taken with <code>format</code> to ensure that the specific
 </tbody>
 </table>
 <p>Implementations of this specification MAY use an implementation of RFC6570 to perform variable expansion, however, some caveats apply.</p>
+<p>Note that when using <code>style: form</code> RFC6570 expansion to produce an <code>application/x-www-form-urlencoded</code> HTTP message body, it is necessary to remove the <code>?</code> prefix that is produced to satisfy the URI query string syntax.</p>
 <section><h2>Equivalences Between Fields and RFC6570 Operators</h2>
 <p>Certain field values translate to RFC6570 operators (or lack thereof):</p>
 <table>
