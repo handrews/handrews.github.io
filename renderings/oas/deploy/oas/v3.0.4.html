@@ -4501,8 +4501,8 @@ Unfortunately, these specifications each define slightly different percent-encod
 See <a href="">Appendix C</a> for more details of RFC6570’s two different approaches to percent-encoding, including an example involving <code>+</code>.</p>
 <p>Content-based serialization is defined by the <a href="#mediaTypeObject">Media Type Object</a>, and used with the <a href="#parameterObject">Parameter Object</a> when the <code>content</code> field is present, and with the <a href="#encodingObject">Encoding Object</a> based on the <code>contentType</code> field when the style fields listed in the previous section are absent.
 Each part is encoded based on the media type (e.g. <code>text/plain</code> or <code>application/json</code>), and must then be percent-encoded for use in a <code>form-urlencoded</code> string.</p>
-<section><h3>Interoperability with Historical Specifications</h3>
 <p>Note that content-based serialization for <code>form-data</code> does not expect or require percent-encoding in the data, only in per-part header values.</p>
+<section><h3>Interoperability with Historical Specifications</h3>
 <p>In most cases, generating query strings in strict compliance with RFC3986 is sufficient to pass validation (including JSON Schema’s <code>format: uri</code> and <code>format: uri-reference</code>), but some <code>form-urlencoded</code> implementations still expect the slightly more restrictive RFC1738 rules to be used.</p>
 <p>Since all RFC1738-compliant URIs are compliant with RFC3986, applications needing to ensure historical interoperability SHOULD use RFC1738’s rules.</p>
 </section><section><h3>Interoperability with Web Browser Environments</h3>
