@@ -4286,6 +4286,7 @@ However, care must be taken with <code>format</code> to ensure that the specific
 </code></pre>
 <p>This example is equivalent to RFC6570’s <code>{?foo*,bar}</code>, and <em><strong>NOT</strong></em> <code>{?foo*}{&amp;bar}</code>, which is problematic because if <code>foo</code> is not defined, the result will be an invalid URI.
 The <code>&amp;</code> prefix operator has no equivalent in the Parameter Object.</p>
+<p>Note that RFC6570 does not specify behavior for compound values beyond the single level addressed by <code>explode</code>.  The results of using objects or arrays where no behavior is clearly specified for them is implementation-defined.</p>
 </section><section><h2>Non-RFC6570 Field Values and Combinations</h2>
 <p>Configurations with no direct RFC6570 equivalent SHOULD also be handled according to RFC6570.
 Implementations MAY create a properly delimited URI Template with variables for individual names and values using RFC6570 regular or reserved expansion (based on <code>allowReserved</code>).</p>
