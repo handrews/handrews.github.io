@@ -1309,7 +1309,7 @@ When <code>example</code> or <code>examples</code> are provided in conjunction w
 <tr>
 <td><a id="parameterAllowReserved"> </a>allowReserved</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are not allowed in the query string, or have a meaning other than their literal value (e.g. <code>+</code> as an escape for the space character in <code>application/x-www-form-urlencoded</code> query strings). This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>.</td>
+<td>When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-24">not allowed in the query string</a> (<code>[</code>, <code>]</code>, <code>#</code>), or have a special meaning in <code>application/x-www-form-urlencoded</code> (<code>-</code>, <code>&amp;</code>, <code>+</code>); see Appendices <a href="#usingRFC6570Implementations">C</a> and <a href="#percentEncodingAndFormMediaTypes">E</a> for details. This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>.</td>
 </tr>
 <tr>
 <td><a id="parameterSchema"> </a>schema</td>
@@ -1412,7 +1412,7 @@ Using <code>content</code> with a <code>text/plain</code> media type is RECOMMEN
    array -&gt; [&quot;blue&quot;,&quot;black&quot;,&quot;brown&quot;]
    object -&gt; { &quot;R&quot;: 100, &quot;G&quot;: 200, &quot;B&quot;: 150 }
 </code></pre>
-<p>The following table shows examples of rendering differences for each value.
+<p>The following table shows examples of the different serializations for each value.
 The examples are percent-encoded as required by RFC6570 and RFC3986; see <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a thorough discussion of percent-encoding concerns, including why unencoded <code>|</code> (<code>%7C</code>), <code>[</code> (<code>%5B</code>), and <code>]</code> (<code>%5D</code>) seem to work in some environments despite not being compliant.</p>
 <table>
 <thead>
@@ -2007,7 +2007,7 @@ In both cases, their order is implementation-defined.</p>
 <a id="encodingHeaders"> </a>headers | Map[<code>string</code>, <a href="#headerObject">Header Object</a> | <a href="#referenceObject">Reference Object</a>] | A map allowing additional information to be provided as headers. <code>Content-Type</code> is described separately and SHALL be ignored in this section. This property SHALL be ignored if the request body media type is not a <code>multipart</code>.
 <a id="encodingStyle"> </a>style | <code>string</code> | Describes how a specific property value will be serialized depending on its type.  See <a href="#parameterObject">Parameter Object</a> for details on the <a href="#parameterStyle"><code>style</code></a> property. The behavior follows the same values as <code>query</code> parameters, including default values. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.
 <a id="encodingExplode"> </a>explode | <code>boolean</code> | When this is true, property values of type <code>array</code> or <code>object</code> generate separate parameters for each value of the array, or key-value-pair of the map.  For other types of properties this property has no effect. When <a href="#encodingStyle"><code>style</code></a> is <code>form</code>, the default value is <code>true</code>. For all other styles, the default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.
-<a id="encodingAllowReserved"> </a>allowReserved | <code>boolean</code> | When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are not allowed in the query string, or have a meaning other than their literal value (e.g. <code>+</code> as an escape for the space character in <code>application/x-www-form-urlencoded</code> query strings).  The default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.</p>
+<a id="encodingAllowReserved"> </a>allowReserved | <code>boolean</code> | When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-24">not allowed in the query string</a> (<code>[</code>, <code>]</code>, <code>#</code>), or have a special meaning in <code>application/x-www-form-urlencoded</code> (<code>-</code>, <code>&amp;</code>, <code>+</code>); see Appendices <a href="#usingRFC6570Implementations">C</a> and <a href="#percentEncodingAndFormMediaTypes">E</a> for details. This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>.</p>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 <p>The default values for <code>contentType</code> are as follows:</p>
 <table>
@@ -4218,6 +4218,8 @@ However, care must be taken with <code>format</code> to ensure that the specific
 </table>
 <p>Implementations of this specification MAY use an implementation of RFC6570 to perform variable expansion, however, some caveats apply.</p>
 <p>Note that when using <code>style: form</code> RFC6570 expansion to produce an <code>application/x-www-form-urlencoded</code> HTTP message body, it is necessary to remove the <code>?</code> prefix that is produced to satisfy the URI query string syntax.</p>
+<p>Note also that not all RFC6570 implementations support all four levels of operators, all of which are needed to fully support the OpenAPI Specification’s usage.
+Using an implementation with a lower level of support will require additional manual construction of URI Templates to work around the limitations.</p>
 <section><h2>Equivalences Between Fields and RFC6570 Operators</h2>
 <p>Certain field values translate to RFC6570 operators (or lack thereof):</p>
 <table>
@@ -4297,7 +4299,7 @@ Implementations MAY create a properly delimited URI Template with variables for 
 <li>any parameter name that is not a legal RFC6570 variable name (alphanumerics, <code>_</code>, and percent-encoded characters)</li>
 </ul>
 <p>The Parameter Object’s <code>name</code> field has a much more permissive syntax than <a href="https://www.rfc-editor.org/rfc/rfc6570#section-2.3">RFC6570 variable name syntax</a>.
-A parameter name that includes characters outside of the allowed RFC6570 variable character set MUST be percent-encoded before it can be used in a URI Template, and MUST set <code>allowReserved: true</code> to avoid double percent-encoding.</p>
+A parameter name that includes characters outside of the allowed RFC6570 variable character set MUST be percent-encoded before it can be used in a URI Template.</p>
 </section><section><h2>Examples</h2>
 <p>Let’s say we want to use the following data in a form query string, where <code>formulas</code> is exploded, and <code>words</code> is not:</p>
 <pre class="nohighlight"><code>
@@ -4359,32 +4361,28 @@ To do that, we’ll add <code>allowReserved: true</code> to <code>formulas</code
 </code></pre>
 <p>We can’t combine the <code>?</code> and <code>+</code> RFC6570 prefixes, and there’s no way with RFC6570 to replace the <code>,</code> separator with a space character.
 So we need to restructure the data to fit a manually constructed URI Template that passes all of the pieces through the right sort of expansion.</p>
-<p>Here is one such template.
-The exact variable names are unimportant, but in this example “f” and “w” are meant to suggest “formulas” and “words”, while “n” and “v” suggest “name” and “value”:</p>
+<p>Here is one such template, using a made-up convention of <code>words.0</code> for the first entry in the words value, <code>words.1</code> for the second.</p>
 <pre class="highlight urlencoded"><code>
-?{+fn0}={+fv0}&amp;{+fn1}={+fv1}&amp;{+fn2}={+fv2}&amp;{wn}={wv0} {wv1} {wv2}
+?a={+a}&amp;b={+b}&amp;c={+c}&amp;words={words.0} {words.1} {words.2}
 </code></pre>
-<p>We’ll also need to pre-process the names and values for <code>formaulas</code> because while <code>/</code> and most other reserved characters are allowed in the query string by RFC3986, <code>[</code>, <code>]</code>, and <code>#</code> <a href="https://datatracker.ietf.org/doc/html/rfc3986#appendix-A">are not</a>, and <code>&amp;</code>, <code>=</code>, and <code>+</code> all have <a href="https://www.rfc-editor.org/rfc/rfc1866#section-8.2.1">special behavior</a> in the <code>application/x-www-form-urlencoded</code> format, which is what we are using in the query string.</p>
+<p>RFC6570 <a href="https://www.rfc-editor.org/rfc/rfc6570.html#section-2.4.2">mentions</a> the use of <code>.</code> “to indicate name hierarchy in substructures,” but does not define any specific naming convention or behavior for it.
+Since the <code>.</code> usage is not automatic, we’ll need to construct an appropriate input structure for this new template.</p>
+<p>We’ll also need to pre-process the values for <code>formulas</code> because while <code>/</code> and most other reserved characters are allowed in the query string by RFC3986, <code>[</code>, <code>]</code>, and <code>#</code> <a href="https://datatracker.ietf.org/doc/html/rfc3986#appendix-A">are not</a>, and <code>&amp;</code>, <code>=</code>, and <code>+</code> all have <a href="https://www.rfc-editor.org/rfc/rfc1866#section-8.2.1">special behavior</a> in the <code>application/x-www-form-urlencoded</code> format, which is what we are using in the query string.</p>
 <p>Setting <code>allowReserved: true</code> does <em>not</em> make reserved characters that are not allowed in URIs allowed, it just allows them to be <em>passed through expansion unchanged.</em>
 Therefore, any tooling still needs to percent-encode those characters because reserved expansion will not do it, but it <em>will</em> leave the percent-encoded triples unchanged.
-See also Appendix D for further guidance on percent-encoding and form media types, including guidance on handling the delimiter characters for <code>spaceDelimited</code>, <code>pipeDelimited</code>, and <code>deepObject</code> in parameter names and values.</p>
-<p>So here is our data structure that arranges the names and values to suit the template above, where names and values for <code>formulas</code> have <code>[]#&amp;=+</code> pre-percent encoded (although only <code>+</code> appears in this example):</p>
+See also [Appendix E](#to indicate name hierarchy in substructures) for further guidance on percent-encoding and form media types, including guidance on handling the delimiter characters for <code>spaceDelimited</code>, <code>pipeDelimited</code>, and <code>deepObject</code> in parameter names and values.</p>
+<p>So here is our data structure that arranges the names and values to suit the template above, where values for <code>formulas</code> have <code>[]#&amp;=+</code> pre-percent encoded (although only <code>+</code> appears in this example):</p>
 <pre class="nohighlight"><code>
-<span class="hljs-attr">fn0:</span> <span class="hljs-string">a</span>
-<span class="hljs-attr">fv0:</span> <span class="hljs-string">x%2By</span>
-<span class="hljs-attr">fn1:</span> <span class="hljs-string">b</span>
-<span class="hljs-attr">fv1:</span> <span class="hljs-string">x/y</span>
-<span class="hljs-attr">fn2:</span> <span class="hljs-string">c</span>
-<span class="hljs-attr">fv2:</span> <span class="hljs-string">x^y</span>
-<span class="hljs-attr">wn:</span> <span class="hljs-string">words</span>
-<span class="hljs-attr">wv0:</span> <span class="hljs-string">math</span>
-<span class="hljs-attr">wv1:</span> <span class="hljs-string">is</span>
-<span class="hljs-attr">wv2:</span> <span class="hljs-string">fun</span>
+<span class="hljs-attr">a:</span> <span class="hljs-string">x%2By</span>
+<span class="hljs-attr">b:</span> <span class="hljs-string">x/y</span>
+<span class="hljs-attr">c:</span> <span class="hljs-string">x^y</span>
+<span class="hljs-attr">words.0:</span> <span class="hljs-string">math</span>
+<span class="hljs-attr">words.1:</span> <span class="hljs-string">is</span>
+<span class="hljs-attr">words.2:</span> <span class="hljs-string">fun</span>
 </code></pre>
 <p>Expanding our manually assembled template with our restructured data yields the following query string:</p>
 <pre class="highlight urlencoded"><code>
 ?a=x%2By&amp;b=x/y&amp;c=x%5Ey&amp;words=math%20is%20fun
-
 </code></pre>
 <p>The <code>/</code> and the pre-percent-encoded <code>%2B</code> have been left alone, but the disallowed <code>^</code> character (inside a value) and space characters (in the template but outside of the expanded variables) were percent-encoded.</p>
 </section><section><h3>Undefined Values and Manual URI Template Construction</h3>
@@ -4402,17 +4400,37 @@ See also Appendix D for further guidance on percent-encoding and form media type
 <p>This means that the manually constructed URI Template and restructured data need to leave out the <code>formulas</code> object entirely so that the <code>words</code> parameter is the first and only parameter in the query string.</p>
 <p>Restructured data:</p>
 <pre class="nohighlight"><code>
-<span class="hljs-attr">wn:</span> <span class="hljs-string">words</span>
-<span class="hljs-attr">wv0:</span> <span class="hljs-string">hello</span>
-<span class="hljs-attr">wv1:</span> <span class="hljs-string">world</span>
+<span class="hljs-attr">words.0:</span> <span class="hljs-string">hello</span>
+<span class="hljs-attr">words.1:</span> <span class="hljs-string">world</span>
 </code></pre>
 <p>Manually constructed URI Template:</p>
 <pre class="highlight urlencoded"><code>
-?{wn}={wv0} {wv1}
+?words={words.0} {words.1}
 </code></pre>
 <p>Result:</p>
 <pre class="highlight urlencoded"><code>
 ?words=hello%20world
+</code></pre>
+</section><section><h3>Illegal Variable Names as Parameter Names</h3>
+<p>In this example, the heart emoji is not legal in URI Template names (or URIs):</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">❤️</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+</code></pre>
+<p>We can’t just pass <code>❤️: love!</code> to an RFC6570 implementation.
+Instead, we have to pre-percent-encode the name (which is a six-octet UTF-8 sequence) in both the data and the URI Template:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-string">&quot;%E2%9D%A4%EF%B8%8F&quot;</span><span class="hljs-string">:</span> <span class="hljs-string">love!</span>
+</code></pre>
+<pre class="highlight urlencoded"><code>
+{?%E2%9D%A4%EF%B8%8F}
+</code></pre>
+<p>This will expand to the result:</p>
+<pre class="highlight urlencoded"><code>
+?%E2%9D%A4%EF%B8%8F=love%21
 </code></pre>
 <p><a id="serializingHeadersAndCookies"></a></section></section></section><section class="appendix"><h1><span>Appendix D: Serializing Headers and Cookies</span></h1></p>
 <p>RFC6570’s percent-encoding behavior is not always appropriate for <code>in: header</code> and <code>in: cookie</code> parameters.
