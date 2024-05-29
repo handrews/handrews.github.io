@@ -150,7 +150,7 @@ This means that resolving component names and tag names both depend on starting 
 <p>For resolving component and tag name connections from a referenced (non-entry) document, it is RECOMMENDED that tools resolve from the entry document, rather than the current document.
 This allows Security Scheme Objects and Tag Objects to be defined with the API’s deployment information (the top-level Server Objects), and treated as an interface for referenced documents to access.</p>
 <p>The interface approach can also work for Discriminator Objects and Schema Objects, but it is also possible to keep the Discriminator Object’s behavior within a single document using the relative URI-reference syntax of <code>mapping</code>.</p>
-<p>There are not currently URI-based alternatives for the Security Requirement Object or for the Operation Object’s <code>tags</code> field.
+<p>There currently are no URI-based alternatives for the Security Requirement Object or for the Operation Object’s <code>tags</code> field.
 These limitations are expected to be addressed in a future release.</p>
 <p>Note that no aspect of implicit connection resolution changes how <a href="#relativeReferencesURI">URIs are resolved</a>, or restricts their possible targets.</p>
 <p><a id="dataTypes"></a></section></section><section><h2><span>Data Types</span></h2></p>
@@ -1001,7 +1001,7 @@ The path itself is still exposed to the documentation viewer but they will not k
 <tr>
 <td><a id="pathItemRef"> </a>$ref</td>
 <td style="text-align:center"><code>string</code></td>
-<td>Allows for a referenced definition of this path item. The value MUST be in the form of a URI, and the referenced structure MUST be in the form of a <a href="#pathItemObject">Path Item Object</a>.  In case a Path Item Object field appears both in the defined object and the referenced object, the behavior is undefined. See the rules for resolving <a href="#relativeReferencesURI">Relative References</a>. <br><br><strong>Deprecated:</strong> Usage of the <code>$ref</code> property has been deprecated when accompanied with properties other than <code>summary</code> and <code>description</code>.</td>
+<td>Allows for a referenced definition of this path item. The value MUST be in the form of a URI, and the referenced structure MUST be in the form of a <a href="#pathItemObject">Path Item Object</a>.  In case a Path Item Object field appears both in the defined object and the referenced object, the behavior is undefined. See the rules for resolving <a href="#relativeReferencesURI">Relative References</a>. <br><br><strong>Note:</strong> The behavior of <code>$ref</code> with adjacent properties is likely to change in future versions of this specification to bring it into closer alignment with the behavior of the <a href="#referenceObject">Reference Object</a>._</td>
 </tr>
 <tr>
 <td><a id="pathItemSummary"> </a>summary</td>
@@ -2547,7 +2547,7 @@ This includes accessing any part of a body that a JSON Pointer [[!RFC6901]] can 
 </tbody>
 </table>
 </section><section><h4>Callback Object Examples</h4>
-<p>The following example uses the user provided <code>queryUrl</code> query string parameter to define the callback URL.  This is an example of how to use a callback object to describe a WebHook callback that goes with the subscription operation to enable registering for the WebHook.</p>
+<p>The following example uses the user provided <code>queryUrl</code> query string parameter to define the callback URL.  This is similar to a <a href="#oasWebhooks">webhook</a>, but differs in that the callback only occurs because of the initial request that sent the <code>queryUrl</code>.</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">myCallback:</span>
   <span class="hljs-string">&#x27;{$request.query.queryUrl}&#x27;</span><span class="hljs-string">:</span>
@@ -3160,10 +3160,12 @@ The <a href="#xmlObject">XML Object</a> contains additional information about th
   <span class="hljs-attr">&quot;required&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
     <span class="hljs-string">&quot;name&quot;</span>
   <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">&quot;example&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
-    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Puma&quot;</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span>
-  <span class="hljs-punctuation">}</span>
+  <span class="hljs-attr">&quot;examples&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Puma&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
 <pre class="nohighlight"><code>
@@ -3176,8 +3178,8 @@ The <a href="#xmlObject">XML Object</a> contains additional information about th
     <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
 <span class="hljs-attr">required:</span>
 <span class="hljs-bullet">-</span> <span class="hljs-string">name</span>
-<span class="hljs-attr">example:</span>
-  <span class="hljs-attr">name:</span> <span class="hljs-string">Puma</span>
+<span class="hljs-attr">examples:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Puma</span>
   <span class="hljs-attr">id:</span> <span class="hljs-number">1</span>
 </code></pre>
 </section><section><h5>Models with Composition</h5>
