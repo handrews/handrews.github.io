@@ -3876,7 +3876,7 @@ See examples for expected behavior.</p>
 </code></pre>
 <p><a id="securitySchemeObject"></a></section></section></section><section><h3><span>Security Scheme Object</span></h3></p>
 <p>Defines a security scheme that can be used by the operations.</p>
-<p>Supported schemes are HTTP authentication, an API key (either as a header, a cookie parameter or as a query parameter), mutual TLS (use of a client certificate), OAuth2’s common flows (implicit, password, client credentials and authorization code) as defined in [[!RFC6749]], OAuth2 device authorization flow as defined in [[!RFC8628]], and <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core</a>.
+<p>Supported schemes are HTTP authentication, an API key (either as a header, a cookie parameter or as a query parameter), mutual TLS (use of a client certificate), OAuth2’s common flows (implicit, password, client credentials and authorization code) as defined in [[!RFC6749]], OAuth2 device authorization flow as defined in [[!RFC8628]], and <a href="https://tools.ietf.org/html/draft-ietf-oauth-discovery-06">OpenID Connect Discovery</a>.
 Please note that as of 2020, the implicit flow is about to be deprecated by <a href="https://tools.ietf.org/html/draft-ietf-oauth-security-topics">OAuth 2.0 Security Best Current Practice</a>. Recommended for most use case is Authorization Code Grant flow with PKCE.</p>
 <section><h4>Fixed Fields</h4>
 <table>
@@ -3935,7 +3935,7 @@ Please note that as of 2020, the implicit flow is about to be deprecated by <a h
 <td><a id="securitySchemeOpenIdConnectUrl"> </a>openIdConnectUrl</td>
 <td style="text-align:center"><code>string</code></td>
 <td><code>openIdConnect</code></td>
-<td><strong>REQUIRED</strong>. <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig">Well-known URL</a> to discover the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata">OpenID provider metadata</a>.</td>
+<td><strong>REQUIRED</strong>. OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL. The OpenID Connect standard requires the use of TLS.</td>
 </tr>
 <tr>
 <td><a id="securitySchemeOauth2MetadataUrl"> </a>oauth2MetadataUrl</td>
