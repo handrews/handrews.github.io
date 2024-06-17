@@ -85,12 +85,62 @@ In a multi-document description, the document containing the <a href="#oasObject
 <p><a id="structuralInteroperability"></a><section><h3><span>Structural Interoperability</span></h3></p>
 <p>When parsing an OAD, JSON or YAML objects are parsed into specific Objects (such as <a href="#operationObject">Operation Objects</a>, <a href="#responseObject">Response Objects</a>, <a href="#referenceObject">Reference Objects</a>, etc.) based on the parsing context.  Depending on how references are arranged, a given JSON or YAML object can be parsed in multiple different contexts:</p>
 <ul>
-<li>As a full OpenAPI Description document (an <a href="#oasObject">OpenAPI Object</a> taking up an entire document)</li>
+<li>As a complete OpenAPI Description document</li>
 <li>As the Object type implied by its parent Object within the document</li>
 <li>As a reference target, with the Object type matching the reference source’s context</li>
 </ul>
 <p>If the same JSON/YAML object is parsed multiple times and the respective contexts require it to be parsed as <em>different</em> Object types, the resulting behavior is <em>implementation defined</em>, and MAY be treated as an error if detected.  An example would be referencing an empty Schema Object under <code>#/components/schemas</code> where a Path Item Object is expected, as an empty object is valid for both types.  For maximum interoperability, it is RECOMMENDED that OpenAPI Description authors avoid such scenarios.</p>
 <p><a id="resolvingImplicitConnections"></a></section><section><h3><span>Resolving Implicit Connections</span></h3></p>
+<p>Several features of this specification require resolution of non-URI-based connections to some other part of the OpenAPI Description (OAD).</p>
+<p>These connections are unambiguously resolved in single-document OADs, but the resolution process in multi-document OADs is <em>implementation-defined</em>, within the constraints described in this section.
+In some cases, an unambiguous URI-based alternative is available, and OAD authors are RECOMMENDED to always use the alternative:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Target</th>
+<th>Alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#securityRequirementObject">Security Requirement Object</a> <code>{name}</code></td>
+<td><a href="#securitySchemeObject">Security Scheme Object</a> name under the <a href="#componentsObject">Components Object</a></td>
+<td><em>n/a</em></td>
+</tr>
+<tr>
+<td><a href="#discriminatorObject">Discriminator Object</a> <code>mapping</code> <em>(implicit, or explicit name syntax)</em></td>
+<td><a href="#schemaObject">Schema Object</a> name under the Components Object</td>
+<td><code>mapping</code> <em>(explicit URI syntax)</em></td>
+</tr>
+<tr>
+<td><a href="#operationObject">Operation Object</a> <code>tags</code></td>
+<td><a href="#tagObject">Tag Object</a> <code>name</code> (in the Components Object)</td>
+<td><em>n/a</em></td>
+</tr>
+<tr>
+<td><a href="#linkObject">Link Object</a> <code>operationId</code></td>
+<td><a href="#pathItemObject">Path Item Object</a> <code>operationId</code></td>
+<td><code>operationRef</code></td>
+</tr>
+</tbody>
+</table>
+<p>A fifth implicit connection involves appending the templated URL paths of the <a href="#pathsObject">Paths Object</a> to the appropriate <a href="#serverObject">Server Object</a>’s <code>url</code> field.
+This is unambiguous because only the entry document’s Paths Object contributes URLs to the described API.</p>
+<p>It is RECOMMENDED to consider all Operation Objects from all parsed documents when resolving any Link Object <code>operationId</code>.
+This requires parsing all referenced documents prior to determining an <code>operationId</code> to be unresolvable.</p>
+<p>The implicit connections in the Security Requirement Object and Discriminator Object rely on the <em>component name</em>, which is the property name holding the component in the appropriately typed sub-object of the Components Object.
+For example, the component name of the Schema Object at <code>#/components/schemas/Foo</code> is <code>Foo</code>.
+The implicit connection of <code>tags</code> in the Operation Object uses the <code>name</code> field of Tag Objects, which (like the Components Object) are found under the root OpenAPI Object.
+This means resolving component names and tag names both depend on starting from the correct OpenAPI Object.</p>
+<p>For resolving component and tag name connections from a referenced (non-entry) document, it is RECOMMENDED that tools resolve from the entry document, rather than the current document.
+This allows Security Scheme Objects and Tag Objects to be defined with the API’s deployment information (the top-level Server Objects), and treated as an interface for referenced documents to access.</p>
+<p>The interface approach can also work for Discriminator Objects and Schema Objects, but it is also possible to keep the Discriminator Object’s behavior within a single document using the relative URI-reference syntax of <code>mapping</code>.</p>
+<p>There are no URI-based alternatives for the Security Requirement Object or for the Operation Object’s <code>tags</code> field.
+These limitations are expected to be addressed in a future release.</p>
+<p>See <a href="#security-requirement-in-a-referenced-document">Security Requirement in a Referenced Document</a> for an example of the possible resolutions, including which one is recommended by this section.
+The behavior for Discrimator Object non-URI mappings and for the Operation Object’s <code>tags</code> field operate on the same principles.</p>
+<p>Note that no aspect of implicit connection resolution changes how <a href="#relativeReferences">URLs are resolved</a>, or restricts their possible targets.</p>
 <p><a id="dataTypes"></a></section></section><section><h2><span>Data Types</span></h2></p>
 <p>Primitive data types in the OAS are based on the types supported by the <a href="https://tools.ietf.org/html/draft-wright-json-schema-00#section-4.2">JSON Schema Specification Wright Draft 00</a>.
 Note that <code>integer</code> as a type is also supported and is defined as a JSON number without a fraction or exponent part.
@@ -2130,7 +2180,7 @@ See <a href="#dataTypeConversion">Appendix B</a> for a discussion of data type c
 <tr>
 <td><a id="encodingAllowReserved"> </a>allowReserved</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>When this is true, parameter values are serialized using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-24">not allowed in the query string</a> (<code>[</code>, <code>]</code>, <code>#</code>), or have a special meaning in <code>application/x-www-form-urlencoded</code> (<code>-</code>, <code>&amp;</code>, <code>+</code>); see Appendices <a href="#usingRFC6570Implementations">C</a> and <a href="#percentEncodingAndFormMediaTypes">E</a> for details. This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.</td>
+<td>When this is true, parameter values are serialized using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-24">not allowed in the query string</a> (<code>[</code>, <code>]</code>, <code>#</code>), or have a special meaning in <code>application/x-www-form-urlencoded</code> (<code>-</code>, <code>&amp;</code>, <code>+</code>); see Appendices <a href="#usingRFC6570Implementations">C</a> and <a href="#percentEncodingAndFormMediaTypes">E</a> for details. The default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -2951,7 +3001,7 @@ Expressions can be embedded into string values by surrounding the expression wit
 <li><code>in</code> MUST NOT be specified, it is implicitly in <code>header</code>.</li>
 <li>All traits that are affected by the location MUST be applicable to a location of <code>header</code> (for example, <a href="#parameterStyle"><code>style</code></a>).  This means that <code>allowEmptyValue</code> and <code>allowReserved</code> MUST NOT be used, and <code>style</code>, if used, MUST be limited to <code>simple</code>.</li>
 </ol>
-<section><h5>Common Fixed Fields</h5>
+<section><h4>Common Fixed Fields</h4>
 <p>These fields MAY be used with either <code>content</code> or <code>schema</code>.</p>
 <table>
 <thead>
@@ -2979,11 +3029,11 @@ Expressions can be embedded into string values by surrounding the expression wit
 </tr>
 </tbody>
 </table>
-</section><section><h5>Fixed Fields for use with <code>schema</code></h5>
+</section><section><h4>Fixed Fields for use with <code>schema</code></h4>
 <p>For simpler scenarios, a <a href="#headerSchema"><code>schema</code></a> and <a href="#headerStyle"><code>style</code></a> can describe the structure and syntax of the header.
 When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example MUST follow the prescribed serialization strategy for the header.</p>
 <p>Serializing with <code>schema</code> is NOT RECOMMENDED for headers with parameters (name=value pairs following a <code>;</code>) in their values, or where values might have non-URL-safe characters; see <a href="#serializingHeadersAndCookies">Appendix D</a> for details.</p>
-<p>When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example SHOULD match the specified schema and follow the prescribed serialization strategy for the parameter.
+<p>When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example SHOULD match the specified schema and follow the prescribed serialization strategy for the header.
 The <code>example</code> and <code>examples</code> fields are mutually exclusive, and if either is present it SHALL <em>override</em> any <code>example</code> in the schema.</p>
 <table>
 <thead>
@@ -3022,7 +3072,7 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 </tbody>
 </table>
 <p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance.</p>
-</section><section><h5>Fixed Fields for use with <code>content</code></h5>
+</section><section><h4>Fixed Fields for use with <code>content</code></h4>
 <p>For more complex scenarios, the <a href="#headerContent"><code>content</code></a> property can define the media type and schema of the header, as well as give examples of its use.
 Using <code>content</code> with a <code>text/plain</code> media type is RECOMMENDED for headers where the <code>schema</code> strategy is not appropriate.</p>
 <table>
@@ -3041,7 +3091,7 @@ Using <code>content</code> with a <code>text/plain</code> media type is RECOMMEN
 </tr>
 </tbody>
 </table>
-</section></section><section><h4>Header Object Example</h4>
+</section><section><h4>Header Object Example</h4>
 <p>A simple header of type <code>integer</code>:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">&quot;X-Rate-Limit-Limit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
@@ -3592,6 +3642,7 @@ The <a href="#xmlObject">XML Object</a> contains additional information about th
 <p>When request bodies or response payloads may be one of a number of different schemas, a Discriminator Object gives a hint about the expected schema of the document.
 This hint can be used to aid in serialization, deserialization, and validation.
 The Discriminator Object does this by implicitly or explicitly associating the possible values of a named property with alternative schemas.</p>
+<p>Note that <code>discriminator</code> MUST NOT change the validation outcome of the schema.</p>
 <section><h4>Fixed Fields</h4>
 <table>
 <thead>
@@ -3615,11 +3666,13 @@ The Discriminator Object does this by implicitly or explicitly associating the p
 </tbody>
 </table>
 </section><section><h4>Conditions for Using the Discriminator Object</h4>
-<p>The Discriminator Object is legal only when using one of the composite keywords <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code>.
-In both the <code>oneOf</code> and <code>anyOf</code> use cases, where those keywords are adjacent to <code>discriminator</code>, all possible schemas MUST be listed explicitly.
-To avoid redundancy, the discriminator MAY be added to a parent schema definition, and all schemas building on the parent schema via an <code>allOf</code> construct may be used as an alternate schema.
+<p>The Discriminator Object is legal only when using one of the composite keywords <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code>.</p>
+<p>In both the <code>oneOf</code> and <code>anyOf</code> use cases, where those keywords are adjacent to <code>discriminator</code>, all possible schemas MUST be listed explicitly.</p>
+<p>To avoid redundancy, the discriminator MAY be added to a parent schema definition, and all schemas building on the parent schema via an <code>allOf</code> construct may be used as an alternate schema.
 It is implementation-defined as to whether all named <a href="#schemaObject">Schema Objects</a> under the <a href="#componentsObject">Components Object</a>, or only those that are otherwise directly referenced are searched for <code>allOf</code> references to the parent schema.
 However, it is RECOMMENDED to search all named schemas in the Components Object because it is common with the <code>allOf</code> usage for other parts of the API to only directly reference the parent schema.</p>
+<p>The <code>allOf</code> form of <code>discriminator</code> is <em>only</em> useful for non-validation use cases; validation with the parent schema with this form of <code>discriminator</code> <em>does not</em> perform a search for child schemas or use them in validation in any way.
+This is because <code>discriminator</code> cannot change the validation outcome, and no standard JSON Schema keyword connects the parent schema to the child schemas.</p>
 <p>The behavior of any configuration of <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code> and <code>discriminator</code> that is not described above is undefined.</p>
 </section><section><h4>Options for Mapping Values to Schemas</h4>
 <p>The value of the property named in <code>propertyName</code> is used as the name of the associated schema under the <a href="#componentsObject">Components Object</a>, <em>unless</em> a <code>mapping</code> is present for that value.
@@ -3750,7 +3803,7 @@ See examples for expected behavior.</p>
 <tr>
 <td><a id="xmlNamespace"> </a>namespace</td>
 <td style="text-align:center"><code>string</code></td>
-<td>The URI of the namespace definition. Value MUST be in the form of an absolute URI.</td>
+<td>The URI of the namespace definition. Value MUST be in the form of a non-relative URI.</td>
 </tr>
 <tr>
 <td><a id="xmlPrefix"> </a>prefix</td>
@@ -3770,6 +3823,12 @@ See examples for expected behavior.</p>
 </tbody>
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
+<p>The <code>namespace</code> keyword is intended to match the syntax of <a href="https://www.w3.org/TR/xml-names11/">XML namespaces</a>, although there are a few caveats:</p>
+<ul>
+<li>Version 3.0.3 and earlier of this specification erroneously used the term “absolute URI” instead of “non-relative URI”, so authors using namespaces that include a fragment should check tooling support carefully.</li>
+<li>XML allows but discourages relative URI-references, while this specification outright forbids them.</li>
+<li>XML 1.1 allows IRIs (<a href="https://datatracker.ietf.org/doc/html/rfc3987">[!RFC3987]</a>) as namespaces, and specifies that namespaces are compared without any encoding or decoding, which means that IRIs encoded to meet this specification’s URI syntax requirement cannot be compared to IRIs as-is.</li>
+</ul>
 </section><section><h4>XML Object Examples</h4>
 <p>Each of the following examples represent the value of the <code>properties</code> keyword in a <a href="#schemaObject">Schema Object</a> that is omitted for brevity.
 The JSON and YAML representations of the <code>properties</code> value are followed by an example XML representation produced for the single property shown.</p>
@@ -4369,6 +4428,89 @@ This enables support for scenarios where multiple query parameters or HTTP heade
     <span class="hljs-bullet">-</span> <span class="hljs-string">write:pets</span>
     <span class="hljs-bullet">-</span> <span class="hljs-string">read:pets</span>
 </code></pre>
+</section><section><h5>Security Requirement in a Referenced Document</h5>
+<p>See <a href="#resolvingImplicitConnections">Resolving Implicit Connections</a> for more information.</p>
+<p>First, our entry document is where parsing begins. It defines the <code>MySecurity</code> security scheme to be JWT-based, and it defines a Path Item as a reference to a component in another document:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-keyword">GET</span> <span class="hljs-string">/api/description/openapi</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>www.example.com
+<span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>application/openapi+json
+</code></pre>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">&quot;components&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;securitySchemes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;MySecurity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;scheme&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;bearer&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;bearerFormat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;JWT&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+<span class="hljs-attr">&quot;paths&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;/foo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;$ref&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;other#/components/pathItems/Foo&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<pre class="nohighlight"><code>
+<span class="hljs-keyword">GET</span> <span class="hljs-string">/api/description/openapi</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>www.example.com
+<span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>application/openapi+yaml
+</code></pre>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">components:</span>
+  <span class="hljs-attr">securitySchemes:</span>
+    <span class="hljs-attr">MySecurity:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">http</span>
+      <span class="hljs-attr">scheme:</span> <span class="hljs-string">bearer</span>
+      <span class="hljs-attr">bearerFormat:</span> <span class="hljs-string">JWT</span>
+<span class="hljs-attr">paths:</span>
+  <span class="hljs-string">/foo:</span>
+    <span class="hljs-string">$ref:</span> <span class="hljs-string">&quot;other#/components/pathItems/Foo&quot;</span>
+</code></pre>
+<p>Next, we have our referenced document, <code>other</code>. The fact that we don’t use file extensions gives the client the flexibility to choose an acceptable format on a resource-by-resource basis, assuming both representations are available:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-keyword">GET</span> <span class="hljs-string">/api/description/other</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>www.example.com
+<span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>application/openapi+json
+</code></pre>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">&quot;components&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;securitySchemes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;MySecurity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;scheme&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;basic&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;pathItems&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;Foo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;get&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;security&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+          <span class="hljs-attr">&quot;MySecurity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span>
+        <span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<pre class="nohighlight"><code>
+<span class="hljs-keyword">GET</span> <span class="hljs-string">/api/description/other</span> <span class="hljs-meta">HTTP/1.1</span>
+<span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>www.example.com
+<span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>application/openapi+yaml
+</code></pre>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">components:</span>
+  <span class="hljs-attr">securitySchemes:</span>
+    <span class="hljs-attr">MySecurity:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">http</span>
+      <span class="hljs-attr">scheme:</span> <span class="hljs-string">basic</span>
+  <span class="hljs-attr">pathItems:</span>
+    <span class="hljs-attr">Foo:</span>
+      <span class="hljs-attr">get:</span>
+        <span class="hljs-attr">security:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">MySecurity:</span> []
+</code></pre>
+<p>In the <code>other</code> document, the referenced path item has a Security Requirement for a Security Scheme, <code>MySecurity</code>. The same Security Scheme exists in the original entry document. As outlined in <a href="#resolvingImplicitConnections">Resolving Implicit Connections</a>, <code>MySecurity</code> is resolved with an <a href="#undefinedAndImplementationDefinedBehavior">implementation-defined behavior</a>. However, documented in that section, it is RECOMMENDED that tools resolve component names from the <a href="#documentStructure">entry document</a>. As with all implementation-defined behavior, it is important to check tool documentation to determine which behavior is supported.</p>
 <p><a id="specificationExtensions"></a></section></section></section></section><section><h2><span>Specification Extensions</span></h2></p>
 <p>While the OpenAPI Specification tries to accommodate most use cases, additional data can be added to extend the specification at certain points.</p>
 <p>The extensions properties are implemented as patterned fields that are always prefixed by <code>&quot;x-&quot;</code>.</p>
@@ -4499,7 +4641,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <p>Serializing typed data to plain text, which can occur in <code>text/plain</code> message bodies or <code>multipart</code> parts, as well as in the <code>application/x-www-form-urlencoded</code> format in either URL query strings or message bodies, involves significant implementation- or application-defined behavior.</p>
 <p>Schema Objects validate data based on the <a href="https://datatracker.ietf.org/doc/html/draft-wright-json-schema-00#section-4.2">JSON Schema data model</a>, which only recognizes four primitive data types: strings (which are <a href="https://datatracker.ietf.org/doc/html/rfc7159#section-8.1">only broadly interoperable as UTF-8</a>), numbers, booleans, and <code>null</code>.
 Notably, integers are not a distinct type from other numbers, with <code>type: integer</code> being a convenience defined mathematically, rather than based on the presence or absence of a decimal point in any string representation.</p>
-<p>The <a href="#parameterObject">Parameter Object</a> and <a href="#encodingObject">Encoding Object</a> offer features to control how to arrange values from array or object types.
+<p>The <a href="#parameterObject">Parameter Object</a>, <a href="#headerObject">Header Object</a> and <a href="#encodingObject">Encoding Object</a> offer features to control how to arrange values from array or object types.
 They can also be used to control how strings are further encoded to avoid reserved or illegal characters.
 However, there is no general-purpose specification for converting schema-validated non-UTF-8 primitive data types (or entire arrays or objects) to strings.</p>
 <p>Two cases do offer standards-based guidance:</p>
