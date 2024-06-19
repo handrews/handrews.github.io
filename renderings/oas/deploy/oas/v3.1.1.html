@@ -14,6 +14,8 @@
 </section></section></section><section><h1>Introduction</h1>
 <p>The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to HTTP APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.</p>
 <p>An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.</p>
+<p>For examples of OpenAPI usage and additional documentation, please visit <a href="https://learn.openapis.org/">learn.openapis.org</a>.</p>
+<p>For extension registries and other specifications published by the OpenAPI Initiative, please visit <a href="https://spec.openapis.org/">spec.openapis.org</a></p>
 <!-- /TOC -->
 </section><section><h1><dfn>Definitions</dfn></h1>
 <p><a id="oasDocument"></a><section><h4><span><dfn>OpenAPI Description</dfn></span></h4></p>
@@ -41,6 +43,9 @@ The media type definitions SHOULD be in compliance with [[!RFC6838]].</p>
 <p><a id="httpCodes"></a></section><section><h4><span><dfn>HTTP Status Codes</dfn></span></h4></p>
 <p>The HTTP Status Codes are used to indicate the status of the executed operation.
 Status codes SHOULD be selected from the available status codes registered in the <a href="https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml">IANA Status Code Registry</a>.</p>
+<p><a id="httpAndCaseSensitivity"></a></section><section><h4><span><dfn>HTTP and Case Sensitivity</dfn></span></h4></p>
+<p>As most field names and values in the OpenAPI Specification are case-sensitive, this document endeavors to call out any case-insensitive names and values.
+However, the case sensitivity of field names and values that map directly to HTTP concepts follow the case sensitivity rules of HTTP, even if this document does not make a note of every concept.</p>
 <p><a id="undefinedAndImplementationDefinedBehavior"></a></section><section><h4><span><dfn>Undefined and Implementation-Defined Behavior</dfn></span></h4></p>
 <p>This specification deems certain situations to have either <em>undefined</em> or <em>implementation-defined</em> behavior.</p>
 <p>Behavior described as <em>undefined</em> is likely, at least in some circumstances, to result in outcomes that contradict the specification.
@@ -69,7 +74,7 @@ This includes all fields that are used as keys in a map, except where explicitly
 <p>Patterned fields MUST have unique names within the containing object.</p>
 <p>In order to preserve the ability to round-trip between YAML and JSON formats, YAML version <a href="https://yaml.org/spec/1.2/spec.html">1.2</a> is RECOMMENDED along with some additional constraints:</p>
 <ul>
-<li>Tags MUST be limited to those allowed by the <a href="https://yaml.org/spec/1.2/spec.html#id2803231">JSON Schema ruleset</a>.</li>
+<li>Tags MUST be limited to those allowed by <a href="https://yaml.org/spec/1.2/spec.html#id2803231">YAML’s JSON schema ruleset</a>, which defines a subset of the YAML syntax and is unrelated to <a href="https://tools.ietf.org/html/draft-wright-json-schema-00">JSON Schema</a>.</li>
 <li>Keys used in YAML maps MUST be limited to a scalar string, as defined by the <a href="https://yaml.org/spec/1.2/spec.html#id2802346">YAML Failsafe schema ruleset</a>.</li>
 </ul>
 <p><strong>Note:</strong> While APIs may be defined by OpenAPI documents in either YAML or JSON format, the API request and response bodies and other content are not required to be JSON or YAML.</p>
@@ -161,7 +166,8 @@ The behavior for Discrimator Object non-URI mappings and for the Operation Objec
 Note that <code>integer</code> as a type is also supported and is defined as a JSON number without a fraction or exponent part.
 Models are defined using the <a href="#schemaObject">Schema Object</a>, which is a superset of JSON Schema Specification Draft 2020-12.</p>
 <p><a id="dataTypeFormat"> </a>As defined by the <a href="https://tools.ietf.org/html/draft-bhutton-json-schema-validation-00#section-7.3">JSON Schema Validation specification</a>, data types can have an optional modifier property: <code>format</code>.  As described in that specification, <code>format</code> is treated as a non-validating annotation by default; the ability to validate <code>format</code> varies across implementations.</p>
-<p>OAS defines additional formats to provide fine detail for primitive data types.</p>
+<p>The OpenAPI Initiative also hosts a <a href="https://spec.openapis.org/registry/format/">Format Registry</a> for formats defined by OAS users and other specifications.  Support for any registered format is strictly OPTIONAL, and support for one registered format does not imply support for any others.</p>
+<p>Types that are not accompanied by a <code>format</code> property follow the type definition in the JSON Schema. Tools that do not recognize a specific <code>format</code> MAY default back to the <code>type</code> alone, as if the <code>format</code> is not specified.</p>
 <p>The formats defined by the OAS are:</p>
 <table>
 <thead>
@@ -270,7 +276,9 @@ Models are defined using the <a href="#schemaObject">Schema Object</a>, which is
 </table>
 <p><a id="richText"></a></section></section></section><section><h2><span>Rich Text Formatting</span></h2></p>
 <p>Throughout the specification <code>description</code> fields are noted as supporting CommonMark markdown formatting.
-Where OpenAPI tooling renders rich text it MUST support, at a minimum, markdown syntax as described by <a href="https://spec.commonmark.org/0.27/">CommonMark 0.27</a>. Tooling MAY choose to ignore some CommonMark features to address security concerns.</p>
+Where OpenAPI tooling renders rich text it MUST support, at a minimum, markdown syntax as described by <a href="https://spec.commonmark.org/0.27/">CommonMark 0.27</a>. Tooling MAY choose to ignore some CommonMark or extension features to address security concerns.</p>
+<p>While the framing of CommonMark 0.27 as a minimum requirement means that tooling MAY choose to implement extensions on top of it, note that any such extensions are by definition implementation-defined and will not be interoperable.
+OpenAPI Description authors SHOULD consider how text using such extensions will be rendered by tools that offer only the minimum support.</p>
 <p><a id="relativeReferencesURI"></a></section><section><h2><span>Relative References in API Description URIs</span></h2></p>
 <p>URIs used as references within an OpenAPI Description, or to external documentation or other supplementary information such as a license, are resolved as <em>identifiers</em>, and described by this specification as <em><strong>URIs</strong></em>.
 As noted under <a href="#parsingDocuments">Parsing Documents</a>, this specification inherits JSON Schema draft 2020-12’s requirements for loading documents and associating them with their expected URIs, which might not match their current location.
@@ -287,6 +295,10 @@ In practice, this is usually the retrieval URI of the document, which MAY be det
 Unless specified otherwise, relative references are resolved using the URLs defined in the <a href="#serverObject"><code>Server Object</code></a> as a Base URL. Note that these themselves MAY be relative to the referring document.</p>
 <p>Relative references in CommonMark hyperlinks are resolved in their rendered context, which might differ from the context of the API description.</p>
 </section><section><h2>Schema</h2>
+<p>This section describes the structure of the OpenAPI Description format.
+This text is the only normative description of the format.
+A JSON Schema is hosted on <a href="https://spec.openapis.org">spec.openapis.org</a> for informational purposes.
+If the JSON Schema differs from this section, then this section MUST be considered authoritative.</p>
 <p>In the following description, if a field is not explicitly <strong>REQUIRED</strong> or described with a MUST or SHALL, it can be considered OPTIONAL.</p>
 <p><a id="oasObject"></a><section><h3><span>OpenAPI Object</span></h3></p>
 <p>This is the root object of the <a href="#oasDocument">OpenAPI document</a>.</p>
@@ -399,7 +411,7 @@ The metadata MAY be used by the clients if needed, and MAY be presented in editi
 <tr>
 <td><a id="infoVersion"> </a>version</td>
 <td style="text-align:center"><code>string</code></td>
-<td><strong>REQUIRED</strong>. The version of the OpenAPI document (which is distinct from the <a href="#oasVersion">OpenAPI Specification version</a> or the API implementation version).</td>
+<td><strong>REQUIRED</strong>. The version of the OpenAPI document (which is distinct from the <a href="#oasVersion">OpenAPI Specification version</a> or the version of API being described).</td>
 </tr>
 </tbody>
 </table>
@@ -1372,6 +1384,7 @@ The path itself is still exposed to the documentation viewer but they will not k
 <p><a id="parameterObject"></a></section></section><section><h3><span>Parameter Object</span></h3></p>
 <p>Describes a single operation parameter.</p>
 <p>A unique parameter is defined by a combination of a <a href="#parameterName">name</a> and <a href="#parameterIn">location</a>.</p>
+<p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns, including interactions with the <code>application/x-www-form-urlencoded</code> query string format.</p>
 <section><h4>Parameter Locations</h4>
 <p>There are four possible parameter locations specified by the <code>in</code> field:</p>
 <ul>
@@ -1382,7 +1395,8 @@ The path itself is still exposed to the documentation viewer but they will not k
 </ul>
 </section><section><h4>Fixed Fields</h4>
 <p>The rules for serialization of the parameter are specified in one of two ways.
-Parameter Objects MUST include either a <code>content</code> field or a <code>schema</code> field, but not both.</p>
+Parameter Objects MUST include either a <code>content</code> field or a <code>schema</code> field, but not both.
+See <a href="#dataTypeConversion">Appendix B</a> for a discussion of converting values of various types to string representations.</p>
 <section><h5>Common Fixed Fields</h5>
 <p>These fields MAY be used with either <code>content</code> or <code>schema</code>.</p>
 <table>
@@ -1422,14 +1436,17 @@ Parameter Objects MUST include either a <code>content</code> field or a <code>sc
 <tr>
 <td><a id="parameterAllowEmptyValue"> </a> allowEmptyValue</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>If <code>true</code>, clients MAY pass a zero-length string value in place of parameters that would otherwise be omitted entirely, which the server SHOULD interpret as the parameter being unused. Default value is <code>false</code>. If <a href="#parameterStyle"><code>style</code></a> is used, and if behavior is <code>n/a</code> (cannot be serialized), the value of <code>allowEmptyValue</code> SHALL be ignored. Interactions between this field and the parameter’s <a href="#schemaObject">Schema Object</a> are implementation-defined. This field is valid only for <code>query</code> parameters. Use of this property is NOT RECOMMENDED, and it is likely to be removed in a later revision.</td>
+<td>If <code>true</code>, clients MAY pass a zero-length string value in place of parameters that would otherwise be omitted entirely, which the server SHOULD interpret as the parameter being unused. Default value is <code>false</code>. If <a href="#parameterStyle"><code>style</code></a> is used, and if <a href="#style-examples">behavior is <em>n/a</em> (cannot be serialized)</a>, the value of <code>allowEmptyValue</code> SHALL be ignored. Interactions between this field and the parameter’s <a href="#schemaObject">Schema Object</a> are implementation-defined. This field is valid only for <code>query</code> parameters. Use of this property is NOT RECOMMENDED, and it is likely to be removed in a later revision.</td>
 </tr>
 </tbody>
 </table>
+<p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
+<p>Note that while <code>&quot;Cookie&quot;</code> as a <code>name</code> is not forbidden with <code>in: header</code>, the effect of defining a cookie parameter that way is undefined; use <code>in: cookie</code> instead.</p>
 </section><section><h5>Fixed Fields for use with <code>schema</code></h5>
 <p>For simpler scenarios, a <a href="#parameterSchema"><code>schema</code></a> and <a href="#parameterStyle"><code>style</code></a> can describe the structure and syntax of the parameter.
 When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example SHOULD match the specified schema and follow the prescribed serialization strategy for the parameter.
 The <code>example</code> and <code>examples</code> fields are mutually exclusive, and if either is present it SHALL <em>override</em> any <code>example</code> in the schema.</p>
+<p>Serializing with <code>schema</code> is NOT RECOMMENDED for <code>in: cookie</code> parameters, <code>in: header</code> parameters that use HTTP header parameters (name=value pairs following a <code>;</code>) in their values, or <code>in: header</code> parameters where values might have non-URL-safe characters; see <a href="#serializingHeadersAndCookies">Appendix D</a> for details.</p>
 <table>
 <thead>
 <tr>
@@ -1447,12 +1464,12 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 <tr>
 <td><a id="parameterExplode"> </a>explode</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>When this is true, parameter values of type <code>array</code> or <code>object</code> generate separate parameters for each value of the array or key-value pair of the map. For other types of parameters this property has no effect. When <a href="#parameterStyle"><code>style</code></a> is <code>form</code>, the default value is <code>true</code>. For all other styles, the default value is <code>false</code>.</td>
+<td>When this is true, parameter values of type <code>array</code> or <code>object</code> generate separate parameters for each value of the array or key-value pair of the map. For other types of parameters this property has no effect. When <a href="#parameterStyle"><code>style</code></a> is <code>form</code>, the default value is <code>true</code>. For all other styles, the default value is <code>false</code>. Note that despite <code>false</code> being the default for <code>deepObject</code>, the combination of <code>false</code> with <code>deepObject</code> is undefined.</td>
 </tr>
 <tr>
 <td><a id="parameterAllowReserved"> </a>allowReserved</td>
 <td style="text-align:center"><code>boolean</code></td>
-<td>Determines whether the parameter value SHOULD allow reserved characters, as defined by [[!RFC3986]] <code>:/?#[]@!$&amp;'()*+,;=</code> to be included without percent-encoding. This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>.</td>
+<td>When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-24">not allowed in the query string</a> (<code>[</code>, <code>]</code>, <code>#</code>), or have a special meaning in <code>application/x-www-form-urlencoded</code> (<code>-</code>, <code>&amp;</code>, <code>+</code>); see Appendices <a href="#usingRFC6570Implementations">C</a> and <a href="#percentEncodingAndFormMediaTypes">E</a> for details. This property only applies to parameters with an <code>in</code> value of <code>query</code>. The default value is <code>false</code>.</td>
 </tr>
 <tr>
 <td><a id="parameterSchema"> </a>schema</td>
@@ -1471,8 +1488,10 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 </tr>
 </tbody>
 </table>
-</section><section><h5>Fixed Fields and considerations for use with <code>content</code></h5>
-<p>For more complex scenarios, the <a href="#parameterContent"><code>content</code></a> property can define the media type and schema of the parameter, as well as give examples of its use.</p>
+<p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance.</p>
+</section><section><h5>Fixed Fields for use with <code>content</code></h5>
+<p>For more complex scenarios, the <a href="#parameterContent"><code>content</code></a> property can define the media type and schema of the parameter, as well as give examples of its use.
+Using <code>content</code> with a <code>text/plain</code> media type is RECOMMENDED for <code>in: header</code> and <code>in: cookie</code> parameters where the <code>schema</code> strategy is not appropriate.</p>
 <table>
 <thead>
 <tr>
@@ -1545,7 +1564,7 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 </tr>
 </tbody>
 </table>
-<p>The behavior of applying a style that uses a delimiter to data containing that delimiter is not defined, and is therefore NOT RECOMMENDED.  To ensure interoperability, any such delimiter characters need to be escaped prior to serializing with the style, and unescaped after parsing.  In the case of <code>spaceDelimited</code>, care must be taken to avoid confusing interactions with URL parameter encoding of spaces.</p>
+<p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a discussion of percent-encoding, including when delimiters need to be percent-encoded and options for handling collisions with percent-encoded data.</p>
 </section><section><h4>Style Examples</h4>
 <p>Assume a parameter named <code>color</code> has one of the following values:</p>
 <pre class="highlight "><code>
@@ -1553,7 +1572,15 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
    array -&gt; [&quot;blue&quot;,&quot;black&quot;,&quot;brown&quot;]
    object -&gt; { &quot;R&quot;: 100, &quot;G&quot;: 200, &quot;B&quot;: 150 }
 </code></pre>
-<p>The following table shows examples of rendering differences for each value.</p>
+<p>The following table shows examples, as would be shown with the <code>example</code> or <code>examples</code> keywords, of the different serializations for each value.</p>
+<ul>
+<li>The value <em>empty</em> denotes the empty string, and is unrelated to the <code>allowEmptyValue</code> field</li>
+<li>The behavior of combinations marked <em>n/a</em> is undefined</li>
+<li>The <code>undefined</code> replaces the <code>empty</code> column in previous versions of this specification in order to better align with <a href="https://www.rfc-editor.org/rfc/rfc6570.html#section-2.3">RFC6570 §2.3</a> terminology, which describes certain values including but not limited to <code>null</code> as “undefined” values with special handling; notably, the empty string is <em>not</em> undefined</li>
+<li>For <code>form</code> and the non-RFC6570 query string styles <code>spaceDelimited</code>, <code>pipeDelimited</code>, and <code>deepObject</code>, each example is shown prefixed with <code>?</code> as if it were the only query parameter; see <a href="#usingRFC6570Implementations">Appendix C</a> for more information on constructing query strings from multiple parameters, and <a href="#serializingHeadersAndCookies">Appendix D</a> for warnings regarding <code>form</code> and cookie parameters</li>
+<li>Note that the <code>?</code> prefix is not appropriate for serializing <code>application/x-www-form-urlencoded</code> HTTP message bodies, and MUST be stripped or (if constructing the string manually) not added when used in that context; see the <a href="#encodingObject">Encoding Object</a> for more information</li>
+<li>The examples are percent-encoded as required by RFC6570 and RFC3986; see <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a thorough discussion of percent-encoding concerns, including why unencoded <code>|</code> (<code>%7C</code>), <code>[</code> (<code>%5B</code>), and <code>]</code> (<code>%5D</code>) seem to work in some environments despite not being compliant.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -1601,7 +1628,7 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 <tr>
 <td>simple</td>
 <td>false</td>
-<td>n/a</td>
+<td><em>empty</em></td>
 <td>blue</td>
 <td>blue,black,brown</td>
 <td>R,100,G,200,B,150</td>
@@ -1609,7 +1636,7 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 <tr>
 <td>simple</td>
 <td>true</td>
-<td>n/a</td>
+<td><em>empty</em></td>
 <td>blue</td>
 <td>blue,black,brown</td>
 <td>R=100,G=200,B=150</td>
@@ -1617,46 +1644,69 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 <tr>
 <td>form</td>
 <td>false</td>
-<td>color=</td>
-<td>color=blue</td>
-<td>color=blue,black,brown</td>
-<td>color=R,100,G,200,B,150</td>
+<td><span style="white-space: nowrap;">?color=</span></td>
+<td><span style="white-space: nowrap;">?color=blue</span></td>
+<td><span style="white-space: nowrap;">?color=blue,black,brown</span></td>
+<td><span style="white-space: nowrap;">?color=R,100,G,200,B,150</span></td>
 </tr>
 <tr>
 <td>form</td>
 <td>true</td>
-<td>color=</td>
-<td>color=blue</td>
-<td>color=blue&amp;color=black&amp;color=brown</td>
-<td>R=100&amp;G=200&amp;B=150</td>
+<td><span style="white-space: nowrap;">?color=</span></td>
+<td><span style="white-space: nowrap;">?color=blue</span></td>
+<td><span style="white-space: nowrap;">?color=blue&amp;color=black&amp;color=brown</span></td>
+<td><span style="white-space: nowrap;">?R=100&amp;G=200&amp;B=150</span></td>
+</tr>
+<tr>
+<td>spaceDelimited</span></td>
+<td>false</td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><span style="white-space: nowrap;">?color=blue%20black%20brown</span></td>
+<td><span style="white-space: nowrap;">?color=R%20100%20G%20200%20B%20150</span></td>
 </tr>
 <tr>
 <td>spaceDelimited</td>
-<td>false</td>
-<td>n/a</td>
-<td>n/a</td>
-<td>color=blue%20black%20brown</td>
-<td>color=R%20100%20G%20200%20B%20150</td>
+<td>true</td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
 </tr>
 <tr>
 <td>pipeDelimited</td>
 <td>false</td>
-<td>n/a</td>
-<td>n/a</td>
-<td>color=blue|black|brown</td>
-<td>color=R|100|G|200|B|150</td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><span style="white-space: nowrap;">?color=blue%7Cblack%7Cbrown</span></td>
+<td><span style="white-space: nowrap;">?color=R%7C100%7CG%7C200%7CB%7C150</span></td>
+</tr>
+<tr>
+<td>pipeDelimited</td>
+<td>true</td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+</tr>
+<tr>
+<td>deepObject</td>
+<td>false</td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
 </tr>
 <tr>
 <td>deepObject</td>
 <td>true</td>
-<td>n/a</td>
-<td>n/a</td>
-<td>n/a</td>
-<td>color&#91;R&#93;=100&amp;color&#91;G&#93;=200&amp;color&#91;B&#93;=150</td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><em>n/a</em></td>
+<td><span style="white-space: nowrap;">?color%5BR%5D=100&amp;color%5BG%5D=200&amp;color%5BB%5D=150</span></td>
 </tr>
 </tbody>
 </table>
-<p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 </section><section><h4>Parameter Object Examples</h4>
 <p>A header parameter with an array of 64 bit integer numbers:</p>
 <pre class="nohighlight"><code>
@@ -1832,7 +1882,7 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 </section><section><h4>Request Body Examples</h4>
-<p>A request body with a referenced model definition.</p>
+<p>A request body with a referenced schema definition.</p>
 <pre class="nohighlight"><code>
 <span class="hljs-punctuation">{</span>
   <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user to add to the system&quot;</span><span class="hljs-punctuation">,</span>
@@ -1905,33 +1955,6 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
       <span class="hljs-attr">user:</span>
         <span class="hljs-attr">summary:</span> <span class="hljs-string">User</span> <span class="hljs-string">example</span> <span class="hljs-string">in</span> <span class="hljs-string">other</span> <span class="hljs-string">format</span>
         <span class="hljs-attr">externalValue:</span> <span class="hljs-string">https://foo.bar/examples/user-example.whatever</span>
-</code></pre>
-<p>A body parameter that is an array of string values:</p>
-<pre class="nohighlight"><code>
-<span class="hljs-punctuation">{</span>
-  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;user to add to the system&quot;</span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">&quot;required&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
-    <span class="hljs-attr">&quot;text/plain&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
-      <span class="hljs-attr">&quot;schema&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
-        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;array&quot;</span><span class="hljs-punctuation">,</span>
-        <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
-          <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span>
-        <span class="hljs-punctuation">}</span>
-      <span class="hljs-punctuation">}</span>
-    <span class="hljs-punctuation">}</span>
-  <span class="hljs-punctuation">}</span>
-<span class="hljs-punctuation">}</span>
-</code></pre>
-<pre class="nohighlight"><code>
-<span class="hljs-attr">description:</span> <span class="hljs-string">user</span> <span class="hljs-string">to</span> <span class="hljs-string">add</span> <span class="hljs-string">to</span> <span class="hljs-string">the</span> <span class="hljs-string">system</span>
-<span class="hljs-attr">required:</span> <span class="hljs-literal">true</span>
-<span class="hljs-attr">content:</span>
-  <span class="hljs-attr">text/plain:</span>
-    <span class="hljs-attr">schema:</span>
-      <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
-      <span class="hljs-attr">items:</span>
-        <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
 </code></pre>
 <p><a id="mediaTypeObject"></a></section></section><section><h3><span>Media Type Object</span></h3></p>
 <p>Each Media Type Object provides schema and examples for the media type identified by its key.</p>
@@ -2092,8 +2115,28 @@ definition may be used:</p>
             <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
             <span class="hljs-attr">properties:</span> {}
 </code></pre>
-<p>In this example, the contents in the <code>requestBody</code> MUST be stringified per [[!RFC1866]] when passed to the server.  In addition, the <code>address</code> field complex object will be stringified.</p>
-<p>When passing complex objects in the <code>application/x-www-form-urlencoded</code> content type, the default serialization strategy of such properties is described in the <a href="#encodingObject"><code>Encoding Object</code></a>’s <a href="#encodingStyle"><code>style</code></a> property as <code>form</code>.</p>
+<p>In this example, the contents in the <code>requestBody</code> MUST be encoded per [[!RFC1866]] when passed to the server.  In addition, the <code>address</code> field complex object will be serialized to a string representation prior to encoding.</p>
+<p>When passing complex objects in the <code>application/x-www-form-urlencoded</code> content type, the default serialization strategy of such properties is described in the <a href="#encodingObject">Encoding Object</a>’s <a href="#encodingStyle"><code>style</code></a> property as <code>form</code>.</p>
+<p>With this example, given an <code>id</code> of <code>f81d4fae-7dec-11d0-a765-00a0c91e6bf6</code> and a US-style address (with ZIP+4) as follows:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;streetAddress&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;123 Example Dr.&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;city&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Somewhere&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;CA&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;zip&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;99999+1234&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Assuming the most compact representation of the JSON value (with unnecessary whitespace removed), we would expect to see the following request body, where space characters have been replaced with <code>+</code> and <code>+</code>, <code>&quot;</code>, <code>{</code>, and <code>}</code> have been percent-encoded to <code>%2B</code>, <code>%22</code>, <code>%7B</code>, and <code>%7D</code>, respectively:</p>
+<pre class="highlight urlencoded"><code>
+id=f81d4fae-7dec-11d0-a765-00a0c91e6bf6&amp;address=%7B%22streetAddress%22:%22123+Example+Dr.%22,%22city%22:%22Somewhere%22,%22state%22:%22CA%22,%22zip%22:%2299999%2B1234%22%7D
+</code></pre>
+<p>Note that the <code>id</code> keyword is treated as <code>text/plain</code> per the <a href="#encodingObject">Encoding Object</a>’s default behavior, and is serialized as-is.
+If it were treated as <code>application/json</code>, then the serialized value would be a JSON string including quotation marks, which would be percent-encoded as <code>%22</code>.</p>
+<p>Here is the <code>id</code> parameter (without <code>address</code>) serialized as <code>application/json</code> instead of <code>text/plain</code>, and then encoded per RFC1866:</p>
+<pre class="highlight urlencoded"><code>
+id=%22f81d4fae-7dec-11d0-a765-00a0c91e6bf6%22
+</code></pre>
+<p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
 </section><section><h4>Special Considerations for <code>multipart</code> Content</h4>
 <p>It is common to use <code>multipart/form-data</code> as a <code>Content-Type</code> when transferring request bodies to operations.  In contrast to 2.0, a <code>schema</code> is REQUIRED to define the input parameters to the operation when using <code>multipart</code> content.  This supports complex structures as well as supporting mechanisms for multiple file uploads.</p>
 <p>In a <code>multipart/form-data</code> request body, each schema property, or each element of a schema array property, takes a section in the payload with an internal header as defined by [[!RFC7578]]. The serialization strategy for each property of a <code>multipart/form-data</code> request body can be specified in an associated <a href="#encodingObject"><code>Encoding Object</code></a>.</p>
@@ -2121,17 +2164,20 @@ definition may be used:</p>
             <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
             <span class="hljs-attr">properties:</span> {}
           <span class="hljs-attr">profileImage:</span>
-            <span class="hljs-comment"># Content-Type for properties with type string and contentEncoding is `application/octet-stream`</span>
+            <span class="hljs-comment"># default Content-Type for properties with type string and a contentEncoding</span>
+            <span class="hljs-comment"># is `application/octet-stream`, so `image/png` must be set using contentMediaType</span>
             <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
             <span class="hljs-attr">contentMediaType:</span> <span class="hljs-string">image/png</span>
             <span class="hljs-attr">contentEncoding:</span> <span class="hljs-string">base64</span>
           <span class="hljs-attr">children:</span>
-            <span class="hljs-comment"># default Content-Type for arrays is based on the _inner_ type (`text/plain` here)</span>
+            <span class="hljs-comment"># default Content-Type for arrays is based on the items subschema type, which</span>
+            <span class="hljs-comment"># is a string, producing a default of `text/plain`</span>
             <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
             <span class="hljs-attr">items:</span>
               <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
           <span class="hljs-attr">addresses:</span>
-            <span class="hljs-comment"># default Content-Type for arrays is based on the _inner_ type (object shown, so `application/json` in this example)</span>
+            <span class="hljs-comment"># default Content-Type for arrays is based on the items subschema type, which</span>
+            <span class="hljs-comment"># is an object, producing a default of `application/json`</span>
             <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
             <span class="hljs-attr">items:</span>
               <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
@@ -2139,8 +2185,13 @@ definition may be used:</p>
 </code></pre>
 <p>An <code>encoding</code> attribute is introduced to give you control over the serialization of parts of <code>multipart</code> request bodies.  This attribute is <em>only</em> applicable to request bodies, and <em>only</em> for <code>multipart</code> and <code>application/x-www-form-urlencoded</code> media types.</p>
 <p><a id="encodingObject"></a></section></section><section><h3><span>Encoding Object</span></h3></p>
-<p>A single encoding definition applied to a single schema property.</p>
-<section><h4>Fixed Fields</h4>
+<p>A single encoding definition applied to a single schema property.
+See <a href="#dataTypeConversion">Appendix B</a> for a discussion of converting values of various types to string representations.</p>
+<p>Properties are correlated with <code>multipart</code> parts using the <code>name</code> parameter to <code>Content-Disposition: form-data</code>, and with <code>application/x-www-form-urlencoded</code> using the query string paramter names.
+In both cases, their order is implementation-defined.</p>
+<p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
+<section><h5>Common Fixed Fields</h5>
+<p>These fields MAY be used either with or without the RFC6570-style serialization fields defined in the next section below.</p>
 <table>
 <thead>
 <tr>
@@ -2153,32 +2204,102 @@ definition may be used:</p>
 <tr>
 <td><a id="encodingContentType"> </a>contentType</td>
 <td style="text-align:center"><code>string</code></td>
-<td>The Content-Type for encoding a specific property. Default value depends on the property type: for <code>object</code> - <code>application/json</code>;  for <code>array</code> – the default is defined based on the inner type; for all other cases the default is <code>application/octet-stream</code>. The value can be a specific media type (e.g. <code>application/json</code>), a wildcard media type (e.g. <code>image/*</code>), or a comma-separated list of the two types.</td>
+<td>The <code>Content-Type</code> for encoding a specific property. The value is a comma-separated list, each element of which is either a specific media type (e.g. <code>image/png</code>) or a wildcard media type (e.g. <code>image/*</code>). Default value depends on the property type as shown in the table below.</td>
 </tr>
 <tr>
 <td><a id="encodingHeaders"> </a>headers</td>
 <td style="text-align:center">Map[<code>string</code>, <a href="#headerObject">Header Object</a> | <a href="#referenceObject">Reference Object</a>]</td>
-<td>A map allowing additional information to be provided as headers, for example <code>Content-Disposition</code>.  <code>Content-Type</code> is described separately and SHALL be ignored in this section. This property SHALL be ignored if the request body media type is not a <code>multipart</code>.</td>
-</tr>
-<tr>
-<td><a id="encodingStyle"> </a>style</td>
-<td style="text-align:center"><code>string</code></td>
-<td>Describes how a specific property value will be serialized depending on its type.  See <a href="#parameterObject">Parameter Object</a> for details on the <a href="#parameterStyle"><code>style</code></a> property. The behavior follows the same values as <code>query</code> parameters, including default values. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
-</tr>
-<tr>
-<td><a id="encodingExplode"> </a>explode</td>
-<td style="text-align:center"><code>boolean</code></td>
-<td>When this is true, property values of type <code>array</code> or <code>object</code> generate separate parameters for each value of the array, or key-value-pair of the map.  For other types of properties this property has no effect. When <a href="#encodingStyle"><code>style</code></a> is <code>form</code>, the default value is <code>true</code>. For all other styles, the default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
-</tr>
-<tr>
-<td><a id="encodingAllowReserved"> </a>allowReserved</td>
-<td style="text-align:center"><code>boolean</code></td>
-<td>Determines whether the parameter value SHOULD allow reserved characters, as defined by [[!RFC3986]] <code>:/?#[]@!$&amp;'()*+,;=</code> to be included without percent-encoding. The default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
+<td>A map allowing additional information to be provided as headers. <code>Content-Type</code> is described separately and SHALL be ignored in this section. This property SHALL be ignored if the request body media type is not a <code>multipart</code>.</td>
 </tr>
 </tbody>
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
-</section><section><h4>Encoding Object Example</h4>
+<p>The default values for <code>contentType</code> are as follows, where an <em>n/a</em> in the <code>contentEncoding</code> column means that the presence or value of <code>contentEncoding</code> is irrelevant:</p>
+<table>
+<thead>
+<tr>
+<th>Property <code>type</code></th>
+<th>Property <code>contentEncoding</code></th>
+<th>Default <code>contentType</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>absent</em></td>
+<td><em>n/a</em></td>
+<td><code>application/octet-stream</code></td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td><em>present</em></td>
+<td><code>application/octet-stream</code></td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td><em>absent</em></td>
+<td><code>text/plain</code></td>
+</tr>
+<tr>
+<td><code>number</code>, <code>integer</code>, or <code>boolean</code></td>
+<td><em>n/a</em></td>
+<td><code>text/plain</code></td>
+</tr>
+<tr>
+<td><code>object</code></td>
+<td><em>n/a</em></td>
+<td><code>application/json</code></td>
+</tr>
+<tr>
+<td><code>array</code></td>
+<td><em>n/a</em></td>
+<td>according to the <code>type</code> of the <code>items</code> schema</td>
+</tr>
+</tbody>
+</table>
+<p>Determining how to handle a <code>type</code> value of <code>null</code> depends on how <code>null</code> values are being serialized.
+If <code>null</code> values are entirely omitted, then the <code>contentType</code> is irrelevant.
+See <a href="#dataTypeConversion">Appendix B</a> for a discussion of data type conversion options.</p>
+</section></section><section><h4>Fixed Fields for RFC6570-style Serialization</h4>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th style="text-align:center">Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="encodingStyle"> </a>style</td>
+<td style="text-align:center"><code>string</code></td>
+<td>Describes how a specific property value will be serialized depending on its type.  See <a href="#parameterObject">Parameter Object</a> for details on the <a href="#parameterStyle"><code>style</code></a> property. The behavior follows the same values as <code>query</code> parameters, including default values. Note that the initial <code>?</code> using in query strings is not used in <code>applcation/x-www-form-urlencoded</code> message bodies, and MUST be removed (if using an RFC6570 implementation) or simply not added (if constructing the string manually). This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
+</tr>
+<tr>
+<td><a id="encodingExplode"> </a>explode</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td>When this is true, property values of type <code>array</code> or <code>object</code> generate separate parameters for each value of the array, or key-value-pair of the map.  For other types of properties this property has no effect. When <a href="#encodingStyle"><code>style</code></a> is <code>form</code>, the default value is <code>true</code>. For all other styles, the default value is <code>false</code>. Note that despite <code>false</code> being the default for <code>deepObject</code>, the combination of <code>false</code> with <code>deepObject</code> is undefined. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
+</tr>
+<tr>
+<td><a id="encodingAllowReserved"> </a>allowReserved</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td>When this is true, parameter values are serialized  using reserved expansion, as defined by <a href="https://datatracker.ietf.org/doc/html/rfc6570#autoid-20">[!RFC6570]</a>, which allows <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-13">RFC3986’s reserved character set</a>, as well as percent-encoded triples, to pass through unchanged, while still percent-encoding all other disallowed characters (including <code>%</code> outside of percent-encoded triples). Applications are still responsible for percent-encoding reserved characters that are <a href="https://datatracker.ietf.org/doc/html/rfc3986#autoid-24">not allowed in the query string</a> (<code>[</code>, <code>]</code>, <code>#</code>), or have a special meaning in <code>application/x-www-form-urlencoded</code> (<code>-</code>, <code>&amp;</code>, <code>+</code>); see Appendices <a href="#usingRFC6570Implementations">C</a> and <a href="#percentEncodingAndFormMediaTypes">E</a> for details. The default value is <code>false</code>. This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
+</tr>
+</tbody>
+</table>
+<p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance, including on difficulties caused by the interaction between RFC6570’s percent-encoding rules and the <code>multipart/form-data</code> media type.</p>
+<p>Note that the presence of at least one of <code>style</code>, <code>explode</code>, or <code>allowReserved</code> with an explicit value is equivalent to using <code>schema</code> with <code>in: query</code> Parameter Objects.
+The absence of all three of those fields is the equivalent of using <code>content</code>, but with the media type specified in <code>contentType</code> rather than through a Media Type Object.</p>
+<section><h5>Encoding <code>multipart</code> Media Types</h5>
+<p>The <code>form-data</code> disposition and its <code>name</code> parameter are mandatory for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.2">RFC7578 §4.2</a>).
+Array properties are handled by applying the same <code>name</code> to multiple parts, as is recommended by <a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.3">RFC7578 §4.3</a> for supplying multiple values per form field.
+See <a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-5">RFC7578 §5</a> for guidance regarding non-ASCII part names.</p>
+<p>Various other <code>multipart</code> types, most notable <code>multipart/mixed</code> (<a href="https://www.rfc-editor.org/rfc/rfc2046.html#section-5.1.3">RFC2046 §5.1.3</a>) neither require nor forbid specific <code>Content-Disposition</code> values, which means care must be taken to ensure that any values used are supported by all relevant software.
+It is not currently possible to correlate schema properties with unnamed, ordered parts in media types such as <code>multipart/mixed</code>, but implementations MAY choose to support such types when <code>Content-Disposition: form-data</code> is used with a <code>name</code> parameter.</p>
+<p>Note that there are significant restrictions on what headers can be used with <code>multipart</code> media types in general (<a href="https://www.rfc-editor.org/rfc/rfc2046.html#section-5.1">RFC2046 §5.1</a>) and <code>multi-part/form-data</code> in particular (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.8">RFC7578 §4.8</a>).</p>
+<p>Note also that <code>Content-Transfer-Encoding</code> is deprecated for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.7">RFC7578 §4.7</a>) where binary data is supported, as it is in HTTP.
+Using <code>contentEncoding</code> is equivalent to setting <code>Content-Transfer-Encoding</code> to the same value.
+If <code>contentEncoding</code> is used along with setting a different <code>Content-Transfer-Encoding</code> value with the <code>headers</code> field, the result is undefined.</p>
+</section></section><section><h4>Encoding Object Example</h4>
 <p><code>multipart/form-data</code> allows for binary parts:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">requestBody:</span>
@@ -2586,6 +2707,9 @@ This includes accessing any part of a body that a JSON Pointer [[!RFC6901]] can 
           <span class="hljs-attr">description:</span> <span class="hljs-string">callback</span> <span class="hljs-string">successfully</span> <span class="hljs-string">processed</span>
 </code></pre>
 <p><a id="exampleObject"></a></section></section><section><h3><span>Example Object</span></h3></p>
+<p>An object grouping an internal or external example value with basic <code>summary</code> and <code>description</code> metadata.
+This object is typically used in properties named <code>examples</code> (plural), and is a <a href="#referenceObject">referenceable</a> alternative to older <code>example</code> (singular) fields that do not support referencing or metadata.</p>
+<p>Examples allow demonstration of the usage of properties, parameters and objects within OpenAPI.</p>
 <section><h4>Fixed Fields</h4>
 <table>
 <thead>
@@ -2962,16 +3086,108 @@ This mechanism is used by <a href="#linkObject">Link Objects</a> and <a href="#c
 <p>Runtime expressions preserve the type of the referenced value.
 Expressions can be embedded into string values by surrounding the expression with <code>{}</code> curly braces.</p>
 <p><a id="headerObject"></a></section></section><section><h3><span>Header Object</span></h3></p>
-<p>The Header Object follows the structure of the <a href="#parameterObject">Parameter Object</a> with the following changes:</p>
+<p>Describes a single header for <a href="#responseHeaders">HTTP responses</a> and for <a href="#encodingHeaders">individual parts in <code>multipart</code> representations</a>; see the relevant <a href="#responseObject">Response Object</a> and <a href="#encodingObject">Encoding Object</a> documentation for restrictions on which headers can be described.</p>
+<p>The Header Object follows the structure of the <a href="#parameterObject">Parameter Object</a>, including determining its serialization strategy based on whether <code>schema</code> or <code>content</code> is present,  with the following changes:</p>
 <ol>
 <li><code>name</code> MUST NOT be specified, it is given in the corresponding <code>headers</code> map.</li>
 <li><code>in</code> MUST NOT be specified, it is implicitly in <code>header</code>.</li>
-<li>All traits that are affected by the location MUST be applicable to a location of <code>header</code> (for example, <a href="#parameterStyle"><code>style</code></a>).</li>
+<li>All traits that are affected by the location MUST be applicable to a location of <code>header</code> (for example, <a href="#parameterStyle"><code>style</code></a>).  This means that <code>allowEmptyValue</code> and <code>allowReserved</code> MUST NOT be used, and <code>style</code>, if used, MUST be limited to <code>simple</code>.</li>
 </ol>
-<section><h4>Header Object Example</h4>
+<section><h4>Common Fixed Fields</h4>
+<p>These fields MAY be used with either <code>content</code> or <code>schema</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th style="text-align:center">Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="headerDescription"> </a>description</td>
+<td style="text-align:center"><code>string</code></td>
+<td>A brief description of the header. This could contain examples of use. <a href="https://spec.commonmark.org/">CommonMark syntax</a> MAY be used for rich text representation.</td>
+</tr>
+<tr>
+<td><a id="headerRequired"> </a>required</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td>Determines whether this header is mandatory. The default value is <code>false</code>.</td>
+</tr>
+<tr>
+<td><a id="headerDeprecated"> </a> deprecated</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td>Specifies that the header is deprecated and SHOULD be transitioned out of usage. Default value is <code>false</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
+</section><section><h4>Fixed Fields for use with <code>schema</code></h4>
+<p>For simpler scenarios, a <a href="#headerSchema"><code>schema</code></a> and <a href="#headerStyle"><code>style</code></a> can describe the structure and syntax of the header.
+When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example MUST follow the prescribed serialization strategy for the header.</p>
+<p>Serializing with <code>schema</code> is NOT RECOMMENDED for headers with parameters (name=value pairs following a <code>;</code>) in their values, or where values might have non-URL-safe characters; see <a href="#serializingHeadersAndCookies">Appendix D</a> for details.</p>
+<p>When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example SHOULD match the specified schema and follow the prescribed serialization strategy for the header.
+The <code>example</code> and <code>examples</code> fields are mutually exclusive, and if either is present it SHALL <em>override</em> any <code>example</code> in the schema.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th style="text-align:center">Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="headerStyle"> </a>style</td>
+<td style="text-align:center"><code>string</code></td>
+<td>Describes how the header value will be serialized.  The default (and only legal value for headers) is <code>simple</code>.</td>
+</tr>
+<tr>
+<td><a id="headerExplode"> </a>explode</td>
+<td style="text-align:center"><code>boolean</code></td>
+<td>When this is true, header values of type <code>array</code> or <code>object</code> generate a single header whose value is a comma-separated list of the array items or key-value pairs of the map, see <a href="#style-examples">Style Examples</a>. For other data types this property has no effect. The default value is <code>false</code>.</td>
+</tr>
+<tr>
+<td><a id="headerSchema"> </a>schema</td>
+<td style="text-align:center"><a href="#schemaObject">Schema Object</a> | <a href="#referenceObject">Reference Object</a></td>
+<td>The schema defining the type used for the header.</td>
+</tr>
+<tr>
+<td><a id="headerExample"> </a>example</td>
+<td style="text-align:center">Any</td>
+<td>Example of the header’s potential value; see <a href="#working-with-examples">Working With Examples</a>.</td>
+</tr>
+<tr>
+<td><a id="headerExamples"> </a>examples</td>
+<td style="text-align:center">Map[ <code>string</code>, <a href="#exampleObject">Example Object</a> | <a href="#referenceObject">Reference Object</a>]</td>
+<td>Examples of the header’s potential value; see <a href="#working-with-examples">Working With Examples</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance.</p>
+</section><section><h4>Fixed Fields for use with <code>content</code></h4>
+<p>For more complex scenarios, the <a href="#headerContent"><code>content</code></a> property can define the media type and schema of the header, as well as give examples of its use.
+Using <code>content</code> with a <code>text/plain</code> media type is RECOMMENDED for headers where the <code>schema</code> strategy is not appropriate.</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th style="text-align:center">Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="headerContent"> </a>content</td>
+<td style="text-align:center">Map[<code>string</code>, <a href="#mediaTypeObject">Media Type Object</a>]</td>
+<td>A map containing the representations for the header. The key is the media type and the value describes it. The map MUST only contain one entry.</td>
+</tr>
+</tbody>
+</table>
+</section><section><h4>Header Object Example</h4>
 <p>A simple header of type <code>integer</code>:</p>
 <pre class="nohighlight"><code>
-<span class="hljs-punctuation">{</span>
+<span class="hljs-attr">&quot;X-Rate-Limit-Limit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
   <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;The number of allowed requests in the current period&quot;</span><span class="hljs-punctuation">,</span>
   <span class="hljs-attr">&quot;schema&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
     <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;integer&quot;</span>
@@ -2979,9 +3195,33 @@ Expressions can be embedded into string values by surrounding the expression wit
 <span class="hljs-punctuation">}</span>
 </code></pre>
 <pre class="nohighlight"><code>
-<span class="hljs-attr">description:</span> <span class="hljs-string">The</span> <span class="hljs-string">number</span> <span class="hljs-string">of</span> <span class="hljs-string">allowed</span> <span class="hljs-string">requests</span> <span class="hljs-string">in</span> <span class="hljs-string">the</span> <span class="hljs-string">current</span> <span class="hljs-string">period</span>
-<span class="hljs-attr">schema:</span>
-  <span class="hljs-attr">type:</span> <span class="hljs-string">integer</span>
+<span class="hljs-attr">X-Rate-Limit-Limit:</span>
+  <span class="hljs-attr">description:</span> <span class="hljs-string">The</span> <span class="hljs-string">number</span> <span class="hljs-string">of</span> <span class="hljs-string">allowed</span> <span class="hljs-string">requests</span> <span class="hljs-string">in</span> <span class="hljs-string">the</span> <span class="hljs-string">current</span> <span class="hljs-string">period</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">integer</span>
+</code></pre>
+<p>Requiring that a strong <code>ETag</code> header (with a value starting with <code>&quot;</code> rather than <code>W/</code>) is present.  Note the use of <code>content</code>, because using <code>schema</code> and <code>style</code> would require the <code>&quot;</code> to be percent-encoded as <code>%22</code>:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">&quot;ETag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;required&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;text/plain&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;schema&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;string&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;pattern&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^\&quot;&quot;</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">ETag:</span>
+  <span class="hljs-attr">required:</span> <span class="hljs-literal">true</span>
+  <span class="hljs-attr">content:</span>
+    <span class="hljs-attr">text/plain:</span>
+      <span class="hljs-attr">schema:</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+        <span class="hljs-attr">pattern:</span> <span class="hljs-string">^&quot;</span> 
 </code></pre>
 <p><a id="tagObject"></a></section></section><section><h3><span>Tag Object</span></h3></p>
 <p>Adds metadata to a single tag that is used by the <a href="#operationObject">Operation Object</a>.
@@ -3100,7 +3340,8 @@ Where JSON Schema indicates that behavior is defined by the application (e.g. fo
 <li>format - See <a href="#dataTypeFormat">Data Type Formats</a> for further details. While relying on JSON Schema’s defined formats, the OAS offers a few additional predefined formats.</li>
 </ul>
 <p>In addition to the JSON Schema properties comprising the OAS dialect, the Schema Object supports keywords from any other vocabularies, or entirely arbitrary properties.</p>
-<p>The OpenAPI Specification’s base vocabulary is comprised of the following keywords:</p>
+<p>JSON Schema implementations MAY choose to treat keywords defined by the OpenAPI Specification’s base vocabulary as <a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-00#section-4.3.1">unknown keywords</a>, due to its inclusion in the OAS dialect with a <a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-00#section-8.1.2"><code>$vocabulary</code></a> value of <code>false</code>.
+The OAS base vocabulary is comprised of the following keywords:</p>
 <p><a id="baseVocabulary"></a></section><section><h4><span>Fixed Fields</span></h4></p>
 <table>
 <thead>
@@ -3152,9 +3393,10 @@ When used, the <code>discriminator</code> indicates the name of the property tha
 The <a href="#xmlObject">XML Object</a> contains additional information about the available options.</p>
 </section><section><h5>Specifying Schema Dialects</h5>
 <p>It is important for tooling to be able to determine which dialect or meta-schema any given resource wishes to be processed with: JSON Schema Core, JSON Schema Validation, OpenAPI Schema dialect, or some custom meta-schema.</p>
-<p>The <code>$schema</code> keyword MAY be present in any root Schema Object, and if present MUST be used to determine which dialect should be used when processing the schema. This allows use of Schema Objects which comply with other drafts of JSON Schema than the default Draft 2020-12 support. Tooling MUST support the <a href="#dialectSchemaId">OAS dialect schema id</a>, and MAY support additional values of <code>$schema</code>.</p>
-<p>To allow use of a different default <code>$schema</code> value for all Schema Objects contained within an OAS document, a <code>jsonSchemaDialect</code> value may be set within the <a href="#oasObject">OpenAPI Object</a>. If this default is not set, then the OAS dialect schema id MUST be used for these Schema Objects. The value of <code>$schema</code> within a Schema Object always overrides any default.</p>
-<p>When a Schema Object is referenced from an external resource which is not an OAS document (e.g. a bare JSON Schema resource), then the value of the <code>$schema</code> keyword for schemas within that resource MUST follow <a href="https://tools.ietf.org/html/draft-bhutton-json-schema-00#section-8.1.1">JSON Schema rules</a>.</p>
+<p>The <code>$schema</code> keyword MAY be present in any Schema Object that is a <a href="https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-00#section-4.3.5">schema resource root</a>, and if present MUST be used to determine which dialect should be used when processing the schema. This allows use of Schema Objects which comply with other drafts of JSON Schema than the default Draft 2020-12 support. Tooling MUST support the <a href="#dialectSchemaId">OAS dialect schema id</a>, and MAY support additional values of <code>$schema</code>.</p>
+<p>To allow use of a different default <code>$schema</code> value for all Schema Objects contained within an OAS document, a <code>jsonSchemaDialect</code> value may be set within the <a href="#oasObject">OpenAPI Object</a>. If this default is not set, then the OAS dialect schema id MUST be used for these Schema Objects. The value of <code>$schema</code> within a resource root Schema Object always overrides any default.</p>
+<p>For standalone JSON Schema documents that do not set <code>$schema</code>, or for Schema Objects in OpenAPI description documents that are <em>not</em> <a href="#documentStructure">complete documents</a>, the dialect SHOULD be assumed to be the OAS dialect.
+However, for maximum interoperability, it is RECOMMENDED that OpenAPI description authors explicitly set the dialect through <code>$schema</code> in such documents.</p>
 </section></section><section><h4>Schema Object Examples</h4>
 <section><h5>Primitive Sample</h5>
 <pre class="nohighlight"><code>
@@ -3576,6 +3818,7 @@ The <a href="#xmlObject">XML Object</a> contains additional information about th
 <p>When request bodies or response payloads may be one of a number of different schemas, a Discriminator Object gives a hint about the expected schema of the document.
 This hint can be used to aid in serialization, deserialization, and validation.
 The Discriminator Object does this by implicitly or explicitly associating the possible values of a named property with alternative schemas.</p>
+<p>Note that <code>discriminator</code> MUST NOT change the validation outcome of the schema.</p>
 <section><h4>Fixed Fields</h4>
 <table>
 <thead>
@@ -3600,9 +3843,11 @@ The Discriminator Object does this by implicitly or explicitly associating the p
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 </section><section><h4>Conditions for Using the Discriminator Object</h4>
-<p>The Discriminator Object is legal only when using one of the composite keywords <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code>.
-In both the <code>oneOf</code> and <code>anyOf</code> use cases, where those keywords are adjacent to <code>discriminator</code>, all possible schemas MUST be listed explicitly.
-To avoid redundancy, the discriminator MAY be added to a parent schema definition, and all schemas building on the parent schema via an <code>allOf</code> construct may be used as an alternate schema.</p>
+<p>The Discriminator Object is legal only when using one of the composite keywords <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code>.</p>
+<p>In both the <code>oneOf</code> and <code>anyOf</code> use cases, where those keywords are adjacent to <code>discriminator</code>, all possible schemas MUST be listed explicitly.</p>
+<p>To avoid redundancy, the discriminator MAY be added to a parent schema definition, and all schemas building on the parent schema via an <code>allOf</code> construct may be used as an alternate schema.</p>
+<p>The <code>allOf</code> form of <code>discriminator</code> is <em>only</em> useful for non-validation use cases; validation with the parent schema with this form of <code>discriminator</code> <em>does not</em> perform a search for child schemas or use them in validation in any way.
+This is because <code>discriminator</code> cannot change the validation outcome, and no standard JSON Schema keyword connects the parent schema to the child schemas.</p>
 <p>The behavior of any configuration of <code>oneOf</code>, <code>anyOf</code>, <code>allOf</code> and <code>discriminator</code> that is not described above is undefined.</p>
 </section><section><h4>Options for Mapping Values to Schemas</h4>
 <p>The value of the property named in <code>propertyName</code> is used as the name of the associated schema under the <a href="#componentsObject">Components Object</a>, <em>unless</em> a <code>mapping</code> is present for that value.
@@ -3733,7 +3978,7 @@ See examples for expected behavior.</p>
 <tr>
 <td><a id="xmlNamespace"> </a>namespace</td>
 <td style="text-align:center"><code>string</code></td>
-<td>The URI of the namespace definition. This MUST be in the form of an absolute URI.</td>
+<td>The URI of the namespace definition. Value MUST be in the form of a non-relative URI.</td>
 </tr>
 <tr>
 <td><a id="xmlPrefix"> </a>prefix</td>
@@ -3753,8 +3998,15 @@ See examples for expected behavior.</p>
 </tbody>
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
+<p>The <code>namespace</code> keyword is intended to match the syntax of <a href="https://www.w3.org/TR/xml-names11/">XML namespaces</a>, although there are a few caveats:</p>
+<ul>
+<li>Version 3.0.3 and earlier of this specification erroneously used the term “absolute URI” instead of “non-relative URI”, so authors using namespaces that include a fragment should check tooling support carefully.</li>
+<li>XML allows but discourages relative URI-references, while this specification outright forbids them.</li>
+<li>XML 1.1 allows IRIs (<a href="https://datatracker.ietf.org/doc/html/rfc3987">[!RFC3987]</a>) as namespaces, and specifies that namespaces are compared without any encoding or decoding, which means that IRIs encoded to meet this specification’s URI syntax requirement cannot be compared to IRIs as-is.</li>
+</ul>
 </section><section><h4>XML Object Examples</h4>
-<p>The examples of the XML object definitions are included inside a property definition of a <a href="#schemaObject">Schema Object</a> with a sample of the XML representation of it.</p>
+<p>Each of the following examples represent the value of the <code>properties</code> keyword in a <a href="#schemaObject">Schema Object</a> that is omitted for brevity.
+The JSON and YAML representations of the <code>properties</code> value are followed by an example XML representation produced for the single property shown.</p>
 <section><h5>No XML Element</h5>
 <p>Basic string property:</p>
 <pre class="nohighlight"><code>
@@ -4461,11 +4713,14 @@ This enables support for scenarios where multiple query parameters or HTTP heade
 <tr>
 <td><a id="extensionProperties"> </a>^x-</td>
 <td style="text-align:center">Any</td>
-<td>Allows extensions to the OpenAPI Schema. The field name MUST begin with <code>x-</code>, for example, <code>x-internal-id</code>. Field names beginning <code>x-oai-</code> and <code>x-oas-</code> are reserved for uses defined by the <a href="https://www.openapis.org/">OpenAPI Initiative</a>. The value can be <code>null</code>, a primitive, an array or an object.</td>
+<td>Allows extensions to the OpenAPI Schema. The field name MUST begin with <code>x-</code>, for example, <code>x-internal-id</code>. Field names beginning <code>x-oai-</code> and <code>x-oas-</code> are reserved for uses defined by the <a href="https://www.openapis.org/">OpenAPI Initiative</a>. The value can be any valid JSON value (<code>null</code>, a primitive, an array or an object.)</td>
 </tr>
 </tbody>
 </table>
-<p>The extensions may or may not be supported by the available tooling, but those may be extended as well to add requested support (if tools are internal or open-sourced).</p>
+<p>The OpenAPI Initiative maintains several <a href="https://spec.openapis.org/registry/index.html">extension registries</a>, including registries for <a href="https://spec.openapis.org/registry/extension/">individual extension keywords</a> and <a href="https://spec.openapis.org/registry/namespace/">extension keyword namespaces</a>.</p>
+<p>Extensions are one of the best ways to prove the viability of proposed additions to the specification.<br>
+It is therefore RECOMMENDED that implementations be designed for extensibility to support community experimentation.</p>
+<p>Support for any one extension is OPTIONAL, and support for one extension does not imply support for others.</p>
 <p><a id="securityFiltering"></a></section><section><h2><span>Security Filtering</span></h2></p>
 <p>Some objects in the OpenAPI Specification MAY be declared and remain empty, or be completely removed, even though they are inherently the core of the API documentation.</p>
 <p>The reasoning is to allow an additional layer of access control over the documentation.
@@ -4475,6 +4730,23 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <li>The <a href="#pathsObject">Paths Object</a> MAY be present but empty. It may be counterintuitive, but this may tell the viewer that they got to the right place, but can’t access any documentation. They would still have access to at least the <a href="#infoObject">Info Object</a> which may contain additional information regarding authentication.</li>
 <li>The <a href="#pathItemObject">Path Item Object</a> MAY be empty. In this case, the viewer will be aware that the path exists, but will not be able to see any of its operations or parameters. This is different from hiding the path itself from the <a href="#pathsObject">Paths Object</a>, because the user will be aware of its existence. This allows the documentation provider to finely control what the viewer can see.</li>
 </ol>
+</section></section><section><h1>Security Considerations</h1>
+<section><h2>OpenAPI Document Formats</h2>
+<p>OpenAPI documents use JSON, YAML, and JSON Schema, and therefore share their security considerations:</p>
+<ul>
+<li><a href="https://www.iana.org/assignments/media-types/application/json">JSON</a></li>
+<li><a href="https://www.iana.org/assignments/media-types/application/yaml">YAML</a></li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-core#section-13">JSON Schema Core</a></li>
+<li><a href="https://json-schema.org/draft/2020-12/json-schema-validation#name-security-considerations">JSON Schema Validation</a></li>
+</ul>
+</section><section><h2>Tooling and Usage Scenarios</h2>
+<p>In addition, OpenAPI documents are processed by a wide variety of tooling for numerous different purposes, such as client code generation, documentation generation, server side routing, and API testing. OpenAPI document authors must consider the risks of the scenarios where the OpenAPI document may be used.</p>
+</section><section><h2>Security Schemes</h2>
+<p>An OpenAPI document describes the security schemes used to protect the resources it defines. The security schemes available offer varying degrees of protection. Factors such as the sensitivity of the data and the potential impact of a security breach should guide the selection of security schemes for the API resources. Some security schemes, such as basic auth and OAuth Implicit flow, are supported for compatibility with existing APIs. However, their inclusion in OpenAPI does not constitute an endorsement of their use, particularly for highly sensitive data or operations.</p>
+</section><section><h2>Handling External Resources</h2>
+<p>OpenAPI documents may contain references to external resources that may be dereferenced automatically by consuming tools. External resources may be hosted on different domains that may be untrusted. References in an OpenAPI document, or across OpenAPI documents may cause a cycle. Tooling must detect and handle cycles to prevent resource exhaustion.</p>
+</section><section><h2>Markdown and HTML Sanitization</h2>
+<p>Certain properties allow the use of Markdown which can contain HTML including script. It is the responsibility of tooling to appropriately sanitize the Markdown.</p>
 <p><a id="revisionHistory"></a></section></section><section class="appendix"><h1><span>Appendix A: Revision History</span></h1></p>
 <table>
 <thead>
@@ -4568,7 +4840,363 @@ While not part of the specification itself, certain libraries MAY choose to allo
 </tbody>
 </table>
 <p><a id="dataTypeConversion"></a></section><section class="appendix"><h1><span>Appendix B: Data Type Conversion</span></h1></p>
+<p>Serializing typed data to plain text, which can occur in <code>text/plain</code> message bodies or <code>multipart</code> parts, as well as in the <code>application/x-www-form-urlencoded</code> format in either URL query strings or message bodies, involves significant implementation- or application-defined behavior.</p>
+<p>Schema Objects validate data based on the <a href="https://datatracker.ietf.org/doc/html/draft-wright-json-schema-00#section-4.2">JSON Schema data model</a>, which only recognizes four primitive data types: strings (which are <a href="https://datatracker.ietf.org/doc/html/rfc7159#section-8.1">only broadly interoperable as UTF-8</a>), numbers, booleans, and <code>null</code>.
+Notably, integers are not a distinct type from other numbers, with <code>type: integer</code> being a convenience defined mathematically, rather than based on the presence or absence of a decimal point in any string representation.</p>
+<p>The <a href="#parameterObject">Parameter Object</a>, <a href="#headerObject">Header Object</a> and <a href="#encodingObject">Encoding Object</a> offer features to control how to arrange values from array or object types.
+They can also be used to control how strings are further encoded to avoid reserved or illegal characters.
+However, there is no general-purpose specification for converting schema-validated non-UTF-8 primitive data types (or entire arrays or objects) to strings.</p>
+<p>Two cases do offer standards-based guidance:</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc3987#section-3.1">RFC3987 §3.1</a> provides guidance for converting non-Unicode strings to UTF-8, particularly in the context of URIs (and by extension, the form media types which use the same encoding rules)</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc6570#section-2.3">RFC6570 §2.3</a> specifies which values, including but not limited to <code>null</code>, are considered <em>undefined</em> and therefore treated specially in the expansion process when serializing based on that specification</li>
+</ul>
+<p>Implementations of RFC6570 often have their own conventions for converting non-string values, but these are implementation-specific and not defined by the RFC itself.
+This is one reason for the OpenAPI Specification to leave these conversions as implementation-defined:  It allows using RFC6570 implementations regardless of how they choose to perform the conversions.</p>
+<p>To control the serialization of numbers, booleans, and <code>null</code> (or other values RFC6570 deems to be undefined) more precisely, schemas can be defined as <code>type: string</code> and constrained using <code>pattern</code>, <code>enum</code>, <code>format</code>, and other keywords to communicate how applications must pre-convert their data prior to schema validation.
+The resulting strings would not require any further type conversion.</p>
+<p>The <code>format</code> keyword can assist in serialization.
+Some formats (such as <code>date-time</code>) are unambiguous, while others (such as <a href="https://spec.openapis.org/registry/format/decimal.html"><code>decimal</code></a> in the <a href="https://spec.openapis.org/registry/format/">Format Registry</a>) are less clear.
+However, care must be taken with <code>format</code> to ensure that the specific formats are supported by all relevant tools as unrecognized formats are ignored.</p>
+<p>Requiring input as pre-formatted, schema-validated strings also improves round-trip interoperability as not all programming languages and environments support the same data types.</p>
 <p><a id="usingRFC6570Implementations"></a></section><section class="appendix"><h1><span>Appendix C: Using RFC6570 Implementations</span></h1></p>
-<p><a id="serializingHeadersAndCookies"></a></section><section class="appendix"><h1><span>Appendix D: Serializing Headers and Cookies</span></h1></p>
+<p>Serialization is defined in terms of RFC6570 URI Templates in two scenarios:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#parameterObject">Parameter Object</a></td>
+<td>When <code>schema</code> is present</td>
+</tr>
+<tr>
+<td><a href="#encodingObject">Encoding Object</a></td>
+<td>When encoding for <code>application/x-www-form-urlencoded</code> and any of <code>style</code>, <code>explode</code>, or <code>allowReserved</code> are used</td>
+</tr>
+</tbody>
+</table>
+<p>Implementations of this specification MAY use an implementation of RFC6570 to perform variable expansion, however, some caveats apply.</p>
+<p>Note that when using <code>style: form</code> RFC6570 expansion to produce an <code>application/x-www-form-urlencoded</code> HTTP message body, it is necessary to remove the <code>?</code> prefix that is produced to satisfy the URI query string syntax.</p>
+<p>When using <code>style</code> and similar keywords to produce a <code>multipart/form-data</code> body, the query string names are placed in the <code>name</code> parameter to the <code>Content-Disposition</code> part header, and the values are placed in the corresponding part body; the <code>?</code>, <code>=</code>, and <code>&amp;</code> characters are not used.
+Note that while <a href="https://datatracker.ietf.org/doc/html/rfc7578">[!RFC7578]</a> allows using RFC3986 percent-encoding in “file names”, it does not otherwise address the use of percent-encoding within the format.
+RFC7578 discusses character set and encoding issues for <code>multipart/form-data</code> in detail, and it is RECOMMENDED that OpenAPI Description authors read this guidance carefully before deciding to use RFC6570-based serialization with this media type.</p>
+<p>Note also that not all RFC6570 implementations support all four levels of operators, all of which are needed to fully support the OpenAPI Specification’s usage.
+Using an implementation with a lower level of support will require additional manual construction of URI Templates to work around the limitations.</p>
+<section><h2>Equivalences Between Fields and RFC6570 Operators</h2>
+<p>Certain field values translate to RFC6570 operators (or lack thereof):</p>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>value</th>
+<th>equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>style</td>
+<td>simple</td>
+<td><em>n/a</em></td>
+</tr>
+<tr>
+<td>style</td>
+<td>matrix</td>
+<td><code>;</code> prefix operator</td>
+</tr>
+<tr>
+<td>style</td>
+<td>label</td>
+<td><code>.</code> prefix operator</td>
+</tr>
+<tr>
+<td>style</td>
+<td>form</td>
+<td><code>?</code> prefix operator</td>
+</tr>
+<tr>
+<td>allowReserved</td>
+<td><code>false</code></td>
+<td><em>n/a</em></td>
+</tr>
+<tr>
+<td>allowReserved</td>
+<td><code>true</code></td>
+<td><code>+</code> prefix operator</td>
+</tr>
+<tr>
+<td>explode</td>
+<td><code>false</code></td>
+<td><em>n/a</em></td>
+</tr>
+<tr>
+<td>explode</td>
+<td><code>true</code></td>
+<td><code>*</code> modifier suffix</td>
+</tr>
+</tbody>
+</table>
+<p>Multiple <code>style: form</code> parameters are equivalent to a single RFC6570 <a href="https://www.rfc-editor.org/rfc/rfc6570#section-2.2">variable list</a> using the <code>?</code> prefix operator:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">foo</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+  <span class="hljs-attr">explode:</span> <span class="hljs-literal">true</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">bar</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+</code></pre>
+<p>This example is equivalent to RFC6570’s <code>{?foo*,bar}</code>, and <em><strong>NOT</strong></em> <code>{?foo*}{&amp;bar}</code>, which is problematic because if <code>foo</code> is not defined, the result will be an invalid URI.
+The <code>&amp;</code> prefix operator has no equivalent in the Parameter Object.</p>
+<p>Note that RFC6570 does not specify behavior for compound values beyond the single level addressed by <code>explode</code>.  The results of using objects or arrays where no behavior is clearly specified for them is implementation-defined.</p>
+</section><section><h2>Non-RFC6570 Field Values and Combinations</h2>
+<p>Configurations with no direct RFC6570 equivalent SHOULD also be handled according to RFC6570.
+Implementations MAY create a properly delimited URI Template with variables for individual names and values using RFC6570 regular or reserved expansion (based on <code>allowReserved</code>).</p>
+<p>This includes:</p>
+<ul>
+<li>the styles <code>pipeDelimited</code>, <code>spaceDelimited</code>, and <code>deepObject</code>, which have no equivalents at all</li>
+<li>the combination of the style <code>form</code> with <code>allowReserved: true</code>, which is not allowed because only one prefix operator can be used at a time</li>
+<li>any parameter name that is not a legal RFC6570 variable name</li>
+</ul>
+<p>The Parameter Object’s <code>name</code> field has a much more permissive syntax than <a href="https://www.rfc-editor.org/rfc/rfc6570#section-2.3">RFC6570 variable name syntax</a>.
+A parameter name that includes characters outside of the allowed RFC6570 variable character set MUST be percent-encoded before it can be used in a URI Template.</p>
+</section><section><h2>Examples</h2>
+<p>Let’s say we want to use the following data in a form query string, where <code>formulas</code> is exploded, and <code>words</code> is not:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">formulas:</span>
+  <span class="hljs-attr">a:</span> <span class="hljs-string">x+y</span>
+  <span class="hljs-attr">b:</span> <span class="hljs-string">x/y</span>
+  <span class="hljs-attr">c:</span> <span class="hljs-string">x^y</span>
+<span class="hljs-attr">words:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">math</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">is</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">fun</span>
+</code></pre>
+<section><h3>RFC6570-Equivalent Expansion</h3>
+<p>This array of parameter objects uses regular <code>style: form</code> expansion, fully supported by RFC6570:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">formulas</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+    <span class="hljs-attr">additionalProperties:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+  <span class="hljs-attr">explode:</span> <span class="hljs-literal">true</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">words</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+    <span class="hljs-attr">items:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+</code></pre>
+<p>This translates to the following URI Template:</p>
+<pre class="highlight urlencoded"><code>
+{?formulas*,words}
+</code></pre>
+<p>when expanded with the data given earlier, we get:</p>
+<pre class="highlight urlencoded"><code>
+?a=x%2By&amp;b=x%2Fy&amp;c=x%5Ey&amp;words=math,is,fun
+</code></pre>
+</section><section><h3>Expansion With Non-RFC6570-Supported Options</h3>
+<p>But now let’s say that (for some reason), we really want that <code>/</code> in the <code>b</code> formula to show up as-is in the query string, and we want our words to be space-separated like in a written phrase.
+To do that, we’ll add <code>allowReserved: true</code> to <code>formulas</code>, and change to <code>style: spaceDelimited</code> for <code>words</code>:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">formulas</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+    <span class="hljs-attr">additionalProperties:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+  <span class="hljs-attr">explode:</span> <span class="hljs-literal">true</span>
+  <span class="hljs-attr">allowReserved:</span> <span class="hljs-literal">true</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">words</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">style:</span> <span class="hljs-string">spaceDelimited</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+    <span class="hljs-attr">items:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+</code></pre>
+<p>We can’t combine the <code>?</code> and <code>+</code> RFC6570 prefixes, and there’s no way with RFC6570 to replace the <code>,</code> separator with a space character.
+So we need to restructure the data to fit a manually constructed URI Template that passes all of the pieces through the right sort of expansion.</p>
+<p>Here is one such template, using a made-up convention of <code>words.0</code> for the first entry in the words value, <code>words.1</code> for the second, and <code>words.2</code> for the third:</p>
+<pre class="highlight urlencoded"><code>
+?a={+a}&amp;b={+b}&amp;c={+c}&amp;words={words.0} {words.1} {words.2}
+</code></pre>
+<p>RFC6570 <a href="https://www.rfc-editor.org/rfc/rfc6570.html#section-2.4.2">mentions</a> the use of <code>.</code> “to indicate name hierarchy in substructures,” but does not define any specific naming convention or behavior for it.
+Since the <code>.</code> usage is not automatic, we’ll need to construct an appropriate input structure for this new template.</p>
+<p>We’ll also need to pre-process the values for <code>formulas</code> because while <code>/</code> and most other reserved characters are allowed in the query string by RFC3986, <code>[</code>, <code>]</code>, and <code>#</code> <a href="https://datatracker.ietf.org/doc/html/rfc3986#appendix-A">are not</a>, and <code>&amp;</code>, <code>=</code>, and <code>+</code> all have <a href="https://www.rfc-editor.org/rfc/rfc1866#section-8.2.1">special behavior</a> in the <code>application/x-www-form-urlencoded</code> format, which is what we are using in the query string.</p>
+<p>Setting <code>allowReserved: true</code> does <em>not</em> make reserved characters that are not allowed in URIs allowed, it just allows them to be <em>passed through expansion unchanged.</em>
+Therefore, any tooling still needs to percent-encode those characters because reserved expansion will not do it, but it <em>will</em> leave the percent-encoded triples unchanged.
+See also <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for further guidance on percent-encoding and form media types, including guidance on handling the delimiter characters for <code>spaceDelimited</code>, <code>pipeDelimited</code>, and <code>deepObject</code> in parameter names and values.</p>
+<p>So here is our data structure that arranges the names and values to suit the template above, where values for <code>formulas</code> have <code>[]#&amp;=+</code> pre-percent encoded (although only <code>+</code> appears in this example):</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">a:</span> <span class="hljs-string">x%2By</span>
+<span class="hljs-attr">b:</span> <span class="hljs-string">x/y</span>
+<span class="hljs-attr">c:</span> <span class="hljs-string">x^y</span>
+<span class="hljs-attr">words.0:</span> <span class="hljs-string">math</span>
+<span class="hljs-attr">words.1:</span> <span class="hljs-string">is</span>
+<span class="hljs-attr">words.2:</span> <span class="hljs-string">fun</span>
+</code></pre>
+<p>Expanding our manually assembled template with our restructured data yields the following query string:</p>
+<pre class="highlight urlencoded"><code>
+?a=x%2By&amp;b=x/y&amp;c=x%5Ey&amp;words=math%20is%20fun
+</code></pre>
+<p>The <code>/</code> and the pre-percent-encoded <code>%2B</code> have been left alone, but the disallowed <code>^</code> character (inside a value) and space characters (in the template but outside of the expanded variables) were percent-encoded.</p>
+</section><section><h3>Undefined Values and Manual URI Template Construction</h3>
+<p>Care must be taken when manually constructing templates to handle the values that <a href="https://datatracker.ietf.org/doc/html/rfc6570#section-2.3">RFC6570 considers to be <em>undefined</em></a> correctly:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">formulas:</span> {}
+<span class="hljs-attr">words:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">hello</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">world</span>
+</code></pre>
+<p>Using this data with our original RFC6570-friendly URI Template, <code>{?formulas*,words}</code>, produces the following:</p>
+<pre class="highlight urlencoded"><code>
+?words=hello,world
+</code></pre>
+<p>This means that the manually constructed URI Template and restructured data need to leave out the <code>formulas</code> object entirely so that the <code>words</code> parameter is the first and only parameter in the query string.</p>
+<p>Restructured data:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">words.0:</span> <span class="hljs-string">hello</span>
+<span class="hljs-attr">words.1:</span> <span class="hljs-string">world</span>
+</code></pre>
+<p>Manually constructed URI Template:</p>
+<pre class="highlight urlencoded"><code>
+?words={words.0} {words.1}
+</code></pre>
+<p>Result:</p>
+<pre class="highlight urlencoded"><code>
+?words=hello%20world
+</code></pre>
+</section><section><h3>Illegal Variable Names as Parameter Names</h3>
+<p>In this example, the heart emoji is not legal in URI Template names (or URIs):</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">parameters:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">❤️</span>
+  <span class="hljs-attr">in:</span> <span class="hljs-string">query</span>
+  <span class="hljs-attr">schema:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+</code></pre>
+<p>We can’t just pass <code>❤️: love!</code> to an RFC6570 implementation.
+Instead, we have to pre-percent-encode the name (which is a six-octet UTF-8 sequence) in both the data and the URI Template:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-string">&quot;%E2%9D%A4%EF%B8%8F&quot;</span><span class="hljs-string">:</span> <span class="hljs-string">love!</span>
+</code></pre>
+<pre class="highlight urlencoded"><code>
+{?%E2%9D%A4%EF%B8%8F}
+</code></pre>
+<p>This will expand to the result:</p>
+<pre class="highlight urlencoded"><code>
+?%E2%9D%A4%EF%B8%8F=love%21
+</code></pre>
+<p><a id="serializingHeadersAndCookies"></a></section></section></section><section class="appendix"><h1><span>Appendix D: Serializing Headers and Cookies</span></h1></p>
+<p>RFC6570’s percent-encoding behavior is not always appropriate for <code>in: header</code> and <code>in: cookie</code> parameters.
+In many cases, it is more appropriate to use <code>content</code> with a media type such as <code>text/plain</code> and require the application to assemble the correct string.</p>
+<p>For both cookies (<a href="https://www.rfc-editor.org/rfc/rfc6265">[!RFC6265]</a>) and HTTP headers using the structured fields (<a href="https://www.rfc-editor.org/rfc/rfc8941">[!RFC8941]</a>) syntax, non-ASCII content is handled using base64 encoding (<code>contentEncoding: base64</code>).
+Note that the standard base64 encoding alphabet includes non-URL-safe characters that are percent-encoded by RFC6570 expansion; serializing values through both encodings is NOT RECOMMENDED.
+While <code>contentEncoding</code> also supports the <code>base64url</code> encoding, which is URL-safe, the header and cookie RFCs do not mention this encoding.</p>
+<p>Most HTTP headers predate the structured field syntax, and a comprehensive assessment of their syntax and encoding rules is well beyond the scope of this specification.
+While <a href="https://www.rfc-editor.org/rfc/rfc8187">[!RFC8187]</a> recommends percent-encoding HTTP field (header or trailer) parameters, these parameters appear after a <code>;</code> character.
+With <code>style: simple</code>, that delimiter would itself be percent-encoded, violating the general HTTP field syntax.</p>
+<p>Using <code>style: form</code> with <code>in: cookie</code> is ambiguous for a single value, and incorrect for multiple values.
+This is true whether the multiple values are the result of using <code>explode: true</code> or not.</p>
+<p>This style is specified to be equivalent to RFC6570 form expansion which includes the <code>?</code> character (see Appendix C for more details), which is not part of the cookie syntax.
+However, examples of this style in past versions of this specification have not included the <code>?</code> prefix, suggesting that the comparison is not exact.
+Because implementations that rely on an RFC6570 implementation and those that perform custom serialization based on the style example will produce different results, it is implementation-defined as to which of the two results is correct.</p>
+<p>For multiple values, <code>style: form</code> is always incorrect as name=value pairs in cookies are delimited by <code>; </code> (a semicolon followed by a space character) rather than <code>&amp;</code>.</p>
 <p><a id="percentEncodingAndFormMediaTypes"></a></section><section class="appendix"><h1><span>Appendix E: Percent-Encoding and Form Media Types</span></h1></p>
+<p><em><strong>NOTE:</strong> In this section, the <code>application/x-www-form-urlencoded</code> and <code>multipart/form-data</code> media types are abbreviated as <code>form-urlencoded</code> and <code>form-data</code>, respectively, for readability.</em></p>
+<p>Percent-encoding is used in URIs and media types that derive their syntax from URIs.
+This process is concerned with three sets of characters, the names of which vary among specifications but are defined as follows for the purposes of this section:</p>
+<ul>
+<li><em>unreserved</em> characters do not need to be percent-encoded; while it is safe to percent-encode them, doing so produces a URI that is <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.2.2">not normalized</a></li>
+<li><em>reserved</em> characters either have special behavior in the URI syntax (such as delimiting components) or are reserved for other specifications that need to define special behavior (e.g. <code>form-urlencoded</code> defines special behavior for <code>=</code>, <code>&amp;</code>, and <code>+</code>)</li>
+<li><em>unsafe</em> characters are known to cause problems when parsing URIs in certain environments</li>
+</ul>
+<p>Unless otherwise specified, this section uses RFC3986’s definition of <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.2">reserved</a> and <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.3">unreserved</a>, and defines the unsafe set as all characters not included in either of those sets.</p>
+<section><h2>Percent-Encoding and <code>form-urlencoded</code></h2>
+<p>Each URI component (such as the query string) considers some of the reserved characters to be unsafe, either because they serve as delimiters between the components (e.g. <code>#</code>), or (in the case of <code>[</code> and <code>]</code>) were historically considered globally unsafe but were later given reserved status for limited purposes.</p>
+<p>Reserved characters with no special meaning defined within a component can be left un-percent encoded.
+However, other specifications can define special meanings, requiring percent-encoding for those characters outside of the additional special meanings.</p>
+<p>The <code>form-urlencoded</code> media type defines special meanings for <code>=</code> and <code>&amp;</code> as delimiters, and <code>+</code> as the replacement for the space character (instead of its percent-encoded form of <code>%20</code>).
+This means that while these three characters are reserved-but-allowed in query strings by RFC3986, they must be percent-encoded in <code>form-urlencoded</code> query strings except when used for their <code>form-urlencoded</code> purposes; see <a href="#usingRFC6570Implementations">Appendix C</a> for an example of handling <code>+</code> in form values.</p>
+</section><section><h2>Percent-Encoding and <code>form-data</code></h2>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7578#section-2">RFC7578 §2</a> suggests RFC3986-based percent-encoding as a mechanism to keep text-based per-part header data such as file names within the ASCII character set.
+This suggestion was not part of older (pre-2015) specifications for <code>form-data</code>, so care must be taken to ensure interoperability.</p>
+<p>The <code>form-data</code> media type allows arbitrary text or binary data in its parts, so percent-encoding is not needed and is likely to cause interoperability problems unless the <code>Content-Type</code> of the part is defined to require it.</p>
+</section><section><h2>Generating and Validating URIs and <code>form-urlencoded</code> Strings</h2>
+<p>URI percent encoding and the <code>form-urlencoded</code> media type have complex specification histories spanning multiple revisions and, in some cases, conflicting claims of ownership by different standards bodies.
+Unfortunately, these specifications each define slightly different percent-encoding rules, which need to be taken into account if the URIs or <code>form-urlencoded</code> message bodies will be subject to strict validation.
+(Note that many URI parsers do not perform validation by default.)</p>
+<p>This specification normatively cites the following relevant standards:</p>
+<table>
+<thead>
+<tr>
+<th>Specification</th>
+<th>Date</th>
+<th>OAS Usage</th>
+<th>Percent-Encoding</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc3986">RFC3986 URI Generic Syntax</a></td>
+<td>01/2005</td>
+<td>URI/URL syntax</td>
+<td>RFC3986</td>
+<td>obsoletes RFC1738, RFC2396</td>
+</tr>
+<tr>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc6570">RFC6570 URI Template</a></td>
+<td>03/2012</td>
+<td>style-based serialization</td>
+<td>RFC3986</td>
+<td>does not use <code>+</code> for <code>form‑urlencoded</code></td>
+</tr>
+<tr>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc1866#section-8.2.1">RFC1866 §8.2.1 form‑urlencoded</a></td>
+<td>11/1995</td>
+<td>content-based serialization</td>
+<td>RFC1738</td>
+<td>obsoleted by <a href="https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">HTML 4.01 §17.13.4.1</a>, <a href="https://url.spec.whatwg.org/#urlencoded-serializing">WHATWG URL §5</a></td>
+</tr>
+</tbody>
+</table>
+<p>Style-based serialization is used in the <a href="#parameterObject">Parameter Object</a> when <code>schema</code> is present, and in the <a href="#encodingObject">Encoding Object</a> when at least one of <code>style</code>, <code>explode</code>, or <code>allowReserved</code> is present.
+See <a href="#usingRFC6570Implementations">Appendix C</a> for more details of RFC6570’s two different approaches to percent-encoding, including an example involving <code>+</code>.</p>
+<p>Content-based serialization is defined by the <a href="#mediaTypeObject">Media Type Object</a>, and used with the <a href="#parameterObject">Parameter Object</a> when the <code>content</code> field is present, and with the <a href="#encodingObject">Encoding Object</a> based on the <code>contentType</code> field when the style fields listed in the previous section are absent.
+Each part is encoded based on the media type (e.g. <code>text/plain</code> or <code>application/json</code>), and must then be percent-encoded for use in a <code>form-urlencoded</code> string.</p>
+<p>Note that content-based serialization for <code>form-data</code> does not expect or require percent-encoding in the data, only in per-part header values.</p>
+<section><h3>Interoperability with Historical Specifications</h3>
+<p>In most cases, generating query strings in strict compliance with RFC3986 is sufficient to pass validation (including JSON Schema’s <code>format: uri</code> and <code>format: uri-reference</code>), but some <code>form-urlencoded</code> implementations still expect the slightly more restrictive RFC1738 rules to be used.</p>
+<p>Since all RFC1738-compliant URIs are compliant with RFC3986, applications needing to ensure historical interoperability SHOULD use RFC1738’s rules.</p>
+</section><section><h3>Interoperability with Web Browser Environments</h3>
+<p>WHATWG is a <a href="https://whatwg.org/faq#what-is-the-whatwg-working-on">web browser-oriented</a> standards group that has defined a “URL Living Standard” for parsing and serializing URLs in a browser context, including parsing and serializing <code>form-urlencoded</code> data.
+WHATWG’s percent-encoding rules for query strings are different depending on whether the query string is <a href="https://url.spec.whatwg.org/#application-x-www-form-urlencoded-percent-encode-set">being treated as <code>form-urlencoded</code></a> (where it requires more percent-encoding than RFC1738) or <a href="https://url.spec.whatwg.org/#query-percent-encode-set">as part of the generic syntax</a>, where it allows characters that RFC3986 forbids.</p>
+<p>Implementations needing maximum compatibility with web browsers SHOULD use WHATWG’s <code>form-urlencoded</code> percent-encoding rules.
+However, they SHOULD NOT rely on WHATWG’s less stringent generic query string rules, as the resulting URLs would fail RFC3986 validation, including JSON Schema’s <code>format: uri</code> and <code>format: uri-reference</code>.</p>
+</section></section><section><h2>Decoding URIs and <code>form-urlencoded</code> Strings</h2>
+<p>The percent-decoding algorithm does not care which characters were or were not percent-decoded, which means that URIs percent-encoded according to any specification will be decoded correctly.</p>
+<p>Similarly, all <code>form-urlencoded</code> decoding algorithms simply add <code>+</code>-for-space handling to the percent-decoding algorithm, and will work regardless of the encoding specification used.</p>
+<p>However, care must be taken to use <code>form-urlencoded</code> decoding if <code>+</code> represents a space, and to use regular percent-decoding if <code>+</code> represents itself as a literal value.</p>
+</section><section><h2>Percent-Encoding and Illegal or Reserved Delimiters</h2>
+<p>The <code>[</code> and <code>]</code>, <code>|</code>, and space characters, which are used as delimiters for the <code>deepObject</code>, <code>pipeDelimited</code>, and <code>spaceDelimited</code> styles, respectively, all MUST be percent-encoded to comply with RFC3986.
+This requires users to pre-encode the character(s) in some other way in parameter names and values to distinguish them from the delimiter usage when using one of these styles.</p>
+<p>The space character is always illegal and encoded in some way by all implementations of all versions of the relevant standards.
+While one could use the <code>form-urlencoded</code> convention of <code>+</code> to distinguish spaces in parameter names and values from <code>spaceDelimited</code> delimiters encoded as <code>%20</code>, the specifications define the decoding as a single pass, making it impossible to distinguish the different usages in the decoded result.</p>
+<p>Some environments use <code>[</code>, <code>]</code>, and possibly <code>|</code> unencoded in query strings without apparent difficulties, and WHATWG’s generic query string rules do not require percent-encoding them.
+Code that relies on leaving these delimiters unencoded, while using regular percent-encoding for them within names and values, is not guaranteed to be interoperable across all implementations.</p>
+<p>For maximum interoperability, it is RECOMMENDED to either define and document an additional escape convention while percent-encoding the delimiters for these styles, or to avoid these styles entirely.
+The exact method of additional encoding/escaping is left to the API designer, and is expected to be performed before serialization and encoding described in this specification, and reversed after this specification’s encoding and serialization steps are reversed.
+This keeps it outside of the processes governed by this specification.</p>
 

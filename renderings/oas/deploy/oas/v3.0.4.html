@@ -13,7 +13,7 @@
 <p>This document is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0.html">The Apache License, Version 2.0</a>.</p>
 </section></section></section><section><h1>Introduction</h1>
 <p>The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.</p>
-<p>An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.</p>
+<p>An OpenAPI description can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.</p>
 <p>For examples of OpenAPI usage and additional documentation, please visit <a href="https://learn.openapis.org/">learn.openapis.org</a>.</p>
 <p>For extension registries and other specifications published by the OpenAPI Initiative, please visit <a href="https://spec.openapis.org/">spec.openapis.org</a></p>
 <!-- /TOC -->
@@ -58,9 +58,9 @@ Unlike undefined behavior, it is safe to rely on implementation-defined behavior
 <section><h2>Versions</h2>
 <p>The OpenAPI Specification is versioned using a <code>major</code>.<code>minor</code>.<code>patch</code> versioning scheme. The <code>major</code>.<code>minor</code> portion of the version string (for example <code>3.1</code>) SHALL designate the OAS feature set. <em><code>.patch</code></em> versions address errors in, or provide clarifications to, this document, not the feature set. Tooling which supports OAS 3.1 SHOULD be compatible with all OAS 3.1.* versions. The patch version SHOULD NOT be considered by tooling, making no distinction between <code>3.1.0</code> and <code>3.1.1</code> for example.</p>
 <p>Occasionally, non-backwards compatible changes may be made in <code>minor</code> versions of the OAS where impact is believed to be low relative to the benefit provided.</p>
-<p>An OpenAPI document compatible with OAS 3.*.* contains a required <a href="#oasVersion"><code>openapi</code></a> field which designates the version of the OAS that it uses.</p>
+<p>An OpenAPI description document compatible with OAS 3.*.* contains a required <a href="#oasVersion"><code>openapi</code></a> field which designates the version of the OAS that it uses.</p>
 </section><section><h2>Format</h2>
-<p>An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON object, which may be represented either in JSON or YAML format.</p>
+<p>An OpenAPI description document that conforms to the OpenAPI Specification is itself a JSON object, which may be represented either in JSON or YAML format.</p>
 <p>For example, if a field has an array value, the JSON array representation will be used:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-punctuation">{</span>
@@ -76,7 +76,7 @@ This includes all fields that are used as keys in a map, except where explicitly
 <li>Tags MUST be limited to those allowed by <a href="https://yaml.org/spec/1.2/spec.html#id2803231">YAML’s JSON schema ruleset</a>, which defines a subset of the YAML syntax and is unrelated to <a href="https://tools.ietf.org/html/draft-wright-json-schema-00">JSON Schema</a>.</li>
 <li>Keys used in YAML maps MUST be limited to a scalar string, as defined by the <a href="https://yaml.org/spec/1.2/spec.html#id2802346">YAML Failsafe schema ruleset</a>.</li>
 </ul>
-<p><strong>Note:</strong> While APIs may be defined by OpenAPI documents in either YAML or JSON format, the API request and response bodies and other content are not required to be JSON or YAML.</p>
+<p><strong>Note:</strong> While APIs may be described by OpenAPI documents in either YAML or JSON format, the API request and response bodies and other content are not required to be JSON or YAML.</p>
 <p><a id="documentStructure"></a></section><section><h2><span>OpenAPI Description Structure</span></h2></p>
 <p>An OpenAPI Description (OAD) MAY be made up of a single document or be divided into multiple, connected parts at the discretion of the author. In the latter case, <a href="#referenceObject">Reference Object</a> and <a href="#pathItemObject">Path Item Object</a> <code>$ref</code> keywords, as well as the <a href="#linkObject">Link Object</a> <code>operationRef</code> keyword, are used.</p>
 <p>Any document consisting entirely of an OpenAPI Object is known as a <strong>complete OpenAPI document</strong>.
@@ -1302,7 +1302,6 @@ The path itself is still exposed to the documentation viewer but they will not k
 <p>The rules for serialization of the parameter are specified in one of two ways.
 Parameter Objects MUST include either a <code>content</code> field or a <code>schema</code> field, but not both.
 See <a href="#dataTypeConversion">Appendix B</a> for a discussion of converting values of various types to string representations.</p>
-<p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 <section><h5>Common Fixed Fields</h5>
 <p>These fields MAY be used with either <code>content</code> or <code>schema</code>.</p>
 <table>
@@ -1346,6 +1345,7 @@ See <a href="#dataTypeConversion">Appendix B</a> for a discussion of converting 
 </tr>
 </tbody>
 </table>
+<p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 <p>Note that while <code>&quot;Cookie&quot;</code> as a <code>name</code> is not forbidden with <code>in: header</code>, the effect of defining a cookie parameter that way is undefined; use <code>in: cookie</code> instead.</p>
 </section><section><h5>Fixed Fields for use with <code>schema</code></h5>
 <p>For simpler scenarios, a <a href="#parameterSchema"><code>schema</code></a> and <a href="#parameterStyle"><code>style</code></a> can describe the structure and syntax of the parameter.
@@ -1549,26 +1549,26 @@ Using <code>content</code> with a <code>text/plain</code> media type is RECOMMEN
 <tr>
 <td>form</td>
 <td>false</td>
-<td>?color=</td>
-<td>?color=blue</td>
-<td>?color=blue,black,brown</td>
-<td>?color=R,100,G,200,B,150</td>
+<td><span style="white-space: nowrap;">?color=</span></td>
+<td><span style="white-space: nowrap;">?color=blue</span></td>
+<td><span style="white-space: nowrap;">?color=blue,black,brown</span></td>
+<td><span style="white-space: nowrap;">?color=R,100,G,200,B,150</span></td>
 </tr>
 <tr>
 <td>form</td>
 <td>true</td>
-<td>?color=</td>
-<td>?color=blue</td>
-<td>?color=blue&amp;color=black&amp;color=brown</td>
-<td>?R=100&amp;G=200&amp;B=150</td>
+<td><span style="white-space: nowrap;">?color=</span></td>
+<td><span style="white-space: nowrap;">?color=blue</span></td>
+<td><span style="white-space: nowrap;">?color=blue&amp;color=black&amp;color=brown</span></td>
+<td><span style="white-space: nowrap;">?R=100&amp;G=200&amp;B=150</span></td>
 </tr>
 <tr>
-<td>spaceDelimited</td>
+<td>spaceDelimited</span></td>
 <td>false</td>
 <td><em>n/a</em></td>
 <td><em>n/a</em></td>
-<td>?color=blue%20black%20brown</td>
-<td>?color=R%20100%20G%20200%20B%20150</td>
+<td><span style="white-space: nowrap;">?color=blue%20black%20brown</span></td>
+<td><span style="white-space: nowrap;">?color=R%20100%20G%20200%20B%20150</span></td>
 </tr>
 <tr>
 <td>spaceDelimited</td>
@@ -1583,8 +1583,8 @@ Using <code>content</code> with a <code>text/plain</code> media type is RECOMMEN
 <td>false</td>
 <td><em>n/a</em></td>
 <td><em>n/a</em></td>
-<td>?color=blue%7Cblack%7Cbrown</td>
-<td>?color=R%7C100%7CG%7C200%7CB%7C150</td>
+<td><span style="white-space: nowrap;">?color=blue%7Cblack%7Cbrown</span></td>
+<td><span style="white-space: nowrap;">?color=R%7C100%7CG%7C200%7CB%7C150</span></td>
 </tr>
 <tr>
 <td>pipeDelimited</td>
@@ -1608,7 +1608,7 @@ Using <code>content</code> with a <code>text/plain</code> media type is RECOMMEN
 <td><em>n/a</em></td>
 <td><em>n/a</em></td>
 <td><em>n/a</em></td>
-<td>?color%5BR%5D=100&amp;color%5BG%5D=200&amp;color%5BB%5D=150</td>
+<td><span style="white-space: nowrap;">?color%5BR%5D=100&amp;color%5BG%5D=200&amp;color%5BB%5D=150</span></td>
 </tr>
 </tbody>
 </table>
@@ -2129,12 +2129,12 @@ In both cases, their order is implementation-defined.</p>
 <tbody>
 <tr>
 <td><code>string</code></td>
-<td><code>binary</code></td>
+<td><code>binary</code> <em>or</em> <code>byte</code></td>
 <td><code>application/octet-stream</code></td>
 </tr>
 <tr>
 <td><code>string</code></td>
-<td><em>none, or any except <code>binary</code></em></td>
+<td><em>none, or any except <code>binary</code> or <code>byte</code></em></td>
 <td><code>text/plain</code></td>
 </tr>
 <tr>
@@ -2800,7 +2800,7 @@ The presence of a link does not guarantee the caller’s ability to successfully
 <tr>
 <td><a id="linkOperationRef"> </a>operationRef</td>
 <td style="text-align:center"><code>string</code></td>
-<td>A relative or absolute URI reference to an OAS operation. This field is mutually exclusive of the <code>operationId</code> field, and MUST point to an <a href="#operationObject">Operation Object</a>. Relative <code>operationRef</code> values MAY be used to locate an existing <a href="#operationObject">Operation Object</a> in the OpenAPI definition.</td>
+<td>A relative or absolute URI reference to an OAS operation. This field is mutually exclusive of the <code>operationId</code> field, and MUST point to an <a href="#operationObject">Operation Object</a>. Relative <code>operationRef</code> values MAY be used to locate an existing <a href="#operationObject">Operation Object</a> in the OpenAPI description.</td>
 </tr>
 <tr>
 <td><a id="linkOperationId"> </a>operationId</td>
@@ -2831,9 +2831,9 @@ The presence of a link does not guarantee the caller’s ability to successfully
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 <p>A linked operation MUST be identified using either an <code>operationRef</code> or <code>operationId</code>.
-In the case of an <code>operationId</code>, it MUST be unique and resolved in the scope of the OAS document.
+In the case of an <code>operationId</code>, it MUST be unique and resolved in the scope of the OpenAPI description.
 Because of the potential for name clashes, the <code>operationRef</code> syntax is preferred
-for specifications with external references.</p>
+for multi-document OpenAPI descriptions.</p>
 <p>Note that it is not possible to provide a constant value to <code>parameters</code> that matches the syntax of a runtime expression.
 It is possible to have ambiguous parameter names, e.g. <code>name: id, in: path</code> and <code>name: path.id, in: query</code>; this is NOT RECOMMENDED and the behavior is implementation-defined, however implementations SHOULD prefer the qualified interpretation (<code>path.id</code> as a path parameter), as the names can always be qualified to disambiguate them (e.g. using <code>query.path.id</code> for the query paramter).</p>
 </section><section><h4>Examples</h4>
@@ -3029,6 +3029,7 @@ Expressions can be embedded into string values by surrounding the expression wit
 </tr>
 </tbody>
 </table>
+<p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 </section><section><h4>Fixed Fields for use with <code>schema</code></h4>
 <p>For simpler scenarios, a <a href="#headerSchema"><code>schema</code></a> and <a href="#headerStyle"><code>style</code></a> can describe the structure and syntax of the header.
 When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example MUST follow the prescribed serialization strategy for the header.</p>
@@ -3702,7 +3703,7 @@ However, the exact nature of such conversions are implementation-defined.</p>
   <span class="hljs-attr">discriminator:</span>
     <span class="hljs-attr">propertyName:</span> <span class="hljs-string">petType</span>
 </code></pre>
-<p>The expectation now is that a property with name <code>petType</code> <em>MUST</em> be present in the response payload, and the value will correspond to the name of a schema defined in the OAS document.  Thus the response payload:</p>
+<p>The expectation now is that a property with name <code>petType</code> <em>MUST</em> be present in the response payload, and the value will correspond to the name of a schema defined in the OpenAPI description.  Thus the response payload:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-punctuation">{</span>
   <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">12345</span><span class="hljs-punctuation">,</span>
@@ -4526,7 +4527,7 @@ This enables support for scenarios where multiple query parameters or HTTP heade
 <tr>
 <td><a id="infoExtensions"> </a>^x-</td>
 <td style="text-align:center">Any</td>
-<td>Allows extensions to the OpenAPI Schema. The field name MUST begin with <code>x-</code>, for example, <code>x-internal-id</code>. The value can be any valid JSON format value (<code>null</code>, a primitive, an array or an object.)</td>
+<td>Allows extensions to the OpenAPI Schema. The field name MUST begin with <code>x-</code>, for example, <code>x-internal-id</code>. The value can be any valid JSON value (<code>null</code>, a primitive, an array or an object.)</td>
 </tr>
 </tbody>
 </table>
@@ -4545,7 +4546,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 </ol>
 </section></section><section><h1>Security Considerations</h1>
 <section><h2>OpenAPI Document Formats</h2>
-<p>OpenAPI documents use JSON, YAML, and JSON Schema, and therefore share their security considerations:</p>
+<p>OpenAPI description documents use JSON, YAML, and JSON Schema, and therefore share their security considerations:</p>
 <ul>
 <li><a href="https://www.iana.org/assignments/media-types/application/json">JSON</a></li>
 <li><a href="https://www.iana.org/assignments/media-types/application/yaml">YAML</a></li>
@@ -4553,11 +4554,11 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <li><a href="https://json-schema.org/draft/2020-12/json-schema-validation#name-security-considerations">JSON Schema Validation</a></li>
 </ul>
 </section><section><h2>Tooling and Usage Scenarios</h2>
-<p>In addition, OpenAPI documents are processed by a wide variety of tooling for numerous different purposes, such as client code generation, documentation generation, server side routing, and API testing. OpenAPI document authors must consider the risks of the scenarios where the OpenAPI document may be used.</p>
+<p>In addition, OpenAPI description documents are processed by a wide variety of tooling for numerous different purposes, such as client code generation, documentation generation, server side routing, and API testing. OpenAPI description authors must consider the risks of the scenarios where the OpenAPI description may be used.</p>
 </section><section><h2>Security Schemes</h2>
-<p>An OpenAPI document describes the security schemes used to protect the resources it defines. The security schemes available offer varying degrees of protection. Factors such as the sensitivity of the data and the potential impact of a security breach should guide the selection of security schemes for the API resources. Some security schemes, such as basic auth and OAuth Implicit flow, are supported for compatibility with existing APIs. However, their inclusion in OpenAPI does not constitute an endorsement of their use, particularly for highly sensitive data or operations.</p>
+<p>An OpenAPI description describes the security schemes used to protect the resources it defines. The security schemes available offer varying degrees of protection. Factors such as the sensitivity of the data and the potential impact of a security breach should guide the selection of security schemes for the API resources. Some security schemes, such as basic auth and OAuth Implicit flow, are supported for compatibility with existing APIs. However, their inclusion in OpenAPI does not constitute an endorsement of their use, particularly for highly sensitive data or operations.</p>
 </section><section><h2>Handling External Resources</h2>
-<p>OpenAPI documents may contain references to external resources that may be dereferenced automatically by consuming tools. External resources may be hosted on different domains that may be untrusted. References in an OpenAPI document, or across OpenAPI documents may cause a cycle. Tooling must detect and handle cycles to prevent resource exhaustion.</p>
+<p>OpenAPI description documents may contain references to external resources that may be dereferenced automatically by consuming tools. External resources may be hosted on different domains that may be untrusted. References in an OpenAPI document, or across OpenAPI documents within a multi-document OpenAPI description, may cause a cycle. Tooling must detect and handle cycles to prevent resource exhaustion.</p>
 </section><section><h2>Markdown and HTML Sanitization</h2>
 <p>Certain properties allow the use of Markdown which can contain HTML including script. It is the responsibility of tooling to appropriately sanitize the Markdown.</p>
 <p><a id="revisionHistory"></a></section></section><section class="appendix"><h1><span>Appendix A: Revision History</span></h1></p>
@@ -4822,7 +4823,7 @@ To do that, we’ll add <code>allowReserved: true</code> to <code>formulas</code
 </code></pre>
 <p>We can’t combine the <code>?</code> and <code>+</code> RFC6570 prefixes, and there’s no way with RFC6570 to replace the <code>,</code> separator with a space character.
 So we need to restructure the data to fit a manually constructed URI Template that passes all of the pieces through the right sort of expansion.</p>
-<p>Here is one such template, using a made-up convention of <code>words.0</code> for the first entry in the words value, <code>words.1</code> for the second.</p>
+<p>Here is one such template, using a made-up convention of <code>words.0</code> for the first entry in the words value, <code>words.1</code> for the second, and <code>words.2</code> for the third:</p>
 <pre class="highlight urlencoded"><code>
 ?a={+a}&amp;b={+b}&amp;c={+c}&amp;words={words.0} {words.1} {words.2}
 </code></pre>
@@ -4831,7 +4832,7 @@ Since the <code>.</code> usage is not automatic, we’ll need to construct an ap
 <p>We’ll also need to pre-process the values for <code>formulas</code> because while <code>/</code> and most other reserved characters are allowed in the query string by RFC3986, <code>[</code>, <code>]</code>, and <code>#</code> <a href="https://datatracker.ietf.org/doc/html/rfc3986#appendix-A">are not</a>, and <code>&amp;</code>, <code>=</code>, and <code>+</code> all have <a href="https://www.rfc-editor.org/rfc/rfc1866#section-8.2.1">special behavior</a> in the <code>application/x-www-form-urlencoded</code> format, which is what we are using in the query string.</p>
 <p>Setting <code>allowReserved: true</code> does <em>not</em> make reserved characters that are not allowed in URIs allowed, it just allows them to be <em>passed through expansion unchanged.</em>
 Therefore, any tooling still needs to percent-encode those characters because reserved expansion will not do it, but it <em>will</em> leave the percent-encoded triples unchanged.
-See also [Appendix E](#to indicate name hierarchy in substructures) for further guidance on percent-encoding and form media types, including guidance on handling the delimiter characters for <code>spaceDelimited</code>, <code>pipeDelimited</code>, and <code>deepObject</code> in parameter names and values.</p>
+See also <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for further guidance on percent-encoding and form media types, including guidance on handling the delimiter characters for <code>spaceDelimited</code>, <code>pipeDelimited</code>, and <code>deepObject</code> in parameter names and values.</p>
 <p>So here is our data structure that arranges the names and values to suit the template above, where values for <code>formulas</code> have <code>[]#&amp;=+</code> pre-percent encoded (although only <code>+</code> appears in this example):</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">a:</span> <span class="hljs-string">x%2By</span>
