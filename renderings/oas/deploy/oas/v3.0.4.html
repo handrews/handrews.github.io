@@ -15,11 +15,15 @@
 <p>The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.</p>
 <p>An OpenAPI description can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.</p>
 <p>For examples of OpenAPI usage and additional documentation, please visit <a href="https://learn.openapis.org/">learn.openapis.org</a>.</p>
-<p>For extension registries and other specifications published by the OpenAPI Initiative, please visit <a href="https://spec.openapis.org/">spec.openapis.org</a></p>
+<p>For extension registries and other specifications published by the OpenAPI Initiative, as well as the authoritative rendering of this specification, please visit <a href="https://spec.openapis.org/">spec.openapis.org</a>.</p>
 <!-- /TOC -->
 </section><section><h1><dfn>Definitions</dfn></h1>
 <p><a id="oasDocument"></a><section><h4><span><dfn>OpenAPI Description</dfn></span></h4></p>
 <p>An OpenAPI Description (OAD) formally describes the surface of an API and its semantics. It is composed of an <a href="#documentStructure">entry document</a> and any/all of its referenced documents. An OAD uses and conforms to the OpenAPI Specification.</p>
+<p><a id="definitionsSchema"></a></section><section><h4><span><dfn>Schema</dfn></span></h4></p>
+<p>A “schema” is a formal description of syntax and structure.
+This document serves as the <a href="#schema">schema</a> for the OpenAPI Specification format; a non-authoritative JSON Schema based on this document is also provided on <a href="https://spec.openapis.org">spec.openapis.org</a> for informational purposes.
+This specification also <em>uses</em> schemas in the form of the <a href="#schemaObject">Schema Object</a>.</p>
 <p><a id="pathTemplating"></a></section><section><h4><span><dfn>Path Templating</dfn></span></h4></p>
 <p>Path templating refers to the usage of template expressions, delimited by curly braces ({}), to mark a section of a URL path as replaceable using path parameters.</p>
 <p>Each template expression in the path MUST correspond to a path parameter that is included in the <a href="#path-item-object">Path Item</a> itself and/or in each of the Path Item’s <a href="#operation-object">Operations</a>.</p>
@@ -69,7 +73,7 @@ Unlike undefined behavior, it is safe to rely on implementation-defined behavior
 </code></pre>
 <p>All field names in the specification are <strong>case sensitive</strong>.
 This includes all fields that are used as keys in a map, except where explicitly noted that keys are <strong>case insensitive</strong>.</p>
-<p>The schema exposes two types of fields: Fixed fields, which have a declared name, and Patterned fields, which declare a regex pattern for the field name.</p>
+<p>The <a href="#schema">schema</a> exposes two types of fields: Fixed fields, which have a declared name, and Patterned fields, which declare a regex pattern for the field name.</p>
 <p>Patterned fields MUST have unique names within the containing object.</p>
 <p>In order to preserve the ability to round-trip between YAML and JSON formats, YAML version <a href="https://yaml.org/spec/1.2/spec.html">1.2</a> is RECOMMENDED along with some additional constraints:</p>
 <ul>
@@ -329,7 +333,7 @@ The metadata MAY be used by the clients if needed, and MAY be presented in editi
 <tr>
 <td><a id="infoVersion"> </a>version</td>
 <td style="text-align:center"><code>string</code></td>
-<td><strong>REQUIRED</strong>. The version of the OpenAPI document (which is distinct from the <a href="#oasVersion">OpenAPI Specification version</a> or the version of API being described).</td>
+<td><strong>REQUIRED</strong>. The version of the OpenAPI document (which is distinct from the <a href="#oasVersion">OpenAPI Specification version</a> or the version of the API being described).</td>
 </tr>
 </tbody>
 </table>
@@ -2000,7 +2004,7 @@ See <a href="#working-with-examples">Working With Examples</a> for further guida
 <p><a id="encodingObject"></a></section></section><section><h3><span>Encoding Object</span></h3></p>
 <p>A single encoding definition applied to a single schema property.
 See <a href="#dataTypeConversion">Appendix B</a> for a discussion of converting values of various types to string representations.</p>
-<p>Properties are correlated with <code>multipart</code> parts using the <code>name</code> parameter to <code>Content-Disposition: form-data</code>, and with <code>application/x-www-form-urlencoded</code> using the query string paramter names.
+<p>Properties are correlated with <code>multipart</code> parts using the <code>name</code> parameter to <code>Content-Disposition: form-data</code>, and with <code>application/x-www-form-urlencoded</code> using the query string parameter names.
 In both cases, their order is implementation-defined.</p>
 <p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
 <section><h4>Fixed Fields</h4>
@@ -2081,7 +2085,7 @@ See <a href="#dataTypeConversion">Appendix B</a> for a discussion of data type c
 <tr>
 <td><a id="encodingStyle"> </a>style</td>
 <td style="text-align:center"><code>string</code></td>
-<td>Describes how a specific property value will be serialized depending on its type.  See <a href="#parameterObject">Parameter Object</a> for details on the <a href="#parameterStyle"><code>style</code></a> property. The behavior follows the same values as <code>query</code> parameters, including default values. Note that the initial <code>?</code> using in query strings is not used in <code>applcation/x-www-form-urlencoded</code> message bodies, and MUST be removed (if using an RFC6570 implementation) or simply not added (if constructing the string manually). This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.</td>
+<td>Describes how a specific property value will be serialized depending on its type.  See <a href="#parameterObject">Parameter Object</a> for details on the <a href="#parameterStyle"><code>style</code></a> property. The behavior follows the same values as <code>query</code> parameters, including default values. Note that the initial <code>?</code> used in query strings is not used in <code>application/x-www-form-urlencoded</code> message bodies, and MUST be removed (if using an RFC6570 implementation) or simply not added (if constructing the string manually). This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code>.</td>
 </tr>
 <tr>
 <td><a id="encodingExplode"> </a>explode</td>
@@ -2171,8 +2175,11 @@ id=%22f81d4fae-7dec-11d0-a765-00a0c91e6bf6%22
 <p>Given a name of <code>example</code> and a solid red 2x2-pixel PNG for <code>icon</code>, this
 would produce a request body of:</p>
 <pre class="highlight urlencoded"><code>
-name=example&amp;icon=iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVQIW2P8z8AARAwMjDAGACwBA/+8RVWvAAAAAElFTk
+name=example&amp;icon=iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAABGdBTUEAALGPC%2FxhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAqADAAQAAAABAAAAAgAAAADO0J6QAAAAEElEQVQIHWP8zwACTGCSAQANHQEDqtPptQAAAABJRU5ErkJggg%3D%3D
 </code></pre>
+<p>Note that this base64-encoded value had to be futher percent-encoded, replacing <code>/</code> with <code>%2F</code> and each of two final <code>=</code> padding characters with <code>%3D</code>.
+Some base64-decoding implementations may be able to use the string without the padding per <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-3.2">RFC4648 §3.2</a>.
+However, this is not guaranteed and the value would still need to be percent-decoded due to the <code>%2F</code>.</p>
 </section></section><section><h4>Encoding <code>multipart</code> Media Types</h4>
 <p>It is common to use <code>multipart/form-data</code> as a <code>Content-Type</code> when transferring forms as request bodies.  In contrast to 2.0, a <code>schema</code> is REQUIRED to define the input parameters to the operation when using <code>multipart</code> content.  This supports complex structures as well as supporting mechanisms for multiple file uploads.</p>
 <p>The <code>form-data</code> disposition and its <code>name</code> parameter are mandatory for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.2">RFC7578 §4.2</a>).
@@ -2184,6 +2191,7 @@ It is not currently possible to correlate schema properties with unnamed, ordere
 <p>Note also that <code>Content-Transfer-Encoding</code> is deprecated for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.7">RFC7578 §4.7</a>) where binary data is supported, as it is in HTTP.
 Using <code>format: byte</code> for a multipart field is equivalent to setting <code>Content-Transfer-Encoding: base64</code>.
 If <code>format: byte</code> is used along with setting a different <code>Content-Transfer-Encoding</code> value with the <code>headers</code> field, the result is undefined.</p>
+<p>Per the JSON Schema specification, <code>contentMediaType</code> without <code>contentEncoding</code> present is treated as if <code>contentEncoding: identity</code> were present.  While useful for embedding text documents such as <code>text/html</code> into JSON strings, it is not useful for a <code>multipart/form-data</code> part, as it just causes the document to be treated as <code>text/plain</code> instead of its actual media type.  Use the Encoding Object without <code>contentMediaType</code> if no <code>contentEncoding</code> is required.</p>
 <p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
 <section><h5>Example: Basic Multipart Form</h5>
 <p>When the <code>encoding</code> attribute is <em>not</em> used, the encoding is determined by the Encoding Object’s defaults:</p>
@@ -2838,7 +2846,7 @@ In the case of an <code>operationId</code>, it MUST be unique and resolved in th
 Because of the potential for name clashes, the <code>operationRef</code> syntax is preferred
 for multi-document OpenAPI descriptions.</p>
 <p>Note that it is not possible to provide a constant value to <code>parameters</code> that matches the syntax of a runtime expression.
-It is possible to have ambiguous parameter names, e.g. <code>name: id, in: path</code> and <code>name: path.id, in: query</code>; this is NOT RECOMMENDED and the behavior is implementation-defined, however implementations SHOULD prefer the qualified interpretation (<code>path.id</code> as a path parameter), as the names can always be qualified to disambiguate them (e.g. using <code>query.path.id</code> for the query paramter).</p>
+It is possible to have ambiguous parameter names, e.g. <code>name: id, in: path</code> and <code>name: path.id, in: query</code>; this is NOT RECOMMENDED and the behavior is implementation-defined, however implementations SHOULD prefer the qualified interpretation (<code>path.id</code> as a path parameter), as the names can always be qualified to disambiguate them (e.g. using <code>query.path.id</code> for the query parameter).</p>
 </section><section><h4>Examples</h4>
 <p>Computing a link from a request operation where the <code>$request.path.id</code> is used to pass a request parameter to the linked operation.</p>
 <pre class="nohighlight"><code>

@@ -13,13 +13,17 @@
 <p>This document is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0.html">The Apache License, Version 2.0</a>.</p>
 </section></section></section><section><h1>Introduction</h1>
 <p>The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to HTTP APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.</p>
-<p>An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.</p>
+<p>An OpenAPI description can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.</p>
 <p>For examples of OpenAPI usage and additional documentation, please visit <a href="https://learn.openapis.org/">learn.openapis.org</a>.</p>
-<p>For extension registries and other specifications published by the OpenAPI Initiative, please visit <a href="https://spec.openapis.org/">spec.openapis.org</a></p>
+<p>For extension registries and other specifications published by the OpenAPI Initiative, as well as the authoritative rendering of this specification, please visit <a href="https://spec.openapis.org/">spec.openapis.org</a>.</p>
 <!-- /TOC -->
 </section><section><h1><dfn>Definitions</dfn></h1>
 <p><a id="oasDocument"></a><section><h4><span><dfn>OpenAPI Description</dfn></span></h4></p>
 <p>An OpenAPI Description (OAD) formally describes the surface of an API and its semantics. It is composed of an <a href="#documentStructure">entry document</a> and any/all of its referenced documents. An OAD uses and conforms to the OpenAPI Specification, and MUST contain at least one <a href="#pathsObject">paths</a> field, <a href="#oasComponents">components</a> field, or <a href="#oasWebhooks">webhooks</a> field.</p>
+<p><a id="definitionsSchema"></a></section><section><h4><span><dfn>Schema</dfn></span></h4></p>
+<p>A “schema” is a formal description of syntax and structure.
+This document serves as the <a href="#schema">schema</a> for the OpenAPI Specification format; a non-authoritative JSON Schema based on this document is also provided on <a href="https://spec.openapis.org">spec.openapis.org</a> for informational purposes.
+This specification also <em>uses</em> schemas in the form of the <a href="#schemaObject">Schema Object</a>.</p>
 <p><a id="pathTemplating"></a></section><section><h4><span><dfn>Path Templating</dfn></span></h4></p>
 <p>Path templating refers to the usage of template expressions, delimited by curly braces (<code>{}</code>), to mark a section of a URL path as replaceable using path parameters.</p>
 <p>Each template expression in the path MUST correspond to a path parameter that is included in the <a href="#path-item-object">Path Item</a> itself and/or in each of the Path Item’s <a href="#operation-object">Operations</a>. An exception is if the path item is empty, for example due to ACL constraints, matching path parameters are not required.</p>
@@ -59,9 +63,9 @@ Unlike undefined behavior, it is safe to rely on implementation-defined behavior
 <section><h2>Versions</h2>
 <p>The OpenAPI Specification is versioned using a <code>major</code>.<code>minor</code>.<code>patch</code> versioning scheme. The <code>major</code>.<code>minor</code> portion of the version string (for example <code>3.1</code>) SHALL designate the OAS feature set. <em><code>.patch</code></em> versions address errors in, or provide clarifications to, this document, not the feature set. Tooling which supports OAS 3.1 SHOULD be compatible with all OAS 3.1.* versions. The patch version SHOULD NOT be considered by tooling, making no distinction between <code>3.1.0</code> and <code>3.1.1</code> for example.</p>
 <p>Occasionally, non-backwards compatible changes may be made in <code>minor</code> versions of the OAS where impact is believed to be low relative to the benefit provided.</p>
-<p>An OpenAPI document compatible with OAS 3.*.* contains a required <a href="#oasVersion"><code>openapi</code></a> field which designates the version of the OAS that it uses.</p>
+<p>An OpenAPI description document compatible with OAS 3.*.* contains a required <a href="#oasVersion"><code>openapi</code></a> field which designates the version of the OAS that it uses.</p>
 </section><section><h2>Format</h2>
-<p>An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON object, which may be represented either in JSON or YAML format.</p>
+<p>An OpenAPI description document that conforms to the OpenAPI Specification is itself a JSON object, which may be represented either in JSON or YAML format.</p>
 <p>For example, if a field has an array value, the JSON array representation will be used:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-punctuation">{</span>
@@ -70,14 +74,14 @@ Unlike undefined behavior, it is safe to rely on implementation-defined behavior
 </code></pre>
 <p>All field names in the specification are <strong>case sensitive</strong>.
 This includes all fields that are used as keys in a map, except where explicitly noted that keys are <strong>case insensitive</strong>.</p>
-<p>The schema exposes two types of fields: Fixed fields, which have a declared name, and Patterned fields, which declare a regex pattern for the field name.</p>
+<p>The <a href="#schema">schema</a> exposes two types of fields: Fixed fields, which have a declared name, and Patterned fields, which declare a regex pattern for the field name.</p>
 <p>Patterned fields MUST have unique names within the containing object.</p>
 <p>In order to preserve the ability to round-trip between YAML and JSON formats, YAML version <a href="https://yaml.org/spec/1.2/spec.html">1.2</a> is RECOMMENDED along with some additional constraints:</p>
 <ul>
-<li>Tags MUST be limited to those allowed by <a href="https://yaml.org/spec/1.2/spec.html#id2803231">YAML’s JSON schema ruleset</a>, which defines a subset of the YAML syntax and is unrelated to <a href="https://tools.ietf.org/html/draft-wright-json-schema-00">JSON Schema</a>.</li>
+<li>Tags MUST be limited to those allowed by <a href="https://yaml.org/spec/1.2/spec.html#id2803231">YAML’s JSON schema ruleset</a>, which defines a subset of the YAML syntax and is unrelated to <a href="https://tools.ietf.org/html/draft-bhutton-json-schema-00">JSON Schema</a>.</li>
 <li>Keys used in YAML maps MUST be limited to a scalar string, as defined by the <a href="https://yaml.org/spec/1.2/spec.html#id2802346">YAML Failsafe schema ruleset</a>.</li>
 </ul>
-<p><strong>Note:</strong> While APIs may be defined by OpenAPI documents in either YAML or JSON format, the API request and response bodies and other content are not required to be JSON or YAML.</p>
+<p><strong>Note:</strong> While APIs may be described by OpenAPI documents in either YAML or JSON format, the API request and response bodies and other content are not required to be JSON or YAML.</p>
 <p><a id="documentStructure"></a></section><section><h2><span>OpenAPI Description Structure</span></h2></p>
 <p>An OpenAPI Description (OAD) MAY be made up of a single document or be divided into multiple, connected parts at the discretion of the author. In the latter case, <a href="#referenceObject">Reference Object</a>, <a href="#pathItemObject">Path Item Object</a> and <a href="#schemaObject">Schema Object</a> <code>$ref</code> keywords, as well as the <a href="#linkObject">Link Object</a> <code>operationRef</code> keyword, are used.</p>
 <p>Any document consisting entirely of an OpenAPI Object is known as a <strong>complete OpenAPI document</strong>.
@@ -411,7 +415,7 @@ The metadata MAY be used by the clients if needed, and MAY be presented in editi
 <tr>
 <td><a id="infoVersion"> </a>version</td>
 <td style="text-align:center"><code>string</code></td>
-<td><strong>REQUIRED</strong>. The version of the OpenAPI document (which is distinct from the <a href="#oasVersion">OpenAPI Specification version</a> or the version of API being described).</td>
+<td><strong>REQUIRED</strong>. The version of the OpenAPI document (which is distinct from the <a href="#oasVersion">OpenAPI Specification version</a> or the version of the API being described).</td>
 </tr>
 </tbody>
 </table>
@@ -1974,7 +1978,7 @@ See <a href="#working-with-examples">Working With Examples</a> for further guida
 <tr>
 <td><a id="mediaTypeSchema"> </a>schema</td>
 <td style="text-align:center"><a href="#schemaObject">Schema Object</a></td>
-<td>The schema defining the content of the request, response, or parameter.</td>
+<td>The schema defining the content of the request, response, parameter, or header.</td>
 </tr>
 <tr>
 <td><a id="mediaTypeExample"> </a>example</td>
@@ -1989,7 +1993,7 @@ See <a href="#working-with-examples">Working With Examples</a> for further guida
 <tr>
 <td><a id="mediaTypeEncoding"> </a>encoding</td>
 <td style="text-align:center">Map[<code>string</code>, <a href="#encodingObject">Encoding Object</a>]</td>
-<td>A map between a property name and its encoding information. The key, being the property name, MUST exist in the schema as a property. The encoding attribute SHALL only apply to <a href="#requestBodyObject">Request Body Objects</a>, and only when the media type is <code>multipart</code> or <code>application/x-www-form-urlencoded</code>.  If no Encoding Object is provided for a property, the behavior is determined by the default values documented for the Encoding Object.</td>
+<td>A map between a property name and information providing more control over the serialization of the value. The key, being the property name, MUST exist in the schema as a property. The encoding attribute SHALL only apply to <a href="#requestBodyObject">Request Body Objects</a>, and only when the media type is <code>multipart</code> or <code>application/x-www-form-urlencoded</code>.  If no Encoding Object is provided for a property, the behavior is determined by the default values documented for the Encoding Object.</td>
 </tr>
 </tbody>
 </table>
@@ -2084,112 +2088,18 @@ See <a href="#working-with-examples">Working With Examples</a> for further guida
     <span class="hljs-attr">image/jpeg:</span> {}
     <span class="hljs-attr">image/png:</span> {}
 </code></pre>
-<p>To upload multiple files, a <code>multipart</code> media type MUST be used:</p>
-<pre class="nohighlight"><code>
-<span class="hljs-attr">requestBody:</span>
-  <span class="hljs-attr">content:</span>
-    <span class="hljs-attr">multipart/form-data:</span>
-      <span class="hljs-attr">schema:</span>
-        <span class="hljs-attr">properties:</span>
-          <span class="hljs-comment"># The property name &#x27;file&#x27; will be used for all files.</span>
-          <span class="hljs-attr">file:</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
-            <span class="hljs-attr">items:</span> {}
-</code></pre>
-<p>As seen in the section on <code>multipart/form-data</code> below, the empty schema for <code>items</code> indicates a media type of <code>application/octet-stream</code>.</p>
+<p>To upload multiple files, a <code>multipart</code> media type MUST be used as shown under <a href="#example-multipart-form-with-multiple-files">Example: Multipart Form with Multiple Files</a>.</p>
 </section><section><h4>Support for x-www-form-urlencoded Request Bodies</h4>
-<p>To submit content using form url encoding via [[!RFC1866]], the following
-definition may be used:</p>
-<pre class="nohighlight"><code>
-<span class="hljs-attr">requestBody:</span>
-  <span class="hljs-attr">content:</span>
-    <span class="hljs-attr">application/x-www-form-urlencoded:</span>
-      <span class="hljs-attr">schema:</span>
-        <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
-        <span class="hljs-attr">properties:</span>
-          <span class="hljs-attr">id:</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
-            <span class="hljs-attr">format:</span> <span class="hljs-string">uuid</span>
-          <span class="hljs-attr">address:</span>
-            <span class="hljs-comment"># complex types are stringified to support RFC 1866</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
-            <span class="hljs-attr">properties:</span> {}
-</code></pre>
-<p>In this example, the contents in the <code>requestBody</code> MUST be encoded per [[!RFC1866]] when passed to the server.  In addition, the <code>address</code> field complex object will be serialized to a string representation prior to encoding.</p>
-<p>When passing complex objects in the <code>application/x-www-form-urlencoded</code> content type, the default serialization strategy of such properties is described in the <a href="#encodingObject">Encoding Object</a>’s <a href="#encodingStyle"><code>style</code></a> property as <code>form</code>.</p>
-<p>With this example, given an <code>id</code> of <code>f81d4fae-7dec-11d0-a765-00a0c91e6bf6</code> and a US-style address (with ZIP+4) as follows:</p>
-<pre class="nohighlight"><code>
-<span class="hljs-punctuation">{</span>
-  <span class="hljs-attr">&quot;streetAddress&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;123 Example Dr.&quot;</span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">&quot;city&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Somewhere&quot;</span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;CA&quot;</span><span class="hljs-punctuation">,</span>
-  <span class="hljs-attr">&quot;zip&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;99999+1234&quot;</span>
-<span class="hljs-punctuation">}</span>
-</code></pre>
-<p>Assuming the most compact representation of the JSON value (with unnecessary whitespace removed), we would expect to see the following request body, where space characters have been replaced with <code>+</code> and <code>+</code>, <code>&quot;</code>, <code>{</code>, and <code>}</code> have been percent-encoded to <code>%2B</code>, <code>%22</code>, <code>%7B</code>, and <code>%7D</code>, respectively:</p>
-<pre class="highlight urlencoded"><code>
-id=f81d4fae-7dec-11d0-a765-00a0c91e6bf6&amp;address=%7B%22streetAddress%22:%22123+Example+Dr.%22,%22city%22:%22Somewhere%22,%22state%22:%22CA%22,%22zip%22:%2299999%2B1234%22%7D
-</code></pre>
-<p>Note that the <code>id</code> keyword is treated as <code>text/plain</code> per the <a href="#encodingObject">Encoding Object</a>’s default behavior, and is serialized as-is.
-If it were treated as <code>application/json</code>, then the serialized value would be a JSON string including quotation marks, which would be percent-encoded as <code>%22</code>.</p>
-<p>Here is the <code>id</code> parameter (without <code>address</code>) serialized as <code>application/json</code> instead of <code>text/plain</code>, and then encoded per RFC1866:</p>
-<pre class="highlight urlencoded"><code>
-id=%22f81d4fae-7dec-11d0-a765-00a0c91e6bf6%22
-</code></pre>
-<p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
+<p>See <a href="#encoding-the-x-www-form-urlencoded-media-type">Encoding the <code>x-www-form-urlencoded</code> Media Type</a> for guidance and examples, both with and without the <code>encoding</code> attribute.</p>
 </section><section><h4>Special Considerations for <code>multipart</code> Content</h4>
-<p>It is common to use <code>multipart/form-data</code> as a <code>Content-Type</code> when transferring request bodies to operations.  In contrast to 2.0, a <code>schema</code> is REQUIRED to define the input parameters to the operation when using <code>multipart</code> content.  This supports complex structures as well as supporting mechanisms for multiple file uploads.</p>
-<p>In a <code>multipart/form-data</code> request body, each schema property, or each element of a schema array property, takes a section in the payload with an internal header as defined by [[!RFC7578]]. The serialization strategy for each property of a <code>multipart/form-data</code> request body can be specified in an associated <a href="#encodingObject"><code>Encoding Object</code></a>.</p>
-<p>When passing in <code>multipart</code> types, boundaries MAY be used to separate sections of the content being transferred – thus, the following default <code>Content-Type</code>s are defined for <code>multipart</code>:</p>
-<ul>
-<li>If the property is a primitive, or an array of primitive values, the default Content-Type is <code>text/plain</code></li>
-<li>If the property is complex, or an array of complex values, the default Content-Type is <code>application/json</code></li>
-<li>If the property is a <code>type: string</code> with a <code>contentEncoding</code>, the default Content-Type is <code>application/octet-stream</code></li>
-</ul>
-<p>Per the JSON Schema specification, <code>contentMediaType</code> without <code>contentEncoding</code> present is treated as if <code>contentEncoding: identity</code> were present.  While useful for embedding text documents such as <code>text/html</code> into JSON strings, it is not useful for a <code>multipart/form-data</code> part, as it just causes the document to be treated as <code>text/plain</code> instead of its actual media type.  Use the Encoding Object without <code>contentMediaType</code> if no <code>contentEncoding</code> is required.</p>
-<p>Note that only <code>multipart/*</code> media types with named parts can be described as shown here.  Note also that while <code>multipart/form-data</code> originally defined a per-part <code>Content-Transfer-Encoding</code> header that could indicate base64 encoding (<code>contentEncoding: base64</code>), it has been deprecated for use with HTTP as of <a href="https://www.rfc-editor.org/rfc/rfc7578#section-4.7">[!RFC7578]</a>.</p>
-<p>Examples:</p>
-<pre class="nohighlight"><code>
-<span class="hljs-attr">requestBody:</span>
-  <span class="hljs-attr">content:</span>
-    <span class="hljs-attr">multipart/form-data:</span>
-      <span class="hljs-attr">schema:</span>
-        <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
-        <span class="hljs-attr">properties:</span>
-          <span class="hljs-attr">id:</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
-            <span class="hljs-attr">format:</span> <span class="hljs-string">uuid</span>
-          <span class="hljs-attr">address:</span>
-            <span class="hljs-comment"># default Content-Type for objects is `application/json`</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
-            <span class="hljs-attr">properties:</span> {}
-          <span class="hljs-attr">profileImage:</span>
-            <span class="hljs-comment"># default Content-Type for properties with type string and a contentEncoding</span>
-            <span class="hljs-comment"># is `application/octet-stream`, so `image/png` must be set using contentMediaType</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
-            <span class="hljs-attr">contentMediaType:</span> <span class="hljs-string">image/png</span>
-            <span class="hljs-attr">contentEncoding:</span> <span class="hljs-string">base64</span>
-          <span class="hljs-attr">children:</span>
-            <span class="hljs-comment"># default Content-Type for arrays is based on the items subschema type, which</span>
-            <span class="hljs-comment"># is a string, producing a default of `text/plain`</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
-            <span class="hljs-attr">items:</span>
-              <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
-          <span class="hljs-attr">addresses:</span>
-            <span class="hljs-comment"># default Content-Type for arrays is based on the items subschema type, which</span>
-            <span class="hljs-comment"># is an object, producing a default of `application/json`</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
-            <span class="hljs-attr">items:</span>
-              <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
-              <span class="hljs-string">$ref:</span> <span class="hljs-string">&#x27;#/components/schemas/Address&#x27;</span>
-</code></pre>
-<p>An <code>encoding</code> attribute is introduced to give you control over the serialization of parts of <code>multipart</code> request bodies.  This attribute is <em>only</em> applicable to request bodies, and <em>only</em> for <code>multipart</code> and <code>application/x-www-form-urlencoded</code> media types.</p>
+<p>See <a href="#encoding-multipart-media-types">Encoding <code>multipart</code> Media Types</a> for further guidance and examples, both with and without the <code>encoding</code> attribute.</p>
 <p><a id="encodingObject"></a></section></section><section><h3><span>Encoding Object</span></h3></p>
 <p>A single encoding definition applied to a single schema property.
 See <a href="#dataTypeConversion">Appendix B</a> for a discussion of converting values of various types to string representations.</p>
-<p>Properties are correlated with <code>multipart</code> parts using the <code>name</code> parameter to <code>Content-Disposition: form-data</code>, and with <code>application/x-www-form-urlencoded</code> using the query string paramter names.
+<p>Properties are correlated with <code>multipart</code> parts using the <code>name</code> parameter to <code>Content-Disposition: form-data</code>, and with <code>application/x-www-form-urlencoded</code> using the query string parameter names.
 In both cases, their order is implementation-defined.</p>
 <p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
+<section><h4>Fixed Fields</h4>
 <section><h5>Common Fixed Fields</h5>
 <p>These fields MAY be used either with or without the RFC6570-style serialization fields defined in the next section below.</p>
 <table>
@@ -2259,7 +2169,7 @@ In both cases, their order is implementation-defined.</p>
 <p>Determining how to handle a <code>type</code> value of <code>null</code> depends on how <code>null</code> values are being serialized.
 If <code>null</code> values are entirely omitted, then the <code>contentType</code> is irrelevant.
 See <a href="#dataTypeConversion">Appendix B</a> for a discussion of data type conversion options.</p>
-</section></section><section><h4>Fixed Fields for RFC6570-style Serialization</h4>
+</section><section><h5>Fixed Fields for RFC6570-style Serialization</h5>
 <table>
 <thead>
 <tr>
@@ -2272,7 +2182,7 @@ See <a href="#dataTypeConversion">Appendix B</a> for a discussion of data type c
 <tr>
 <td><a id="encodingStyle"> </a>style</td>
 <td style="text-align:center"><code>string</code></td>
-<td>Describes how a specific property value will be serialized depending on its type.  See <a href="#parameterObject">Parameter Object</a> for details on the <a href="#parameterStyle"><code>style</code></a> property. The behavior follows the same values as <code>query</code> parameters, including default values. Note that the initial <code>?</code> using in query strings is not used in <code>applcation/x-www-form-urlencoded</code> message bodies, and MUST be removed (if using an RFC6570 implementation) or simply not added (if constructing the string manually). This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
+<td>Describes how a specific property value will be serialized depending on its type.  See <a href="#parameterObject">Parameter Object</a> for details on the <a href="#parameterStyle"><code>style</code></a> property. The behavior follows the same values as <code>query</code> parameters, including default values. Note that the initial <code>?</code> used in query strings is not used in <code>application/x-www-form-urlencoded</code> message bodies, and MUST be removed (if using an RFC6570 implementation) or simply not added (if constructing the string manually). This property SHALL be ignored if the request body media type is not <code>application/x-www-form-urlencoded</code> or <code>multipart/form-data</code>. If a value is explicitly defined, then the value of <a href="#encodingContentType"><code>contentType</code></a> (implicit or explicit) SHALL be ignored.</td>
 </tr>
 <tr>
 <td><a id="encodingExplode"> </a>explode</td>
@@ -2289,53 +2199,48 @@ See <a href="#dataTypeConversion">Appendix B</a> for a discussion of data type c
 <p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance, including on difficulties caused by the interaction between RFC6570’s percent-encoding rules and the <code>multipart/form-data</code> media type.</p>
 <p>Note that the presence of at least one of <code>style</code>, <code>explode</code>, or <code>allowReserved</code> with an explicit value is equivalent to using <code>schema</code> with <code>in: query</code> Parameter Objects.
 The absence of all three of those fields is the equivalent of using <code>content</code>, but with the media type specified in <code>contentType</code> rather than through a Media Type Object.</p>
-<section><h5>Encoding <code>multipart</code> Media Types</h5>
-<p>The <code>form-data</code> disposition and its <code>name</code> parameter are mandatory for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.2">RFC7578 §4.2</a>).
-Array properties are handled by applying the same <code>name</code> to multiple parts, as is recommended by <a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.3">RFC7578 §4.3</a> for supplying multiple values per form field.
-See <a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-5">RFC7578 §5</a> for guidance regarding non-ASCII part names.</p>
-<p>Various other <code>multipart</code> types, most notable <code>multipart/mixed</code> (<a href="https://www.rfc-editor.org/rfc/rfc2046.html#section-5.1.3">RFC2046 §5.1.3</a>) neither require nor forbid specific <code>Content-Disposition</code> values, which means care must be taken to ensure that any values used are supported by all relevant software.
-It is not currently possible to correlate schema properties with unnamed, ordered parts in media types such as <code>multipart/mixed</code>, but implementations MAY choose to support such types when <code>Content-Disposition: form-data</code> is used with a <code>name</code> parameter.</p>
-<p>Note that there are significant restrictions on what headers can be used with <code>multipart</code> media types in general (<a href="https://www.rfc-editor.org/rfc/rfc2046.html#section-5.1">RFC2046 §5.1</a>) and <code>multi-part/form-data</code> in particular (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.8">RFC7578 §4.8</a>).</p>
-<p>Note also that <code>Content-Transfer-Encoding</code> is deprecated for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.7">RFC7578 §4.7</a>) where binary data is supported, as it is in HTTP.
-Using <code>contentEncoding</code> is equivalent to setting <code>Content-Transfer-Encoding</code> to the same value.
-If <code>contentEncoding</code> is used along with setting a different <code>Content-Transfer-Encoding</code> value with the <code>headers</code> field, the result is undefined.</p>
-</section></section><section><h4>Encoding Object Example</h4>
-<p><code>multipart/form-data</code> allows for binary parts:</p>
+</section></section><section><h4>Encoding the <code>x-www-form-urlencoded</code> Media Type</h4>
+<p>To submit content using form url encoding via [[!RFC1866]], use the <code>application/x-www-form-urlencoded</code> media type in the <a href="#mediaTypeObject">Media Type Object</a> under the <a href="#requestBodyObject">Request Body Object</a>.
+This configuration means that the request body MUST be encoded per [[!RFC1866]] when passed to the server, after any complex objects have been serialized to a string representation.</p>
+<p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
+<section><h5>Example: URL Encoded Form with JSON Values</h5>
+<p>When there is no <a href="#mediaTypeEncoding"><code>encoding</code> field</a>, the serialization strategy is based on the Encoding Object’s default values:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">requestBody:</span>
   <span class="hljs-attr">content:</span>
-    <span class="hljs-attr">multipart/form-data:</span>
+    <span class="hljs-attr">application/x-www-form-urlencoded:</span>
       <span class="hljs-attr">schema:</span>
         <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
         <span class="hljs-attr">properties:</span>
           <span class="hljs-attr">id:</span>
-            <span class="hljs-comment"># default is text/plain</span>
             <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
             <span class="hljs-attr">format:</span> <span class="hljs-string">uuid</span>
           <span class="hljs-attr">address:</span>
-            <span class="hljs-comment"># default is application/json</span>
+            <span class="hljs-comment"># complex types are stringified to support RFC 1866</span>
             <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
             <span class="hljs-attr">properties:</span> {}
-          <span class="hljs-attr">historyMetadata:</span>
-            <span class="hljs-comment"># need to declare XML format!</span>
-            <span class="hljs-attr">description:</span> <span class="hljs-string">metadata</span> <span class="hljs-string">in</span> <span class="hljs-string">XML</span> <span class="hljs-string">format</span>
-            <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
-            <span class="hljs-attr">properties:</span> {}
-          <span class="hljs-attr">profileImage:</span> {}
-      <span class="hljs-attr">encoding:</span>
-        <span class="hljs-attr">historyMetadata:</span>
-          <span class="hljs-comment"># require XML Content-Type in utf-8 encoding</span>
-          <span class="hljs-attr">contentType:</span> <span class="hljs-string">application/xml;</span> <span class="hljs-string">charset=utf-8</span>
-        <span class="hljs-attr">profileImage:</span>
-          <span class="hljs-comment"># only accept png/jpeg</span>
-          <span class="hljs-attr">contentType:</span> <span class="hljs-string">image/png,</span> <span class="hljs-string">image/jpeg</span>
-          <span class="hljs-attr">headers:</span>
-            <span class="hljs-attr">X-Rate-Limit-Limit:</span>
-              <span class="hljs-attr">description:</span> <span class="hljs-string">The</span> <span class="hljs-string">number</span> <span class="hljs-string">of</span> <span class="hljs-string">allowed</span> <span class="hljs-string">requests</span> <span class="hljs-string">in</span> <span class="hljs-string">the</span> <span class="hljs-string">current</span> <span class="hljs-string">period</span>
-              <span class="hljs-attr">schema:</span>
-                <span class="hljs-attr">type:</span> <span class="hljs-string">integer</span>
 </code></pre>
-<p><code>application/x-www-form-urlencoded</code> is a text format, which requires base64-encoding any binary data:</p>
+<p>With this example, consider an <code>id</code> of <code>f81d4fae-7dec-11d0-a765-00a0c91e6bf6</code> and a US-style address (with ZIP+4) as follows:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;streetAddress&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;123 Example Dr.&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;city&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Somewhere&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;state&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;CA&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;zip&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;99999+1234&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Assuming the most compact representation of the JSON value (with unnecessary whitespace removed), we would expect to see the following request body, where space characters have been replaced with <code>+</code> and <code>+</code>, <code>&quot;</code>, <code>{</code>, and <code>}</code> have been percent-encoded to <code>%2B</code>, <code>%22</code>, <code>%7B</code>, and <code>%7D</code>, respectively:</p>
+<pre class="highlight urlencoded"><code>
+id=f81d4fae-7dec-11d0-a765-00a0c91e6bf6&amp;address=%7B%22streetAddress%22:%22123+Example+Dr.%22,%22city%22:%22Somewhere%22,%22state%22:%22CA%22,%22zip%22:%2299999%2B1234%22%7D
+</code></pre>
+<p>Note that the <code>id</code> keyword is treated as <code>text/plain</code> per the <a href="#encodingObject">Encoding Object</a>’s default behavior, and is serialized as-is.
+If it were treated as <code>application/json</code>, then the serialized value would be a JSON string including quotation marks, which would be percent-encoded as <code>%22</code>.</p>
+<p>Here is the <code>id</code> parameter (without <code>address</code>) serialized as <code>application/json</code> instead of <code>text/plain</code>, and then encoded per RFC1866:</p>
+<pre class="highlight urlencoded"><code>
+id=%22f81d4fae-7dec-11d0-a765-00a0c91e6bf6%22
+</code></pre>
+</section><section><h5>Example: URL Encoded Form with Binary Values</h5>
+<p>Note that <code>application/x-www-form-urlencoded</code> is a text format, which requires base64-encoding any binary data:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">requestBody:</span>
   <span class="hljs-attr">content:</span>
@@ -2346,15 +2251,117 @@ If <code>contentEncoding</code> is used along with setting a different <code>Con
           <span class="hljs-attr">name:</span>
             <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
           <span class="hljs-attr">icon:</span>
-            <span class="hljs-comment"># default for type string is text/plain, need to declare</span>
-            <span class="hljs-comment"># the appropriate contentType in the Encoding Object</span>
+            <span class="hljs-comment"># The default with &quot;contentEncoding&quot; is application/octet-stream,</span>
+            <span class="hljs-comment"># so we need to set image media type(s) in the Encoding Object.</span>
             <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
             <span class="hljs-attr">contentEncoding:</span> <span class="hljs-string">base64url</span>
   <span class="hljs-attr">encoding:</span>
     <span class="hljs-attr">icon:</span>
       <span class="hljs-attr">contentType:</span> <span class="hljs-string">image/png,</span> <span class="hljs-string">image/jpeg</span>
 </code></pre>
-<p><a id="responsesObject"></a></section></section><section><h3><span>Responses Object</span></h3></p>
+<p>Given a name of <code>example</code> and a solid red 2x2-pixel PNG for <code>icon</code>, this
+would produce a request body of:</p>
+<pre class="highlight urlencoded"><code>
+name=example&amp;icon=iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAABGdBTUEAALGPC_xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAqADAAQAAAABAAAAAgAAAADO0J6QAAAAEElEQVQIHWP8zwACTGCSAQANHQEDqtPptQAAAABJRU5ErkJggg%3D%3D
+</code></pre>
+<p>Note that the <code>=</code> padding characters at the end need to be percent-encoded, even with the “URL safe” <code>contentEncoding: base64url</code>.
+Some base64-decoding implementations may be able to use the string without the padding per <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-3.2">RFC4648 §3.2</a>.
+However, this is not guaranteed, so it may be more interoperable to keep the padding and rely on percent-decoding.</p>
+</section></section><section><h4>Encoding <code>multipart</code> Media Types</h4>
+<p>It is common to use <code>multipart/form-data</code> as a <code>Content-Type</code> when transferring forms as request bodies.  In contrast to 2.0, a <code>schema</code> is REQUIRED to define the input parameters to the operation when using <code>multipart</code> content.  This supports complex structures as well as supporting mechanisms for multiple file uploads.</p>
+<p>The <code>form-data</code> disposition and its <code>name</code> parameter are mandatory for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.2">RFC7578 §4.2</a>).
+Array properties are handled by applying the same <code>name</code> to multiple parts, as is recommended by <a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.3">RFC7578 §4.3</a> for supplying multiple values per form field.
+See <a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-5">RFC7578 §5</a> for guidance regarding non-ASCII part names.</p>
+<p>Various other <code>multipart</code> types, most notable <code>multipart/mixed</code> (<a href="https://www.rfc-editor.org/rfc/rfc2046.html#section-5.1.3">RFC2046 §5.1.3</a>) neither require nor forbid specific <code>Content-Disposition</code> values, which means care must be taken to ensure that any values used are supported by all relevant software.
+It is not currently possible to correlate schema properties with unnamed, ordered parts in media types such as <code>multipart/mixed</code>, but implementations MAY choose to support such types when <code>Content-Disposition: form-data</code> is used with a <code>name</code> parameter.</p>
+<p>Note that there are significant restrictions on what headers can be used with <code>multipart</code> media types in general (<a href="https://www.rfc-editor.org/rfc/rfc2046.html#section-5.1">RFC2046 §5.1</a>) and <code>multi-part/form-data</code> in particular (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.8">RFC7578 §4.8</a>).</p>
+<p>Note also that <code>Content-Transfer-Encoding</code> is deprecated for <code>multipart/form-data</code> (<a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.7">RFC7578 §4.7</a>) where binary data is supported, as it is in HTTP.
+Using <code>contentEncoding</code> is equivalent to setting <code>Content-Transfer-Encoding</code> to the same value.
+If <code>contentEncoding</code> is used along with setting a different <code>Content-Transfer-Encoding</code> value with the <code>headers</code> field, the result is undefined.</p>
+<p>Per the JSON Schema specification, <code>contentMediaType</code> without <code>contentEncoding</code> present is treated as if <code>contentEncoding: identity</code> were present.  While useful for embedding text documents such as <code>text/html</code> into JSON strings, it is not useful for a <code>multipart/form-data</code> part, as it just causes the document to be treated as <code>text/plain</code> instead of its actual media type.  Use the Encoding Object without <code>contentMediaType</code> if no <code>contentEncoding</code> is required.</p>
+<p>See <a href="#percentEncodingAndFormMediaTypes">Appendix E</a> for a detailed examination of percent-encoding concerns for form media types.</p>
+<section><h5>Example: Basic Multipart Form</h5>
+<p>When the <code>encoding</code> attribute is <em>not</em> used, the encoding is determined by the Encoding Object’s defaults:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">requestBody:</span>
+  <span class="hljs-attr">content:</span>
+    <span class="hljs-attr">multipart/form-data:</span>
+      <span class="hljs-attr">schema:</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+        <span class="hljs-attr">properties:</span>
+          <span class="hljs-attr">id:</span>
+            <span class="hljs-comment"># default for primitives without a special format is text/plain</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+            <span class="hljs-attr">format:</span> <span class="hljs-string">uuid</span>
+          <span class="hljs-attr">profileImage:</span>
+            <span class="hljs-comment"># default for string with binary format is `application/octet-stream`</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+            <span class="hljs-attr">format:</span> <span class="hljs-string">binary</span>
+          <span class="hljs-attr">addresses:</span>
+            <span class="hljs-comment"># default for arrays is based on the type in the `items`</span>
+            <span class="hljs-comment"># subschema, which is an object, so `application/json`</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+            <span class="hljs-attr">items:</span>
+              <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+              <span class="hljs-string">$ref:</span> <span class="hljs-string">&#x27;#/components/schemas/Address&#x27;</span>
+</code></pre>
+</section><section><h5>Example: Multipart Form with Encoding Objects</h5>
+<p>Using <code>encoding</code>, we can set more specific types for binary data, or non-JSON formats for complex values.
+We can also describe headers for each part:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">requestBody:</span>
+  <span class="hljs-attr">content:</span>
+    <span class="hljs-attr">multipart/form-data:</span>
+      <span class="hljs-attr">schema:</span>
+        <span class="hljs-attr">type:</span> <span class="hljs-string">object</span>
+        <span class="hljs-attr">properties:</span>
+          <span class="hljs-attr">id:</span>
+            <span class="hljs-comment"># default is `text/plain`</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+            <span class="hljs-attr">format:</span> <span class="hljs-string">uuid</span>
+          <span class="hljs-attr">addresses:</span>
+            <span class="hljs-comment"># default based on the `items` subschema would be</span>
+            <span class="hljs-comment"># `application/json`, but we want these address objects</span>
+            <span class="hljs-comment"># serialized as `application/xml` instead</span>
+            <span class="hljs-attr">description:</span> <span class="hljs-string">addresses</span> <span class="hljs-string">in</span> <span class="hljs-string">XML</span> <span class="hljs-string">format</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+            <span class="hljs-attr">items:</span>
+                <span class="hljs-string">$ref:</span> <span class="hljs-string">&#x27;#/components/schemas/Address&#x27;</span>
+          <span class="hljs-attr">profileImage:</span>
+            <span class="hljs-comment"># default is application/octet-stream, but we can declare</span>
+            <span class="hljs-comment"># a more specific image type or types</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
+            <span class="hljs-attr">format:</span> <span class="hljs-string">binary</span>
+      <span class="hljs-attr">encoding:</span>
+        <span class="hljs-attr">addresses:</span>
+          <span class="hljs-comment"># require XML Content-Type in utf-8 encoding</span>
+          <span class="hljs-comment"># This is applied to each address part corresponding</span>
+          <span class="hljs-comment"># to each address in he array</span>
+          <span class="hljs-attr">contentType:</span> <span class="hljs-string">application/xml;</span> <span class="hljs-string">charset=utf-8</span>
+        <span class="hljs-attr">profileImage:</span>
+          <span class="hljs-comment"># only accept png or jpeg</span>
+          <span class="hljs-attr">contentType:</span> <span class="hljs-string">image/png,</span> <span class="hljs-string">image/jpeg</span>
+          <span class="hljs-attr">headers:</span>
+            <span class="hljs-attr">X-Rate-Limit-Limit:</span>
+              <span class="hljs-attr">description:</span> <span class="hljs-string">The</span> <span class="hljs-string">number</span> <span class="hljs-string">of</span> <span class="hljs-string">allowed</span> <span class="hljs-string">requests</span> <span class="hljs-string">in</span> <span class="hljs-string">the</span> <span class="hljs-string">current</span> <span class="hljs-string">period</span>
+              <span class="hljs-attr">schema:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">integer</span>
+</code></pre>
+</section><section><h5>Example: Multipart Form with Multiple Files</h5>
+<p>In accordance with <a href="https://www.rfc-editor.org/rfc/rfc7578.html#section-4.3">RFC7578 §4.3</a>, multiple files for a single form field are uploaded using the same name (<code>file</code> in this example) for each file’s part:</p>
+<pre class="nohighlight"><code>
+<span class="hljs-attr">requestBody:</span>
+  <span class="hljs-attr">content:</span>
+    <span class="hljs-attr">multipart/form-data:</span>
+      <span class="hljs-attr">schema:</span>
+        <span class="hljs-attr">properties:</span>
+          <span class="hljs-comment"># The property name &#x27;file&#x27; will be used for all files.</span>
+          <span class="hljs-attr">file:</span>
+            <span class="hljs-attr">type:</span> <span class="hljs-string">array</span>
+            <span class="hljs-attr">items:</span> {}
+</code></pre>
+<p>As seen in the section on <code>multipart/form-data</code> below, the empty schema for <code>items</code> indicates a media type of <code>application/octet-stream</code>.</p>
+<p><a id="responsesObject"></a></section></section></section><section><h3><span>Responses Object</span></h3></p>
 <p>A container for the expected responses of an operation.
 The container maps a HTTP response code to the expected response.</p>
 <p>The documentation is not necessarily expected to cover all possible HTTP response codes because they may not be known in advance.
@@ -2893,7 +2900,7 @@ The presence of a link does not guarantee the caller’s ability to successfully
 <tr>
 <td><a id="linkOperationRef"> </a>operationRef</td>
 <td style="text-align:center"><code>string</code></td>
-<td>A URI identifying an OAS operation. This field is mutually exclusive of the <code>operationId</code> field, and MUST point to an <a href="#operationObject">Operation Object</a>. Relative <code>operationRef</code> values MAY be used to locate an existing <a href="#operationObject">Operation Object</a> in the OpenAPI definition. See the rules for resolving <a href="#relativeReferencesURI">Relative References</a>.</td>
+<td>A URI identifying an OAS operation. This field is mutually exclusive of the <code>operationId</code> field, and MUST point to an <a href="#operationObject">Operation Object</a>. Relative <code>operationRef</code> values MAY be used to locate an existing <a href="#operationObject">Operation Object</a> in the OpenAPI description. See the rules for resolving <a href="#relativeReferencesURI">Relative References</a>.</td>
 </tr>
 <tr>
 <td><a id="linkOperationId"> </a>operationId</td>
@@ -2924,11 +2931,11 @@ The presence of a link does not guarantee the caller’s ability to successfully
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 <p>A linked operation MUST be identified using either an <code>operationRef</code> or <code>operationId</code>.
-In the case of an <code>operationId</code>, it MUST be unique and resolved in the scope of the OAS document.
+In the case of an <code>operationId</code>, it MUST be unique and resolved in the scope of the OpenAPI description.
 Because of the potential for name clashes, the <code>operationRef</code> syntax is preferred
-for OpenAPI documents with external references.</p>
+for multi-document OpenAPI descriptions.</p>
 <p>Note that it is not possible to provide a constant value to <code>parameters</code> that matches the syntax of a runtime expression.
-It is possible to have ambiguous parameter names, e.g. <code>name: id, in: path</code> and <code>name: path.id, in: query</code>; this is NOT RECOMMENDED and the behavior is implementation-defined, however implementations SHOULD prefer the qualified interpretation (<code>path.id</code> as a path parameter), as the names can always be qualified to disambiguate them (e.g. using <code>query.path.id</code> for the query paramter).</p>
+It is possible to have ambiguous parameter names, e.g. <code>name: id, in: path</code> and <code>name: path.id, in: query</code>; this is NOT RECOMMENDED and the behavior is implementation-defined, however implementations SHOULD prefer the qualified interpretation (<code>path.id</code> as a path parameter), as the names can always be qualified to disambiguate them (e.g. using <code>query.path.id</code> for the query parameter).</p>
 </section><section><h4>Examples</h4>
 <p>Computing a link from a request operation where the <code>$request.path.id</code> is used to pass a request parameter to the linked operation.</p>
 <pre class="nohighlight"><code>
@@ -3093,7 +3100,8 @@ Expressions can be embedded into string values by surrounding the expression wit
 <li><code>in</code> MUST NOT be specified, it is implicitly in <code>header</code>.</li>
 <li>All traits that are affected by the location MUST be applicable to a location of <code>header</code> (for example, <a href="#parameterStyle"><code>style</code></a>).  This means that <code>allowEmptyValue</code> and <code>allowReserved</code> MUST NOT be used, and <code>style</code>, if used, MUST be limited to <code>simple</code>.</li>
 </ol>
-<section><h4>Common Fixed Fields</h4>
+<section><h4>Fixed Fields</h4>
+<section><h5>Common Fixed Fields</h5>
 <p>These fields MAY be used with either <code>content</code> or <code>schema</code>.</p>
 <table>
 <thead>
@@ -3122,7 +3130,7 @@ Expressions can be embedded into string values by surrounding the expression wit
 </tbody>
 </table>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
-</section><section><h4>Fixed Fields for use with <code>schema</code></h4>
+</section><section><h5>Fixed Fields for use with <code>schema</code></h5>
 <p>For simpler scenarios, a <a href="#headerSchema"><code>schema</code></a> and <a href="#headerStyle"><code>style</code></a> can describe the structure and syntax of the header.
 When <code>example</code> or <code>examples</code> are provided in conjunction with the <code>schema</code> object, the example MUST follow the prescribed serialization strategy for the header.</p>
 <p>Serializing with <code>schema</code> is NOT RECOMMENDED for headers with parameters (name=value pairs following a <code>;</code>) in their values, or where values might have non-URL-safe characters; see <a href="#serializingHeadersAndCookies">Appendix D</a> for details.</p>
@@ -3165,7 +3173,7 @@ The <code>example</code> and <code>examples</code> fields are mutually exclusive
 </tbody>
 </table>
 <p>See also <a href="#usingRFC6570Implementations">Appendix C: Using RFC6570 Implementations</a> for additional guidance.</p>
-</section><section><h4>Fixed Fields for use with <code>content</code></h4>
+</section><section><h5>Fixed Fields for use with <code>content</code></h5>
 <p>For more complex scenarios, the <a href="#headerContent"><code>content</code></a> property can define the media type and schema of the header, as well as give examples of its use.
 Using <code>content</code> with a <code>text/plain</code> media type is RECOMMENDED for headers where the <code>schema</code> strategy is not appropriate.</p>
 <table>
@@ -3184,7 +3192,7 @@ Using <code>content</code> with a <code>text/plain</code> media type is RECOMMEN
 </tr>
 </tbody>
 </table>
-</section><section><h4>Header Object Example</h4>
+</section></section><section><h4>Header Object Example</h4>
 <p>A simple header of type <code>integer</code>:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-attr">&quot;X-Rate-Limit-Limit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
@@ -3877,7 +3885,7 @@ However, the exact nature of such conversions are implementation-defined.</p>
   <span class="hljs-attr">discriminator:</span>
     <span class="hljs-attr">propertyName:</span> <span class="hljs-string">petType</span>
 </code></pre>
-<p>The expectation now is that a property with name <code>petType</code> <em>MUST</em> be present in the response payload, and the value will correspond to the name of a schema defined in the OAS document.  Thus the response payload:</p>
+<p>The expectation now is that a property with name <code>petType</code> <em>MUST</em> be present in the response payload, and the value will correspond to the name of a schema defined in the OpenAPI description.  Thus the response payload:</p>
 <pre class="nohighlight"><code>
 <span class="hljs-punctuation">{</span>
   <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">12345</span><span class="hljs-punctuation">,</span>
@@ -4000,7 +4008,7 @@ See examples for expected behavior.</p>
 <p>This object MAY be extended with <a href="#specificationExtensions">Specification Extensions</a>.</p>
 <p>The <code>namespace</code> keyword is intended to match the syntax of <a href="https://www.w3.org/TR/xml-names11/">XML namespaces</a>, although there are a few caveats:</p>
 <ul>
-<li>Version 3.0.3 and earlier of this specification erroneously used the term “absolute URI” instead of “non-relative URI”, so authors using namespaces that include a fragment should check tooling support carefully.</li>
+<li>Versions 3.1.0, 3.0.3, and earlier of this specification erroneously used the term “absolute URI” instead of “non-relative URI”, so authors using namespaces that include a fragment should check tooling support carefully.</li>
 <li>XML allows but discourages relative URI-references, while this specification outright forbids them.</li>
 <li>XML 1.1 allows IRIs (<a href="https://datatracker.ietf.org/doc/html/rfc3987">[!RFC3987]</a>) as namespaces, and specifies that namespaces are compared without any encoding or decoding, which means that IRIs encoded to meet this specification’s URI syntax requirement cannot be compared to IRIs as-is.</li>
 </ul>
@@ -4732,7 +4740,7 @@ While not part of the specification itself, certain libraries MAY choose to allo
 </ol>
 </section></section><section><h1>Security Considerations</h1>
 <section><h2>OpenAPI Document Formats</h2>
-<p>OpenAPI documents use JSON, YAML, and JSON Schema, and therefore share their security considerations:</p>
+<p>OpenAPI description documents use JSON, YAML, and JSON Schema, and therefore share their security considerations:</p>
 <ul>
 <li><a href="https://www.iana.org/assignments/media-types/application/json">JSON</a></li>
 <li><a href="https://www.iana.org/assignments/media-types/application/yaml">YAML</a></li>
@@ -4740,11 +4748,11 @@ While not part of the specification itself, certain libraries MAY choose to allo
 <li><a href="https://json-schema.org/draft/2020-12/json-schema-validation#name-security-considerations">JSON Schema Validation</a></li>
 </ul>
 </section><section><h2>Tooling and Usage Scenarios</h2>
-<p>In addition, OpenAPI documents are processed by a wide variety of tooling for numerous different purposes, such as client code generation, documentation generation, server side routing, and API testing. OpenAPI document authors must consider the risks of the scenarios where the OpenAPI document may be used.</p>
+<p>In addition, OpenAPI description documents are processed by a wide variety of tooling for numerous different purposes, such as client code generation, documentation generation, server side routing, and API testing. OpenAPI description authors must consider the risks of the scenarios where the OpenAPI description may be used.</p>
 </section><section><h2>Security Schemes</h2>
-<p>An OpenAPI document describes the security schemes used to protect the resources it defines. The security schemes available offer varying degrees of protection. Factors such as the sensitivity of the data and the potential impact of a security breach should guide the selection of security schemes for the API resources. Some security schemes, such as basic auth and OAuth Implicit flow, are supported for compatibility with existing APIs. However, their inclusion in OpenAPI does not constitute an endorsement of their use, particularly for highly sensitive data or operations.</p>
+<p>An OpenAPI description describes the security schemes used to protect the resources it defines. The security schemes available offer varying degrees of protection. Factors such as the sensitivity of the data and the potential impact of a security breach should guide the selection of security schemes for the API resources. Some security schemes, such as basic auth and OAuth Implicit flow, are supported for compatibility with existing APIs. However, their inclusion in OpenAPI does not constitute an endorsement of their use, particularly for highly sensitive data or operations.</p>
 </section><section><h2>Handling External Resources</h2>
-<p>OpenAPI documents may contain references to external resources that may be dereferenced automatically by consuming tools. External resources may be hosted on different domains that may be untrusted. References in an OpenAPI document, or across OpenAPI documents may cause a cycle. Tooling must detect and handle cycles to prevent resource exhaustion.</p>
+<p>OpenAPI description documents may contain references to external resources that may be dereferenced automatically by consuming tools. External resources may be hosted on different domains that may be untrusted. References in an OpenAPI document, or across OpenAPI documents within a multi-document OpenAPI description, may cause a cycle. Tooling must detect and handle cycles to prevent resource exhaustion.</p>
 </section><section><h2>Markdown and HTML Sanitization</h2>
 <p>Certain properties allow the use of Markdown which can contain HTML including script. It is the responsibility of tooling to appropriately sanitize the Markdown.</p>
 <p><a id="revisionHistory"></a></section></section><section class="appendix"><h1><span>Appendix A: Revision History</span></h1></p>
