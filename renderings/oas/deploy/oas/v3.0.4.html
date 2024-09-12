@@ -192,14 +192,14 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       ]
     }
   ],
-  "publishISODate": "2024-09-10T00:00:00.000Z",
-  "generatedSubtitle": "10 September 2024"
+  "publishISODate": "2024-09-12T00:00:00.000Z",
+  "generatedSubtitle": "12 September 2024"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/base.css"></head><body class="h-entry"><div class="head">
     <p class="logos"><a class="logo" href="https://openapis.org/"><img crossorigin="" alt="OpenAPI Initiative" height="48" src="https://raw.githubusercontent.com/OAI/OpenAPI-Style-Guide/master/graphics/bitmap/OpenAPI_Logo_Pantone.png">
   </a></p>
     <h1 id="title" class="title">OpenAPI Specification v3.0.4 </h1> <h2 id="subtitle" class="subtitle">Version 3.0.4</h2>
-    <p id="w3c-state"> <time class="dt-published" datetime="2024-09-10">10 September 2024</time></p>
+    <p id="w3c-state"> <time class="dt-published" datetime="2024-09-12">12 September 2024</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -342,15 +342,13 @@ This includes all fields that are used as keys in a map, except where explicitly
 <p><strong>Note:</strong> While APIs may be described by OpenAPI documents in either YAML or JSON format, the API request and response bodies and other content are not required to be JSON or YAML.</p>
 </section><section id="openapi-description-structure"><div class="header-wrapper"><h3 id="x4-3-openapi-description-structure"><bdi class="secno">4.3 </bdi>OpenAPI Description Structure</h3><a class="self-link" href="#openapi-description-structure" aria-label="Permalink for Section 4.3"></a></div>
 <p>An OpenAPI Description (OAD) <em class="rfc2119">MAY</em> be made up of a single document or be divided into multiple, connected parts at the discretion of the author. In the latter case, <a href="#reference-object">Reference Object</a> and <a href="#path-item-object">Path Item Object</a> <code>$ref</code> keywords, as well as the <a href="#link-object">Link Object</a> <code>operationRef</code> keyword, are used.</p>
-<p>Any document consisting entirely of an <a href="#openapi-object">OpenAPI Object</a> is known as a <strong>syntactically complete OpenAPI document</strong>.
-An OpenAPI document that does <em>not</em> reference any other documents is known as a <strong>self-contained OpenAPI document</strong>.
-A single-document description is therefore <em>both</em> syntactically complete <em>and</em> self-contained.
-In a multi-document description, the document containing the OpenAPI Object where parsing begins for a specific API’s description is known as that API’s <strong>entry document</strong>.</p>
+<p>Any document consisting entirely of an <a href="#openapi-object">OpenAPI Object</a> is known as a <strong>complete OpenAPI document</strong>.
+In a multi-document description, the document containing the OpenAPI Object where parsing begins for a specific API’s description is known as that API’s <strong>entry OpenAPI document</strong>, or simply <strong>entry document</strong>.</p>
 <p>It is <em class="rfc2119">RECOMMENDED</em> that the entry OpenAPI document be named: <code>openapi.json</code> or <code>openapi.yaml</code>.</p>
 <section id="structural-interoperability"><div class="header-wrapper"><h4 id="x4-3-1-structural-interoperability"><bdi class="secno">4.3.1 </bdi>Structural Interoperability</h4><a class="self-link" href="#structural-interoperability" aria-label="Permalink for Section 4.3.1"></a></div>
 <p>When parsing an OAD, JSON or YAML objects are parsed into specific Objects (such as <a href="#operation-object">Operation Objects</a>, <a href="#response-object">Response Objects</a>, <a href="#reference-object">Reference Objects</a>, etc.) based on the parsing context. Depending on how references are arranged, a given JSON or YAML object can be parsed in multiple different contexts:</p>
 <ul>
-<li>As a syntactically complete OpenAPI Description document</li>
+<li>As a complete OpenAPI Description document</li>
 <li>As the Object type implied by its parent Object within the document</li>
 <li>As a reference target, with the Object type matching the reference source’s context</li>
 </ul>
@@ -3025,10 +3023,9 @@ The presence of a link does not guarantee the caller’s ability to successfully
 </table>
 <p>This object <em class="rfc2119">MAY</em> be extended with <a href="#specification-extensions">Specification Extensions</a>.</p>
 <p>A linked operation <em class="rfc2119">MUST</em> be identified using either an <code>operationRef</code> or <code>operationId</code>.
-The identified or reference operation <em class="rfc2119">MUST</em> be unique, and in the case of an <code>operationId</code>, it <em class="rfc2119">MUST</em> be resolved within the scope of the OpenAPI Description (OAD).
-Because of the potential for name clashes, the <code>operationRef</code> syntax is preferred for multi-document OADs.
-However, because use of an operation depends on its URL path template in the <a href="#paths-object">Paths Object</a>, operations from any <a href="#path-item-object">Path Item Object</a> that is referenced multiple times within the OAD cannot be resolved unambiguously.
-In such ambiguous cases, the resulting behavior is implementation-defined and <em class="rfc2119">MAY</em> result in an error.</p>
+In the case of an <code>operationId</code>, it <em class="rfc2119">MUST</em> be unique and resolved in the scope of the OpenAPI description.
+Because of the potential for name clashes, the <code>operationRef</code> syntax is preferred
+for multi-document OpenAPI descriptions.</p>
 <p>Note that it is not possible to provide a constant value to <code>parameters</code> that matches the syntax of a runtime expression.
 It is possible to have ambiguous parameter names, e.g. <code>name: "id", in: "path"</code> and <code>name: "path.id", in: "query"</code>; this is <em class="rfc2119">NOT RECOMMENDED</em> and the behavior is implementation-defined, however implementations <em class="rfc2119">SHOULD</em> prefer the qualified interpretation (<code>path.id</code> as a path parameter), as the names can always be qualified to disambiguate them (e.g. using <code>query.path.id</code> for the query parameter).</p>
 </section><section id="examples"><div class="header-wrapper"><h5 id="x4-7-20-2-examples"><bdi class="secno">4.7.20.2 </bdi>Examples</h5><a class="self-link" href="#examples" aria-label="Permalink for Section 4.7.20.2"></a></div>

@@ -192,14 +192,14 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       ]
     }
   ],
-  "publishISODate": "2024-09-10T00:00:00.000Z",
-  "generatedSubtitle": "10 September 2024"
+  "publishISODate": "2024-09-12T00:00:00.000Z",
+  "generatedSubtitle": "12 September 2024"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/base.css"></head><body class="h-entry"><div class="head">
     <p class="logos"><a class="logo" href="https://openapis.org/"><img crossorigin="" alt="OpenAPI Initiative" height="48" src="https://raw.githubusercontent.com/OAI/OpenAPI-Style-Guide/master/graphics/bitmap/OpenAPI_Logo_Pantone.png">
   </a></p>
     <h1 id="title" class="title">OpenAPI Specification v3.1.1 </h1> <h2 id="subtitle" class="subtitle">Version 3.1.1</h2>
-    <p id="w3c-state"> <time class="dt-published" datetime="2024-09-10">10 September 2024</time></p>
+    <p id="w3c-state"> <time class="dt-published" datetime="2024-09-12">12 September 2024</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -557,11 +557,11 @@ This feature is used both for working in development or test environments withou
 <p>Relative URI references in other Objects, and in Schema Objects where no parent schema contains an <code>$id</code>, <em class="rfc2119">MUST</em> be resolved using the referring document’s base URI, which is determined in accordance with [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc3986" title="Uniform Resource Identifier (URI): Generic Syntax">RFC3986</a></cite>] <a href="https://tools.ietf.org/html/rfc3986#section-5.1.2">Section 5.1.2 – 5.1.4</a>.
 In practice, this is usually the retrieval URI of the document, which <em class="rfc2119">MAY</em> be determined based on either its current actual location or a user-supplied expected location.</p>
 <p>If a URI contains a fragment identifier, then the fragment should be resolved per the fragment resolution mechanism of the referenced document. If the representation of the referenced document is JSON or YAML, then the fragment identifier <em class="rfc2119">SHOULD</em> be interpreted as a JSON-Pointer as per [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc6901" title="JavaScript Object Notation (JSON) Pointer">RFC6901</a></cite>].</p>
+<p>Relative references in CommonMark hyperlinks are resolved in their rendered context, which might differ from the context of the API description.</p>
 </section><section id="relative-references-in-api-urls"><div class="header-wrapper"><h3 id="x4-7-relative-references-in-api-urls"><bdi class="secno">4.7 </bdi>Relative References in API URLs</h3><a class="self-link" href="#relative-references-in-api-urls" aria-label="Permalink for Section 4.7"></a></div>
 <p>API endpoints are by definition accessed as locations, and are described by this specification as <strong><em>URLs</em></strong>.</p>
 <p>Unless specified otherwise, all fields that are URLs <em class="rfc2119">MAY</em> be relative references as defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc3986" title="Uniform Resource Identifier (URI): Generic Syntax">RFC3986</a></cite>] <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-4.2">Section 4.2</a>.
 Unless specified otherwise, relative references are resolved using the URLs defined in the <a href="#server-object">Server Object</a> as a Base URL. Note that these themselves <em class="rfc2119">MAY</em> be relative to the referring document.</p>
-<p>Relative references in CommonMark hyperlinks are resolved in their rendered context, which might differ from the context of the API description.</p>
 </section><section id="schema-0"><div class="header-wrapper"><h3 id="x4-8-schema"><bdi class="secno">4.8 </bdi>Schema</h3><a class="self-link" href="#schema-0" aria-label="Permalink for Section 4.8"></a></div>
 <p>This section describes the structure of the OpenAPI Description format.
 This text is the only normative description of the format.
