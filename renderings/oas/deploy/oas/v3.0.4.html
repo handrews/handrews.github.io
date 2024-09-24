@@ -83,24 +83,6 @@ dd{margin-left:0}
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="https://spec.openapis.org/oas/v3.0.4.html">
 <style>
-.hljs{--base:#fafafa;--mono-1:#383a42;--mono-2:#686b77;--mono-3:#717277;--hue-1:#0b76c5;--hue-2:#336ae3;--hue-3:#a626a4;--hue-4:#42803c;--hue-5:#ca4706;--hue-5-2:#c91243;--hue-6:#986801;--hue-6-2:#9a6a01}
-@media (prefers-color-scheme:dark){
-.hljs{--base:#282c34;--mono-1:#abb2bf;--mono-2:#818896;--mono-3:#5c6370;--hue-1:#56b6c2;--hue-2:#61aeee;--hue-3:#c678dd;--hue-4:#98c379;--hue-5:#e06c75;--hue-5-2:#be5046;--hue-6:#d19a66;--hue-6-2:#e6c07b}
-}
-.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;color:var(--mono-1,#383a42);background:#fafafa;background:var(--base,#fafafa)}
-.hljs-comment,.hljs-quote{color:#717277;color:var(--mono-3,#717277);font-style:italic}
-.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4;color:var(--hue-3,#a626a4)}
-.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;color:var(--hue-5,#ca4706);font-weight:700}
-.hljs-literal{color:#0b76c5;color:var(--hue-1,#0b76c5)}
-.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c;color:var(--hue-4,#42803c)}
-.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01;color:var(--hue-6-2,#9a6a01)}
-.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801;color:var(--hue-6,#986801)}
-.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3;color:var(--hue-2,#336ae3)}
-.hljs-emphasis{font-style:italic}
-.hljs-strong{font-weight:700}
-.hljs-link{text-decoration:underline}
-</style>
-<style>
 var{position:relative;cursor:pointer}
 var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}
 var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#222}
@@ -192,14 +174,14 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       ]
     }
   ],
-  "publishISODate": "2024-09-12T00:00:00.000Z",
-  "generatedSubtitle": "12 September 2024"
+  "publishISODate": "2024-09-24T00:00:00.000Z",
+  "generatedSubtitle": "24 September 2024"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/base.css"></head><body class="h-entry"><div class="head">
     <p class="logos"><a class="logo" href="https://openapis.org/"><img crossorigin="" alt="OpenAPI Initiative" height="48" src="https://raw.githubusercontent.com/OAI/OpenAPI-Style-Guide/master/graphics/bitmap/OpenAPI_Logo_Pantone.png">
   </a></p>
     <h1 id="title" class="title">OpenAPI Specification v3.0.4 </h1> <h2 id="subtitle" class="subtitle">Version 3.0.4</h2>
-    <p id="w3c-state"> <time class="dt-published" datetime="2024-09-12">12 September 2024</time></p>
+    <p id="w3c-state"> <time class="dt-published" datetime="2024-09-24">24 September 2024</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -2350,12 +2332,12 @@ This configuration means that the request body <em class="rfc2119">MUST</em> be 
 <span class="hljs-punctuation">}</span>
 </code></pre>
 <p>Assuming the most compact representation of the JSON value (with unnecessary whitespace removed), we would expect to see the following request body, where space characters have been replaced with <code>+</code> and <code>+</code>, <code>"</code>, <code>{</code>, and <code>}</code> have been percent-encoded to <code>%2B</code>, <code>%22</code>, <code>%7B</code>, and <code>%7D</code>, respectively:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">id=f81d4fae-7dec-11d0-a765-00a0c91e6bf6&amp;address=%7B%22streetAddress%22:%22123+Example+Dr.%22,%22city%22:%22Somewhere%22,%22state%22:%22CA%22,%22zip%22:%2299999%2B1234%22%7D
+<pre class="nohighlight" tabindex="0"><code>id=<span class="hljs-literal">f81d4fae-7dec-11d0-a765-00a0c91e6bf6</span>&amp;<span class="hljs-attr">address</span>=<span class="hljs-literal">%7B%22streetAddress%22:%22123+Example+Dr.%22,%22city%22:%22Somewhere%22,%22state%22:%22CA%22,%22zip%22:%2299999%2B1234%22%7D</span>
 </code></pre>
 <p>Note that the <code>id</code> keyword is treated as <code>text/plain</code> per the <a href="#encoding-object">Encoding Object</a>’s default behavior, and is serialized as-is.
 If it were treated as <code>application/json</code>, then the serialized value would be a JSON string including quotation marks, which would be percent-encoded as <code>%22</code>.</p>
 <p>Here is the <code>id</code> parameter (without <code>address</code>) serialized as <code>application/json</code> instead of <code>text/plain</code>, and then encoded per RFC1866:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs abnf"><span class="hljs-attribute">id</span>=%<span class="hljs-number">22</span>f81d4fae-<span class="hljs-number">7</span>dec-<span class="hljs-number">11</span>d0-a765-<span class="hljs-number">00</span>a0c91e6bf6%<span class="hljs-number">22</span>
+<pre class="nohighlight" tabindex="0"><code>id=<span class="hljs-literal">%22f81d4fae-7dec-11d0-a765-00a0c91e6bf6%22</span>
 </code></pre>
 </section><section id="example-url-encoded-form-with-binary-values"><div class="header-wrapper"><h6 id="x4-7-15-2-2-example-url-encoded-form-with-binary-values"><bdi class="secno">4.7.15.2.2 </bdi>Example: URL Encoded Form with Binary Values</h6><a class="self-link" href="#example-url-encoded-form-with-binary-values" aria-label="Permalink for Section 4.7.15.2.2"></a></div>
 <p>Note that <code>application/x-www-form-urlencoded</code> is a text format, which requires base64-encoding any binary data:</p>
@@ -2378,7 +2360,7 @@ If it were treated as <code>application/json</code>, then the serialized value w
 </code></pre>
 <p>Given a name of <code>example</code> and a solid red 2x2-pixel PNG for <code>icon</code>, this
 would produce a request body of:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">name=example&amp;icon=iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAABGdBTUEAALGPC%2FxhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAqADAAQAAAABAAAAAgAAAADO0J6QAAAAEElEQVQIHWP8zwACTGCSAQANHQEDqtPptQAAAABJRU5ErkJggg%3D%3D
+<pre class="nohighlight" tabindex="0"><code>name=<span class="hljs-literal">example</span>&amp;<span class="hljs-attr">icon</span>=<span class="hljs-literal">iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAABGdBTUEAALGPC%2FxhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAqADAAQAAAABAAAAAgAAAADO0J6QAAAAEElEQVQIHWP8zwACTGCSAQANHQEDqtPptQAAAABJRU5ErkJggg%3D%3D</span>
 </code></pre>
 <p>Note that this base64-encoded value had to be futher percent-encoded, replacing <code>/</code> with <code>%2F</code> and each of two final <code>=</code> padding characters with <code>%3D</code>.
 Some base64-decoding implementations may be able to use the string without the padding per [<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc4648" title="The Base16, Base32, and Base64 Data Encodings">RFC4648</a></cite>] <a href="https://datatracker.ietf.org/doc/html/rfc4648#section-3.2">Section 3.2</a>.
@@ -2728,12 +2710,12 @@ This includes accessing any part of a body that a JSON Pointer [<cite><a class="
 <span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json
 <span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>188
 
-<span class="language-prolog">{
-  <span class="hljs-string">"failedUrl"</span>: <span class="hljs-string">"https://clientdomain.com/failed"</span>,
-  <span class="hljs-string">"successUrls"</span>: [
-    <span class="hljs-string">"https://clientdomain.com/fast"</span>,
-    <span class="hljs-string">"https://clientdomain.com/medium"</span>,
-    <span class="hljs-string">"https://clientdomain.com/slow"</span>
+<span class="language-uri">{
+  "failedUrl": "https://<span class="hljs-attr">clientdomain.com</span>/<span class="hljs-attr">failed",</span>
+  "successUrls": [
+    "https://<span class="hljs-attr">clientdomain.com</span>/<span class="hljs-attr">fast",</span>
+    "https://<span class="hljs-attr">clientdomain.com</span>/<span class="hljs-attr">medium",</span>
+    "https://<span class="hljs-attr">clientdomain.com</span>/<span class="hljs-attr">slow"</span>
   ]
 }
 </span></code></pre>
@@ -4801,10 +4783,10 @@ A parameter name that includes characters outside of the allowed RFC6570 variabl
       <span class="hljs-attr">type:</span> <span class="hljs-string">string</span>
 </code></pre>
 <p>This translates to the following URI Template:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">{?formulas*,words}
+<pre class="nohighlight" tabindex="0"><code>{<span class="hljs-attr">?formulas*</span>,<span class="hljs-attr">words</span>}
 </code></pre>
 <p>when expanded with the data given earlier, we get:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">?a=x%2By&amp;b=x%2Fy&amp;c=x%5Ey&amp;words=math,is,fun
+<pre class="nohighlight" tabindex="0"><code>?<span class="hljs-attr">a</span>=<span class="hljs-literal">x%2By</span>&amp;<span class="hljs-attr">b</span>=<span class="hljs-literal">x%2Fy</span>&amp;<span class="hljs-attr">c</span>=<span class="hljs-literal">x%5Ey</span>&amp;<span class="hljs-attr">words</span>=<span class="hljs-literal">math,is,fun</span>
 </code></pre>
 </section><section id="expansion-with-non-rfc6570-supported-options"><div class="header-wrapper"><h4 id="c-4-2-expansion-with-non-rfc6570-supported-options"><bdi class="secno">C.4.2 </bdi>Expansion with Non-RFC6570-Supported Options</h4><a class="self-link" href="#expansion-with-non-rfc6570-supported-options" aria-label="Permalink for Appendix C.4.2"></a></div>
 <p>But now let’s say that (for some reason), we really want that <code>/</code> in the <code>b</code> formula to show up as-is in the query string, and we want our words to be space-separated like in a written phrase.
@@ -4830,7 +4812,7 @@ To do that, we’ll add <code>allowReserved: true</code> to <code>formulas</code
 <p>We can’t combine the <code>?</code> and <code>+</code> RFC6570 <a href="https://tools.ietf.org/html/rfc6570#section-2.4.1">prefixes</a>, and there’s no way with RFC6570 to replace the <code>,</code> separator with a space character.
 So we need to restructure the data to fit a manually constructed URI Template that passes all of the pieces through the right sort of expansion.</p>
 <p>Here is one such template, using a made-up convention of <code>words.0</code> for the first entry in the words value, <code>words.1</code> for the second, and <code>words.2</code> for the third:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">?a={+a}&amp;b={+b}&amp;c={+c}&amp;words={words.0} {words.1} {words.2}
+<pre class="nohighlight" tabindex="0"><code>?a={<span class="hljs-attr">+a</span>}&amp;b={<span class="hljs-attr">+b</span>}&amp;c={<span class="hljs-attr">+c</span>}&amp;words={<span class="hljs-attr">words.0</span>} {<span class="hljs-attr">words.1</span>} {<span class="hljs-attr">words.2</span>}
 </code></pre>
 <p>RFC6570 <a href="https://tools.ietf.org/html/rfc6570#section-2.4.2">mentions</a> the use of <code>.</code> “to indicate name hierarchy in substructures,” but does not define any specific naming convention or behavior for it.
 Since the <code>.</code> usage is not automatic, we’ll need to construct an appropriate input structure for this new template.</p>
@@ -4847,7 +4829,7 @@ See also <a href="#appendix-e-percent-encoding-and-form-media-types">Appendix E<
 <span class="hljs-attr">words.2:</span> <span class="hljs-string">fun</span>
 </code></pre>
 <p>Expanding our manually assembled template with our restructured data yields the following query string:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">?a=x%2By&amp;b=x/y&amp;c=x%5Ey&amp;words=math%20is%20fun
+<pre class="nohighlight" tabindex="0"><code>?<span class="hljs-attr">a</span>=<span class="hljs-literal">x%2By</span>&amp;<span class="hljs-attr">b</span>=<span class="hljs-literal">x/y</span>&amp;<span class="hljs-attr">c</span>=<span class="hljs-literal">x%5Ey</span>&amp;<span class="hljs-attr">words</span>=<span class="hljs-literal">math%20is%20fun</span>
 </code></pre>
 <p>The <code>/</code> and the pre-percent-encoded <code>%2B</code> have been left alone, but the disallowed <code>^</code> character (inside a value) and space characters (in the template but outside of the expanded variables) were percent-encoded.</p>
 </section><section id="undefined-values-and-manual-uri-template-construction"><div class="header-wrapper"><h4 id="c-4-3-undefined-values-and-manual-uri-template-construction"><bdi class="secno">C.4.3 </bdi>Undefined Values and Manual URI Template Construction</h4><a class="self-link" href="#undefined-values-and-manual-uri-template-construction" aria-label="Permalink for Appendix C.4.3"></a></div>
@@ -4858,7 +4840,7 @@ See also <a href="#appendix-e-percent-encoding-and-form-media-types">Appendix E<
 <span class="hljs-bullet">-</span> <span class="hljs-string">world</span>
 </code></pre>
 <p>Using this data with our original RFC6570-friendly URI Template, <code>{?formulas*,words}</code>, produces the following:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">?words=hello,world
+<pre class="nohighlight" tabindex="0"><code>?<span class="hljs-attr">words</span>=<span class="hljs-literal">hello,world</span>
 </code></pre>
 <p>This means that the manually constructed URI Template and restructured data need to leave out the <code>formulas</code> object entirely so that the <code>words</code> parameter is the first and only parameter in the query string.</p>
 <p>Restructured data:</p>
@@ -4866,10 +4848,10 @@ See also <a href="#appendix-e-percent-encoding-and-form-media-types">Appendix E<
 <span class="hljs-attr">words.1:</span> <span class="hljs-string">world</span>
 </code></pre>
 <p>Manually constructed URI Template:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">?words={words.0} {words.1}
+<pre class="nohighlight" tabindex="0"><code>?words={<span class="hljs-attr">words.0</span>} {<span class="hljs-attr">words.1</span>}
 </code></pre>
 <p>Result:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">?words=hello%20world
+<pre class="nohighlight" tabindex="0"><code>?<span class="hljs-attr">words</span>=<span class="hljs-literal">hello%20world</span>
 </code></pre>
 </section><section id="illegal-variable-names-as-parameter-names"><div class="header-wrapper"><h4 id="c-4-4-illegal-variable-names-as-parameter-names"><bdi class="secno">C.4.4 </bdi>Illegal Variable Names as Parameter Names</h4><a class="self-link" href="#illegal-variable-names-as-parameter-names" aria-label="Permalink for Appendix C.4.4"></a></div>
 <p>In this example, the heart emoji is not legal in URI Template names (or URIs):</p>
@@ -4883,10 +4865,10 @@ See also <a href="#appendix-e-percent-encoding-and-form-media-types">Appendix E<
 Instead, we have to pre-percent-encode the name (which is a six-octet UTF-8 sequence) in both the data and the URI Template:</p>
 <pre class="nohighlight" tabindex="0"><code><span class="hljs-string">"%E2%9D%A4%EF%B8%8F"</span><span class="hljs-string">:</span> <span class="hljs-string">love!</span>
 </code></pre>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">{?%E2%9D%A4%EF%B8%8F}
+<pre class="nohighlight" tabindex="0"><code>{<span class="hljs-attr">?%E2%9D%A4%EF%B8%8F</span>}
 </code></pre>
 <p>This will expand to the result:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs">?%E2%9D%A4%EF%B8%8F=love%21
+<pre class="nohighlight" tabindex="0"><code>?<span class="hljs-attr">%E2%9D%A4%EF%B8%8F</span>=<span class="hljs-literal">love%21</span>
 </code></pre>
 </section></section></section><section class="appendix" id="appendix-d-serializing-headers-and-cookies"><div class="header-wrapper"><h2 id="d-appendix-d-serializing-headers-and-cookies"><bdi class="secno">D. </bdi>Appendix D: Serializing Headers and Cookies</h2><a class="self-link" href="#appendix-d-serializing-headers-and-cookies" aria-label="Permalink for Appendix D."></a></div>
 <p>[<cite><a class="bibref" data-link-type="biblio" href="#bib-rfc6570" title="URI Template">RFC6570</a></cite>]'s percent-encoding behavior is not always appropriate for <code>in: "header"</code> and <code>in: "cookie"</code> parameters.
