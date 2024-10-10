@@ -177,14 +177,14 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       ]
     }
   ],
-  "publishISODate": "2024-09-12T00:00:00.000Z",
-  "generatedSubtitle": "12 September 2024"
+  "publishISODate": "2024-10-10T00:00:00.000Z",
+  "generatedSubtitle": "10 October 2024"
 }</script>
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/base.css"></head><body class="h-entry"><div class="head">
     <p class="logos"><a class="logo" href="https://openapis.org/"><img crossorigin="" alt="OpenAPI Initiative" height="48" src="https://raw.githubusercontent.com/OAI/OpenAPI-Style-Guide/master/graphics/bitmap/OpenAPI_Logo_Pantone.png">
   </a></p>
     <h1 id="title" class="title">OpenAPI Specification v3.2.0 </h1> <h2 id="subtitle" class="subtitle">Version 3.2.0</h2>
-    <p id="w3c-state"> <time class="dt-published" datetime="2024-09-12">12 September 2024</time></p>
+    <p id="w3c-state"> <time class="dt-published" datetime="2024-10-10">10 October 2024</time></p>
     <details open="">
       <summary>More details about this document</summary>
       <dl>
@@ -2404,7 +2404,7 @@ This configuration means that the request body <em class="rfc2119">MUST</em> be 
 <p>Note that the <code>id</code> keyword is treated as <code>text/plain</code> per the <a href="#encoding-object">Encoding Object</a>’s default behavior, and is serialized as-is.
 If it were treated as <code>application/json</code>, then the serialized value would be a JSON string including quotation marks, which would be percent-encoded as <code>%22</code>.</p>
 <p>Here is the <code>id</code> parameter (without <code>address</code>) serialized as <code>application/json</code> instead of <code>text/plain</code>, and then encoded per RFC1866:</p>
-<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs abnf"><span class="hljs-attribute">id</span>=%<span class="hljs-number">22</span>f81d4fae-<span class="hljs-number">7</span>dec-<span class="hljs-number">11</span>d0-a765-<span class="hljs-number">00</span>a0c91e6bf6%<span class="hljs-number">22</span>
+<pre class="highlight urlencoded" tabindex="0"><code aria-busy="false" class="hljs abnf"><span class="hljs-attribute">id</span><span class="hljs-operator">=</span>%<span class="hljs-number">22</span>f81d4fae-<span class="hljs-number">7</span>dec-<span class="hljs-number">11</span>d0-a765-<span class="hljs-number">00</span>a0c91e6bf6%<span class="hljs-number">22</span>
 </code></pre>
 </section><section id="example-url-encoded-form-with-binary-values"><div class="header-wrapper"><h6 id="x4-8-15-2-2-example-url-encoded-form-with-binary-values"><bdi class="secno">4.8.15.2.2 </bdi>Example: URL Encoded Form with Binary Values</h6><a class="self-link" href="#example-url-encoded-form-with-binary-values" aria-label="Permalink for Section 4.8.15.2.2"></a></div>
 <p>Note that <code>application/x-www-form-urlencoded</code> is a text format, which requires base64-encoding any binary data:</p>
