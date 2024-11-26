@@ -1,0 +1,25 @@
+From d40aea78d80753096f5454ab5143df9eb262e916 Mon Sep 17 00:00:00 2001
+From: "Henry H. Andrews" <andrews_henry@yahoo.com>
+Date: Mon, 21 Oct 2024 12:42:15 -0700
+Subject: [PATCH] Add 3.0.4 release date to 3.2.0
+
+---
+ versions/3.2.0.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/versions/3.2.0.md b/versions/3.2.0.md
+index ff3440e1..08f04cbd 100644
+--- a/versions/3.2.0.md
++++ b/versions/3.2.0.md
+@@ -4120,7 +4120,7 @@ Certain fields allow the use of Markdown which can contain HTML including script
+ | 3.1.0 | 2021-02-15 | Release of the OpenAPI Specification 3.1.0 |
+ | 3.1.0-rc1 | 2020-10-08 | rc1 of the 3.1 specification |
+ | 3.1.0-rc0 | 2020-06-18 | rc0 of the 3.1 specification |
+-| 3.0.4 | TBD | Patch release of the OpenAPI Specification 3.0.4 |
++| 3.0.4 | 2024-10-17 | Patch release of the OpenAPI Specification 3.0.4 |
+ | 3.0.3 | 2020-02-20 | Patch release of the OpenAPI Specification 3.0.3 |
+ | 3.0.2 | 2018-10-08 | Patch release of the OpenAPI Specification 3.0.2 |
+ | 3.0.1 | 2017-12-06 | Patch release of the OpenAPI Specification 3.0.1 |
+-- 
+2.37.1 (Apple Git-137.1)
+
