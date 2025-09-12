@@ -1,0 +1,444 @@
+{
+"base64url": {
+  "slug": "base64url",
+  "title": "Base64url",
+  "issue": "",
+  "description": "Binary data encoded as a url-safe string as defined in [RFC4648](https://www.rfc-editor.org/rfc/rfc4648#section-5)",
+  "url": "/registry/format/base64url",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"binary": {
+  "slug": "binary",
+  "title": "Binary",
+  "issue": "",
+  "description": "any sequence of octets",
+  "url": "/registry/format/binary",
+  "owner": "DarrelMiller",
+  "base_type": ["string"]
+},
+"byte": {
+  "slug": "byte",
+  "title": "Byte",
+  "issue": "",
+  "description": "base64 encoded data as defined in [RFC4648](https://www.rfc-editor.org/rfc/rfc4648#section-4)",
+  "url": "/registry/format/byte",
+  "owner": "DarrelMiller",
+  "base_type": ["string"]
+},
+"char": {
+  "slug": "char",
+  "title": "Char",
+  "issue": "",
+  "description": "A single character",
+  "url": "/registry/format/char",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"commonmark": {
+  "slug": "commonmark",
+  "title": "Commonmark",
+  "issue": "",
+  "description": "commonmark-formatted text",
+  "url": "/registry/format/commonmark",
+  "owner": "MikeRalphson",
+  "base_type": ["string"]
+},
+"date-time-local": {
+  "slug": "date-time-local",
+  "title": "Date Time Local",
+  "issue": "4759",
+  "description": "RFC3339 date-time without the timezone component",
+  "url": "/registry/format/date-time-local",
+  "owner": "ya7010",
+  "base_type": ["string"]
+},
+"date-time": {
+  "slug": "date-time",
+  "title": "Date Time",
+  "issue": "",
+  "description": "date and time as defined by date-time - [RFC3339](https://www.rfc-editor.org/rfc/rfc3339#section-5.6)",
+  "url": "/registry/format/date-time",
+  "owner": "DarrelMiller",
+  "base_type": ["string"]
+},
+"date": {
+  "slug": "date",
+  "title": "Date",
+  "issue": "",
+  "description": "date as defined by full-date - [RFC3339](https://www.rfc-editor.org/rfc/rfc3339#section-5.6)",
+  "url": "/registry/format/date",
+  "owner": "DarrelMiller",
+  "base_type": ["string"]
+},
+"decimal": {
+  "slug": "decimal",
+  "title": "Decimal",
+  "issue": "889",
+  "description": "A fixed point decimal number of unspecified precision and range",
+  "url": "/registry/format/decimal",
+  "owner": "baywet",
+  "base_type": ["string", "number"]
+},
+"decimal128": {
+  "slug": "decimal128",
+  "title": "Decimal128",
+  "issue": "",
+  "description": "A decimal floating-point number with 34 significant decimal digits",
+  "url": "/registry/format/decimal128",
+  "owner": "",
+  "base_type": ["string", "number"]
+},
+"double-int": {
+  "slug": "double-int",
+  "title": "Double Int",
+  "issue": "",
+  "description": "an integer that can be stored in an IEEE 754 double-precision number without loss of precision",
+  "url": "/registry/format/double-int",
+  "owner": "mikekistler",
+  "base_type": ["number"]
+},
+"double": {
+  "slug": "double",
+  "title": "Double",
+  "issue": "",
+  "description": "double precision floating point number",
+  "url": "/registry/format/double",
+  "owner": "DarrelMiller",
+  "base_type": ["number"]
+},
+"duration": {
+  "slug": "duration",
+  "title": "Duration",
+  "issue": "",
+  "description": "duration as defined by duration - RFC3339",
+  "url": "/registry/format/duration",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"email": {
+  "slug": "email",
+  "title": "Email",
+  "issue": "",
+  "description": "An email address as defined as Mailbox in RFC5321",
+  "url": "/registry/format/email",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"float": {
+  "slug": "float",
+  "title": "Float",
+  "issue": "",
+  "description": "single precision floating point number",
+  "url": "/registry/format/float",
+  "owner": "DarrelMiller",
+  "base_type": ["number"]
+},
+"hostname": {
+  "slug": "hostname",
+  "title": "Hostname",
+  "issue": "",
+  "description": "A host name as defined by RFC1123",
+  "url": "/registry/format/hostname",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"html": {
+  "slug": "html",
+  "title": "Html",
+  "issue": "",
+  "description": "HTML-formatted text",
+  "url": "/registry/format/html",
+  "owner": "MikeRalphson",
+  "base_type": ["string"]
+},
+"http-date": {
+  "slug": "http-date",
+  "title": "Http Date",
+  "issue": "",
+  "description": "date and time as defined by HTTP-date - [RFC7231](https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.1.1)",
+  "url": "/registry/format/http-date",
+  "owner": "mikekistler",
+  "base_type": ["string"]
+},
+"idn-email": {
+  "slug": "idn-email",
+  "title": "Idn Email",
+  "issue": "",
+  "description": "An email address as defined as Mailbox in RFC6531",
+  "url": "/registry/format/idn-email",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"idn-hostname": {
+  "slug": "idn-hostname",
+  "title": "Idn Hostname",
+  "issue": "",
+  "description": "An internationalized host name as defined by RFC5890",
+  "url": "/registry/format/idn-hostname",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"int16": {
+  "slug": "int16",
+  "title": "Int16",
+  "issue": "",
+  "description": "signed 16-bit integer",
+  "url": "/registry/format/int16",
+  "owner": "DarrelMiller",
+  "base_type": ["number"]
+},
+"int32": {
+  "slug": "int32",
+  "title": "Int32",
+  "issue": "",
+  "description": "signed 32-bit integer",
+  "url": "/registry/format/int32",
+  "owner": "DarrelMiller",
+  "base_type": ["number"]
+},
+"int64": {
+  "slug": "int64",
+  "title": "Int64",
+  "issue": "",
+  "description": "signed 64-bit integer",
+  "url": "/registry/format/int64",
+  "owner": "DarrelMiller",
+  "base_type": ["number", "string"]
+},
+"int8": {
+  "slug": "int8",
+  "title": "Int8",
+  "issue": "845",
+  "description": "signed 8-bit integer",
+  "url": "/registry/format/int8",
+  "owner": "MikeRalphson",
+  "base_type": ["number"]
+},
+"ipv4": {
+  "slug": "ipv4",
+  "title": "Ipv4",
+  "issue": "",
+  "description": "An IPv4 address as defined as dotted-quad by RFC2673",
+  "url": "/registry/format/ipv4",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"ipv6": {
+  "slug": "ipv6",
+  "title": "Ipv6",
+  "issue": "",
+  "description": "An IPv6 address as defined by RFC4673",
+  "url": "/registry/format/ipv6",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"iri-reference": {
+  "slug": "iri-reference",
+  "title": "Iri Reference",
+  "issue": "",
+  "description": "A Internationalized Resource Identifier as defined in RFC3987",
+  "url": "/registry/format/iri-reference",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"iri": {
+  "slug": "iri",
+  "title": "Iri",
+  "issue": "",
+  "description": "A Internationalized Resource Identifier as defined in RFC3987",
+  "url": "/registry/format/iri",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"json-pointer": {
+  "slug": "json-pointer",
+  "title": "Json Pointer",
+  "issue": "",
+  "description": "A JSON string representation of a JSON Pointer as defined in RFC6901",
+  "url": "/registry/format/json-pointer",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"media-range": {
+  "slug": "media-range",
+  "title": "Media Range",
+  "issue": "",
+  "description": "A media type as defined by the `media-range` ABNF production in RFC9110.",
+  "url": "/registry/format/media-range",
+  "owner": "jdesrosiers",
+  "base_type": ["string"]
+},
+"password": {
+  "slug": "password",
+  "title": "Password",
+  "issue": "",
+  "description": "a string that hints to obscure the value.",
+  "url": "/registry/format/password",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"regex": {
+  "slug": "regex",
+  "title": "Regex",
+  "issue": "",
+  "description": "A regular expression as defined in ECMA-262",
+  "url": "/registry/format/regex",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"relative-json-pointer": {
+  "slug": "relative-json-pointer",
+  "title": "Relative Json Pointer",
+  "issue": "",
+  "description": "A JSON string representation of a relative JSON Pointer as defined in draft RFC 01",
+  "url": "/registry/format/relative-json-pointer",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"sf-binary": {
+  "slug": "sf-binary",
+  "title": "Sf Binary",
+  "issue": "",
+  "description": "structured fields byte sequence as defined in [RFC8941]",
+  "url": "/registry/format/sf-binary",
+  "owner": "mikekistler",
+  "base_type": ["string"]
+},
+"sf-boolean": {
+  "slug": "sf-boolean",
+  "title": "Sf Boolean",
+  "issue": "",
+  "description": "structured fields boolean as defined in [RFC8941]",
+  "url": "/registry/format/sf-boolean",
+  "owner": "mikekistler",
+  "base_type": ["string"]
+},
+"sf-decimal": {
+  "slug": "sf-decimal",
+  "title": "Sf Decimal",
+  "issue": "",
+  "description": "structured fields decimal as defined in [RFC8941]",
+  "url": "/registry/format/sf-decimal",
+  "owner": "mikekistler",
+  "base_type": ["number"]
+},
+"sf-integer": {
+  "slug": "sf-integer",
+  "title": "Sf Integer",
+  "issue": "",
+  "description": "structured fields integer as defined in [RFC8941]",
+  "url": "/registry/format/sf-integer",
+  "owner": "mikekistler",
+  "base_type": ["number"]
+},
+"sf-string": {
+  "slug": "sf-string",
+  "title": "Sf String",
+  "issue": "",
+  "description": "structured fields string as defined in [RFC8941]",
+  "url": "/registry/format/sf-string",
+  "owner": "mikekistler",
+  "base_type": ["string"]
+},
+"sf-token": {
+  "slug": "sf-token",
+  "title": "Sf Token",
+  "issue": "",
+  "description": "structured fields token as defined in [RFC8941]",
+  "url": "/registry/format/sf-token",
+  "owner": "mikekistler",
+  "base_type": ["string"]
+},
+"time-local": {
+  "slug": "time-local",
+  "title": "Time Local",
+  "issue": "4759",
+  "description": "RFC3339 time without the timezone component",
+  "url": "/registry/format/time-local",
+  "owner": "ya7010",
+  "base_type": ["string"]
+},
+"time": {
+  "slug": "time",
+  "title": "Time",
+  "issue": "",
+  "description": "time as defined by full-time - RFC3339",
+  "url": "/registry/format/time",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"uint16": {
+  "slug": "uint16",
+  "title": "Uint16",
+  "issue": "4564",
+  "description": "unsigned 16-bit integer",
+  "url": "/registry/format/uint16",
+  "owner": "baywet",
+  "base_type": ["number"]
+},
+"uint32": {
+  "slug": "uint32",
+  "title": "Uint32",
+  "issue": "4564",
+  "description": "unsigned 32-bit integer",
+  "url": "/registry/format/uint32",
+  "owner": "baywet",
+  "base_type": ["number"]
+},
+"uint64": {
+  "slug": "uint64",
+  "title": "Uint64",
+  "issue": "4564",
+  "description": "unsigned 64-bit integer",
+  "url": "/registry/format/uint64",
+  "owner": "baywet",
+  "base_type": ["number", "string"]
+},
+"uint8": {
+  "slug": "uint8",
+  "title": "Uint8",
+  "issue": "845",
+  "description": "unsigned 8-bit integer",
+  "url": "/registry/format/uint8",
+  "owner": "MikeRalphson",
+  "base_type": ["number"]
+},
+"uri-reference": {
+  "slug": "uri-reference",
+  "title": "Uri Reference",
+  "issue": "",
+  "description": "A URI reference as defined in [RFC3986](https://www.rfc-editor.org/info/rfc3986)",
+  "url": "/registry/format/uri-reference",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"uri-template": {
+  "slug": "uri-template",
+  "title": "Uri Template",
+  "issue": "",
+  "description": "A URI Template as defined in RFC6570",
+  "url": "/registry/format/uri-template",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"uri": {
+  "slug": "uri",
+  "title": "Uri",
+  "issue": "",
+  "description": "A Uniform Resource Identifier as defined in RFC3986",
+  "url": "/registry/format/uri",
+  "owner": "baywet",
+  "base_type": ["string"]
+},
+"uuid": {
+  "slug": "uuid",
+  "title": "Uuid",
+  "issue": "",
+  "description": "A Universally Unique IDentifier as defined in RFC4122",
+  "url": "/registry/format/uuid",
+  "owner": "baywet",
+  "base_type": ["string"]
+}
+
+}

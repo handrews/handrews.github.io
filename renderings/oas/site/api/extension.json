@@ -1,0 +1,13 @@
+{
+"x-twitter": {
+  "slug": "x-twitter",
+  "title": "X Twitter",
+  "issue": "",
+  "description": "Used to hold a reference to the API provider's Twitter account.",
+  "owner": "MikeRalphson",
+  "url": "/registry/extension/x-twitter",
+  "objects": ["contactObject"],
+  "schema": {"type":"string"}
+}
+
+}

@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OpenAPI Initiative Publications</title>
+    <description>Specifications, registries, and schemas</description>
+    <link>/</link>
+    <atom:link href="/rss/feed.xml" rel="self" type="application/rss+xml" />
+    
+      
+        
+        
+    <item>
+      <title>jsonSchema</title>
+      <description>JSON Schema</description>
+      <category>alternative-schema</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/alternative-schema/jsonSchema</link>
+      <guid isPermaLink="true">/registry/alternative-schema/jsonSchema</guid>
+    </item>
+        
+    <item>
+      <title>xmlSchema</title>
+      <description>xml Schema</description>
+      <category>alternative-schema</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/alternative-schema/xmlSchema</link>
+      <guid isPermaLink="true">/registry/alternative-schema/xmlSchema</guid>
+    </item>
+        
+      
+    
+      
+        
+        
+    <item>
+      <title>alternativeSchema</title>
+      <description>x-oas-draft-alternativeSchema</description>
+      <category>draft-feature</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/draft-feature/alternativeSchema</link>
+      <guid isPermaLink="true">/registry/draft-feature/alternativeSchema</guid>
+    </item>
+        
+      
+    
+      
+        
+        
+    <item>
+      <title>x-twitter</title>
+      <description>Used to hold a reference to the API provider&apos;s Twitter account.</description>
+      <category>extension</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/extension/x-twitter</link>
+      <guid isPermaLink="true">/registry/extension/x-twitter</guid>
+    </item>
+        
+      
+    
+      
+        
+        
+    <item>
+      <title>base64url</title>
+      <description>Binary data encoded as a url-safe string as defined in [RFC4648](https://www.rfc-editor.org/rfc/rfc4648#section-5)</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/base64url</link>
+      <guid isPermaLink="true">/registry/format/base64url</guid>
+    </item>
+        
+    <item>
+      <title>binary</title>
+      <description>any sequence of octets</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/binary</link>
+      <guid isPermaLink="true">/registry/format/binary</guid>
+    </item>
+        
+    <item>
+      <title>byte</title>
+      <description>base64 encoded data as defined in [RFC4648](https://www.rfc-editor.org/rfc/rfc4648#section-4)</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/byte</link>
+      <guid isPermaLink="true">/registry/format/byte</guid>
+    </item>
+        
+    <item>
+      <title>char</title>
+      <description>A single character</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/char</link>
+      <guid isPermaLink="true">/registry/format/char</guid>
+    </item>
+        
+    <item>
+      <title>commonmark</title>
+      <description>commonmark-formatted text</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/commonmark</link>
+      <guid isPermaLink="true">/registry/format/commonmark</guid>
+    </item>
+        
+    <item>
+      <title>date-time-local</title>
+      <description>RFC3339 date-time without the timezone component</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/date-time-local</link>
+      <guid isPermaLink="true">/registry/format/date-time-local</guid>
+    </item>
+        
+    <item>
+      <title>date-time</title>
+      <description>date and time as defined by date-time - [RFC3339](https://www.rfc-editor.org/rfc/rfc3339#section-5.6)</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/date-time</link>
+      <guid isPermaLink="true">/registry/format/date-time</guid>
+    </item>
+        
+    <item>
+      <title>date</title>
+      <description>date as defined by full-date - [RFC3339](https://www.rfc-editor.org/rfc/rfc3339#section-5.6)</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/date</link>
+      <guid isPermaLink="true">/registry/format/date</guid>
+    </item>
+        
+    <item>
+      <title>decimal</title>
+      <description>A fixed point decimal number of unspecified precision and range</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/decimal</link>
+      <guid isPermaLink="true">/registry/format/decimal</guid>
+    </item>
+        
+    <item>
+      <title>decimal128</title>
+      <description>A decimal floating-point number with 34 significant decimal digits</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/decimal128</link>
+      <guid isPermaLink="true">/registry/format/decimal128</guid>
+    </item>
+        
+    <item>
+      <title>double-int</title>
+      <description>an integer that can be stored in an IEEE 754 double-precision number without loss of precision</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/double-int</link>
+      <guid isPermaLink="true">/registry/format/double-int</guid>
+    </item>
+        
+    <item>
+      <title>double</title>
+      <description>double precision floating point number</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/double</link>
+      <guid isPermaLink="true">/registry/format/double</guid>
+    </item>
+        
+    <item>
+      <title>duration</title>
+      <description>duration as defined by duration - RFC3339</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/duration</link>
+      <guid isPermaLink="true">/registry/format/duration</guid>
+    </item>
+        
+    <item>
+      <title>email</title>
+      <description>An email address as defined as Mailbox in RFC5321</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/email</link>
+      <guid isPermaLink="true">/registry/format/email</guid>
+    </item>
+        
+    <item>
+      <title>float</title>
+      <description>single precision floating point number</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/float</link>
+      <guid isPermaLink="true">/registry/format/float</guid>
+    </item>
+        
+    <item>
+      <title>hostname</title>
+      <description>A host name as defined by RFC1123</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/hostname</link>
+      <guid isPermaLink="true">/registry/format/hostname</guid>
+    </item>
+        
+    <item>
+      <title>html</title>
+      <description>HTML-formatted text</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/html</link>
+      <guid isPermaLink="true">/registry/format/html</guid>
+    </item>
+        
+    <item>
+      <title>http-date</title>
+      <description>date and time as defined by HTTP-date - [RFC7231](https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.1.1)</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/http-date</link>
+      <guid isPermaLink="true">/registry/format/http-date</guid>
+    </item>
+        
+    <item>
+      <title>idn-email</title>
+      <description>An email address as defined as Mailbox in RFC6531</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/idn-email</link>
+      <guid isPermaLink="true">/registry/format/idn-email</guid>
+    </item>
+        
+    <item>
+      <title>idn-hostname</title>
+      <description>An internationalized host name as defined by RFC5890</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/idn-hostname</link>
+      <guid isPermaLink="true">/registry/format/idn-hostname</guid>
+    </item>
+        
+    <item>
+      <title>int16</title>
+      <description>signed 16-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/int16</link>
+      <guid isPermaLink="true">/registry/format/int16</guid>
+    </item>
+        
+    <item>
+      <title>int32</title>
+      <description>signed 32-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/int32</link>
+      <guid isPermaLink="true">/registry/format/int32</guid>
+    </item>
+        
+    <item>
+      <title>int64</title>
+      <description>signed 64-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/int64</link>
+      <guid isPermaLink="true">/registry/format/int64</guid>
+    </item>
+        
+    <item>
+      <title>int8</title>
+      <description>signed 8-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/int8</link>
+      <guid isPermaLink="true">/registry/format/int8</guid>
+    </item>
+        
+    <item>
+      <title>ipv4</title>
+      <description>An IPv4 address as defined as dotted-quad by RFC2673</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/ipv4</link>
+      <guid isPermaLink="true">/registry/format/ipv4</guid>
+    </item>
+        
+    <item>
+      <title>ipv6</title>
+      <description>An IPv6 address as defined by RFC4673</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/ipv6</link>
+      <guid isPermaLink="true">/registry/format/ipv6</guid>
+    </item>
+        
+    <item>
+      <title>iri-reference</title>
+      <description>A Internationalized Resource Identifier as defined in RFC3987</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/iri-reference</link>
+      <guid isPermaLink="true">/registry/format/iri-reference</guid>
+    </item>
+        
+    <item>
+      <title>iri</title>
+      <description>A Internationalized Resource Identifier as defined in RFC3987</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/iri</link>
+      <guid isPermaLink="true">/registry/format/iri</guid>
+    </item>
+        
+    <item>
+      <title>json-pointer</title>
+      <description>A JSON string representation of a JSON Pointer as defined in RFC6901</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/json-pointer</link>
+      <guid isPermaLink="true">/registry/format/json-pointer</guid>
+    </item>
+        
+    <item>
+      <title>media-range</title>
+      <description>A media type as defined by the `media-range` ABNF production in RFC9110.</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/media-range</link>
+      <guid isPermaLink="true">/registry/format/media-range</guid>
+    </item>
+        
+    <item>
+      <title>password</title>
+      <description>a string that hints to obscure the value.</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/password</link>
+      <guid isPermaLink="true">/registry/format/password</guid>
+    </item>
+        
+    <item>
+      <title>regex</title>
+      <description>A regular expression as defined in ECMA-262</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/regex</link>
+      <guid isPermaLink="true">/registry/format/regex</guid>
+    </item>
+        
+    <item>
+      <title>relative-json-pointer</title>
+      <description>A JSON string representation of a relative JSON Pointer as defined in draft RFC 01</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/relative-json-pointer</link>
+      <guid isPermaLink="true">/registry/format/relative-json-pointer</guid>
+    </item>
+        
+    <item>
+      <title>sf-binary</title>
+      <description>structured fields byte sequence as defined in [RFC8941]</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/sf-binary</link>
+      <guid isPermaLink="true">/registry/format/sf-binary</guid>
+    </item>
+        
+    <item>
+      <title>sf-boolean</title>
+      <description>structured fields boolean as defined in [RFC8941]</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/sf-boolean</link>
+      <guid isPermaLink="true">/registry/format/sf-boolean</guid>
+    </item>
+        
+    <item>
+      <title>sf-decimal</title>
+      <description>structured fields decimal as defined in [RFC8941]</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/sf-decimal</link>
+      <guid isPermaLink="true">/registry/format/sf-decimal</guid>
+    </item>
+        
+    <item>
+      <title>sf-integer</title>
+      <description>structured fields integer as defined in [RFC8941]</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/sf-integer</link>
+      <guid isPermaLink="true">/registry/format/sf-integer</guid>
+    </item>
+        
+    <item>
+      <title>sf-string</title>
+      <description>structured fields string as defined in [RFC8941]</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/sf-string</link>
+      <guid isPermaLink="true">/registry/format/sf-string</guid>
+    </item>
+        
+    <item>
+      <title>sf-token</title>
+      <description>structured fields token as defined in [RFC8941]</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/sf-token</link>
+      <guid isPermaLink="true">/registry/format/sf-token</guid>
+    </item>
+        
+    <item>
+      <title>time-local</title>
+      <description>RFC3339 time without the timezone component</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/time-local</link>
+      <guid isPermaLink="true">/registry/format/time-local</guid>
+    </item>
+        
+    <item>
+      <title>time</title>
+      <description>time as defined by full-time - RFC3339</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/time</link>
+      <guid isPermaLink="true">/registry/format/time</guid>
+    </item>
+        
+    <item>
+      <title>uint16</title>
+      <description>unsigned 16-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uint16</link>
+      <guid isPermaLink="true">/registry/format/uint16</guid>
+    </item>
+        
+    <item>
+      <title>uint32</title>
+      <description>unsigned 32-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uint32</link>
+      <guid isPermaLink="true">/registry/format/uint32</guid>
+    </item>
+        
+    <item>
+      <title>uint64</title>
+      <description>unsigned 64-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uint64</link>
+      <guid isPermaLink="true">/registry/format/uint64</guid>
+    </item>
+        
+    <item>
+      <title>uint8</title>
+      <description>unsigned 8-bit integer</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uint8</link>
+      <guid isPermaLink="true">/registry/format/uint8</guid>
+    </item>
+        
+    <item>
+      <title>uri-reference</title>
+      <description>A URI reference as defined in [RFC3986](https://www.rfc-editor.org/info/rfc3986)</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uri-reference</link>
+      <guid isPermaLink="true">/registry/format/uri-reference</guid>
+    </item>
+        
+    <item>
+      <title>uri-template</title>
+      <description>A URI Template as defined in RFC6570</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uri-template</link>
+      <guid isPermaLink="true">/registry/format/uri-template</guid>
+    </item>
+        
+    <item>
+      <title>uri</title>
+      <description>A Uniform Resource Identifier as defined in RFC3986</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uri</link>
+      <guid isPermaLink="true">/registry/format/uri</guid>
+    </item>
+        
+    <item>
+      <title>uuid</title>
+      <description>A Universally Unique IDentifier as defined in RFC4122</description>
+      <category>format</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/format/uuid</link>
+      <guid isPermaLink="true">/registry/format/uuid</guid>
+    </item>
+        
+      
+    
+      
+        
+        
+    <item>
+      <title>binary</title>
+      <description>Non-text-based media types</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/binary</link>
+      <guid isPermaLink="true">/registry/media-type/binary</guid>
+    </item>
+        
+    <item>
+      <title>forms</title>
+      <description>Ordered name-value pairs</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/forms</link>
+      <guid isPermaLink="true">/registry/media-type/forms</guid>
+    </item>
+        
+    <item>
+      <title>linksets</title>
+      <description>Sets of RFC8288 Web Links</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/linksets</link>
+      <guid isPermaLink="true">/registry/media-type/linksets</guid>
+    </item>
+        
+    <item>
+      <title>sequential_json</title>
+      <description>Multiple concatenated JSON documents suitable for streaming</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/sequential_json</link>
+      <guid isPermaLink="true">/registry/media-type/sequential_json</guid>
+    </item>
+        
+    <item>
+      <title>sequential_multipart</title>
+      <description>Multipart subtypes with unnamed parts</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/sequential_multipart</link>
+      <guid isPermaLink="true">/registry/media-type/sequential_multipart</guid>
+    </item>
+        
+    <item>
+      <title>sse</title>
+      <description>Event streams for SSE</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/sse</link>
+      <guid isPermaLink="true">/registry/media-type/sse</guid>
+    </item>
+        
+    <item>
+      <title>text</title>
+      <description>Text-based media types</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/text</link>
+      <guid isPermaLink="true">/registry/media-type/text</guid>
+    </item>
+        
+    <item>
+      <title>xml</title>
+      <description>Extensible markup language</description>
+      <category>media-type</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/media-type/xml</link>
+      <guid isPermaLink="true">/registry/media-type/xml</guid>
+    </item>
+        
+      
+    
+      
+        
+        
+    <item>
+      <title>fdx</title>
+      <description>Extensions created and used by [Financial Data Exchange (FDX)](https://financialdataexchange.org)</description>
+      <category>namespace</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/namespace/fdx</link>
+      <guid isPermaLink="true">/registry/namespace/fdx</guid>
+    </item>
+        
+    <item>
+      <title>ms</title>
+      <description>Extensions [created and used by Microsoft](https://github.com/microsoft/OpenAPI/blob/main/extensions/index.md)</description>
+      <category>namespace</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/namespace/ms</link>
+      <guid isPermaLink="true">/registry/namespace/ms</guid>
+    </item>
+        
+    <item>
+      <title>oai</title>
+      <description>Reserved for uses defined by the OAI</description>
+      <category>namespace</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/namespace/oai</link>
+      <guid isPermaLink="true">/registry/namespace/oai</guid>
+    </item>
+        
+    <item>
+      <title>oas-draft</title>
+      <description>Extensions created by OAI to indicate proposed changes to the OAS specification</description>
+      <category>namespace</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/namespace/oas-draft</link>
+      <guid isPermaLink="true">/registry/namespace/oas-draft</guid>
+    </item>
+        
+    <item>
+      <title>oas</title>
+      <description>Reserved for uses defined by the OAI</description>
+      <category>namespace</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/namespace/oas</link>
+      <guid isPermaLink="true">/registry/namespace/oas</guid>
+    </item>
+        
+    <item>
+      <title>sap</title>
+      <description>Extensions created and used by SAP</description>
+      <category>namespace</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/namespace/sap</link>
+      <guid isPermaLink="true">/registry/namespace/sap</guid>
+    </item>
+        
+      
+    
+      
+    
+      
+        
+        
+      
+    
+      
+        
+        
+    <item>
+      <title>audience</title>
+      <description>Tags with `kind: audience` indicate the intended audience for an operation.</description>
+      <category>tag-kind</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/tag-kind/audience</link>
+      <guid isPermaLink="true">/registry/tag-kind/audience</guid>
+    </item>
+        
+    <item>
+      <title>badge</title>
+      <description> Tags with `kind: badge` are applied as visible badges in documentation.</description>
+      <category>tag-kind</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/tag-kind/badge</link>
+      <guid isPermaLink="true">/registry/tag-kind/badge</guid>
+    </item>
+        
+    <item>
+      <title>nav</title>
+      <description>Tags with `kind: nav` are used in documentation to group operations into sections</description>
+      <category>tag-kind</category>
+      <pubDate>Thu, 11 Sep 2025 18:16:25 -0700</pubDate>
+      <link>/registry/tag-kind/nav</link>
+      <guid isPermaLink="true">/registry/tag-kind/nav</guid>
+    </item>
+        
+      
+    
+  </channel>
+</rss>

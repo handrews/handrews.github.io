@@ -1,0 +1,45 @@
+{
+"fdx": {
+  "slug": "fdx",
+  "issue": "",
+  "description": "Extensions created and used by [Financial Data Exchange (FDX)](https://financialdataexchange.org)",
+  "url": "/registry/namespace/fdx",
+  "owner": "DavidBiesack"
+},
+"ms": {
+  "slug": "ms",
+  "issue": "",
+  "description": "Extensions [created and used by Microsoft](https://github.com/microsoft/OpenAPI/blob/main/extensions/index.md)",
+  "url": "/registry/namespace/ms",
+  "owner": "DarrelMiller"
+},
+"oai": {
+  "slug": "oai",
+  "issue": "",
+  "description": "Reserved for uses defined by the OAI",
+  "url": "/registry/namespace/oai",
+  "owner": "DarrelMiller"
+},
+"oas-draft": {
+  "slug": "oas-draft",
+  "issue": "",
+  "description": "Extensions created by OAI to indicate proposed changes to the OAS specification",
+  "url": "/registry/namespace/oas-draft",
+  "owner": "DarrelMiller"
+},
+"oas": {
+  "slug": "oas",
+  "issue": "",
+  "description": "Reserved for uses defined by the OAI",
+  "url": "/registry/namespace/oas",
+  "owner": "DarrelMiller"
+},
+"sap": {
+  "slug": "sap",
+  "issue": "",
+  "description": "Extensions created and used by SAP",
+  "url": "/registry/namespace/sap",
+  "owner": "ralfhandl, pavelkornev"
+}
+
+}

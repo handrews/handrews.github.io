@@ -1,0 +1,23 @@
+2021-03 to 2021-04
+* change OpenAPI `servers` from Server to array of Servers
+* add `put` to list of operation fields in Path Item
+
+2021-04 to 2021-05
+* remove shared uri definition
+
+2021-05 to 2021-09
+* use `const` instead of `enum`
+* improve some conditionals (add `type: object`)
+* improve pattern for `name` in styles-for-path
+* refactor param field dependencies
+* Fix pattern for responses (don't allow `4X1`, `51X`, etc.)
+* allow case-insensitive vaue "bearer"/"bEaReR"/etc
+* `scheme` (note final `e`) no longer required for bearer
+
+2021-09 to 2022-02
+* More descriptions and comments
+* set defautl for `url` in Server
+* add `format: uri` to `termsOfService`
+* add `format`s to `url` and `email` in Contact
+* fix typo (`descriptions` -> `description`)
+
